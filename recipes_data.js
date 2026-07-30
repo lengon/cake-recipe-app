@@ -61464,5 +61464,2930 @@ window.recipes = {
         "text": "將麵團均勻分為2份，以保鮮膜包裹後放進冰箱隔夜或至少四小時之後再使用。"
       }
     ]
+  },
+  "macha_p33_coconut_snow_cake": {
+    "id": "macha_p33_coconut_snow_cake",
+    "isCustom": true,
+    "name": "抹茶椰子雪花糕",
+    "englishName": "Matcha Coconut Snow Cake",
+    "description": "[頁碼] 第 33 頁 | 份量：1盒 (模型15×10×3cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "15x10x3",
+      "unit": "cm"
+    },
+    "tips": [
+      "冷藏保存 / 7天"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 300,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "動物性鮮奶油",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "玉米粉",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "椰子粉",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "抹茶粉加熱水拌勻成抹茶糊，備用。"
+      },
+      {
+        "step": 2,
+        "text": "玉米粉加糖拌勻後，倒入牛奶、鮮奶油以小火邊加熱邊攪拌至煮滾。"
+      },
+      {
+        "step": 3,
+        "text": "將抹茶糊加入〈作法2〉中拌勻，再趁熱倒入模型中，待涼後放入冰箱冷藏至凝固，再從模型中脫模取出，分切成小塊狀，均勻沾裹上椰子粉即可。"
+      }
+    ]
+  },
+  "macha_p34_milk_jam": {
+    "id": "macha_p34_milk_jam",
+    "isCustom": true,
+    "name": "抹茶牛奶醬",
+    "englishName": "Matcha Milk Jam",
+    "description": "[頁碼] 第 34 頁 | 份量：約200g (抹醬系列)",
+    "basePan": {
+      "shape": "custom",
+      "size": "200",
+      "unit": "g"
+    },
+    "tips": [
+      "冷藏保存 / 30天"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "動物性鮮奶油",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "動物性鮮奶油、牛奶、細砂糖一起放入鍋中煮至滾。"
+      },
+      {
+        "step": 2,
+        "text": "再改以小火攪拌慢煮約30分鐘至濃稠狀，熄火，加入抹茶粉拌勻即可。"
+      }
+    ]
+  },
+  "macha_p34_butter_spread": {
+    "id": "macha_p34_butter_spread",
+    "isCustom": true,
+    "name": "抹茶奶油醬",
+    "englishName": "Matcha Butter Spread",
+    "description": "[頁碼] 第 34 頁 | 份量：500g",
+    "basePan": {
+      "shape": "custom",
+      "size": "500",
+      "unit": "g"
+    },
+    "tips": [
+      "冷藏保存 / 15天",
+      "奶油如果剛從冰箱取出會較堅硬些，需先放置室溫使其軟化後再製作抹醬。",
+      "此抹醬可冷藏保存，食用前先前放置室溫回軟即可。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "軟化的奶油",
+        "baseValue": 260,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 20,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "抹茶粉加熱水拌勻成抹茶糊，備用。"
+      },
+      {
+        "step": 2,
+        "text": "蛋黃加細砂糖拌勻後，將牛奶倒入以中火加熱煮至85℃後，熄火。"
+      },
+      {
+        "step": 3,
+        "text": "繼續將抹茶糊加入拌勻，放涼。"
+      },
+      {
+        "step": 4,
+        "text": "再分次加入軟化的奶油攪拌均勻即可。"
+      }
+    ]
+  },
+  "macha_p35_honey_cream_cheese": {
+    "id": "macha_p35_honey_cream_cheese",
+    "isCustom": true,
+    "name": "抹茶蜂蜜乳酪醬",
+    "englishName": "Matcha Honey Cream Cheese Spread",
+    "description": "[頁碼] 第 35 頁 | 份量：230g",
+    "basePan": {
+      "shape": "custom",
+      "size": "230",
+      "unit": "g"
+    },
+    "tips": [
+      "冷藏保存 / 15天"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油乳酪",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蜂蜜",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油乳酪隔水加熱拌軟，將蜂蜜加入拌勻，再將抹茶粉過篩加入拌勻即可。"
+      }
+    ]
+  },
+  "macha_p35_cream_pudding_spread": {
+    "id": "macha_p35_cream_pudding_spread",
+    "isCustom": true,
+    "name": "抹茶奶油布丁醬",
+    "englishName": "Matcha Cream Pudding Spread",
+    "description": "[頁碼] 第 35 頁 | 份量：300g",
+    "basePan": {
+      "shape": "custom",
+      "size": "300",
+      "unit": "g"
+    },
+    "tips": [
+      "冷藏保存 / 5天"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "玉米粉",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 15,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "低筋麵粉、玉米粉一起過篩至銅盆內，再加入細砂糖拌勻後，加入全蛋拌勻。"
+      },
+      {
+        "step": 2,
+        "text": "牛奶煮熱後慢慢加入〈作法1〉中拌勻，再置於爐火上以中火不停的攪拌至呈濃稠狀、有大氣泡產生即可熄火。"
+      },
+      {
+        "step": 3,
+        "text": "趁熱將奶油加入〈作法2〉中拌勻，最後將抹茶粉加入拌勻即可。"
+      }
+    ]
+  },
+  "macha_p39_two_color_coconut_pudding": {
+    "id": "macha_p39_two_color_coconut_pudding",
+    "isCustom": true,
+    "name": "雙色椰奶布丁",
+    "englishName": "Two-Color Coconut Milk Pudding",
+    "description": "[頁碼] 第 39 頁 | 份量：2個",
+    "basePan": {
+      "shape": "round",
+      "size": "2",
+      "unit": "cup"
+    },
+    "tips": [
+      "吉利T須先和細砂糖拌勻才能加入水中或牛奶、椰奶等液態材料中加熱，不宜直接和液態材料混合，會較易產生結塊。",
+      "吉利T須使用“冷”的液態材料拌勻後再進行加熱動作，若先以“熱”的液態（例如：熱水）攪拌，會影響凝固效果。",
+      "因要做雙色分層效果，故將椰奶布丁液以1/3和2/3的份量比例分出來，此比例可隨個人喜好調整。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "椰奶",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "吉利T",
+        "baseValue": 4,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 10,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "細砂糖和吉利T拌勻。"
+      },
+      {
+        "step": 2,
+        "text": "再倒入牛奶和椰奶拌勻，以中火邊加熱邊攪拌均勻煮熱，即為椰奶布丁液。"
+      },
+      {
+        "step": 3,
+        "text": "再以1:2的比例份量各自放入容器中。"
+      },
+      {
+        "step": 4,
+        "text": "抹茶粉加熱水拌勻後，倒進2/3份量的布丁液中拌勻，再倒入布丁杯中放涼到稍微凝固。"
+      },
+      {
+        "step": 5,
+        "text": "再把剩下的椰奶布丁液倒入，待冷卻凝固後放入冰箱冷藏冰涼即可。"
+      }
+    ]
+  },
+  "macha_p41_42_caramel_matcha_pudding": {
+    "id": "macha_p41_42_caramel_matcha_pudding",
+    "isCustom": true,
+    "name": "焦糖抹茶布丁",
+    "englishName": "Caramel Matcha Pudding",
+    "description": "[頁碼] 第 41-42 頁 | 份量：6個 (模型6×4.5×5.5cm)",
+    "basePan": {
+      "shape": "round",
+      "size": "6x4.5x5.5",
+      "unit": "cm"
+    },
+    "tips": [
+      "煮焦糖液時開始不要攪拌，以防砂糖結晶。糖色呈金黃色時搖晃鍋子即可。",
+      "加熱時如鍋邊有焦黃，可用毛刷沾水刷一下，否則鍋邊會變焦黑。",
+      "倒入熱水是為了讓焦糖降溫(煮成茶褐色的焦糖約為115℃，熱水低於100℃)，否則溫度持續上升焦糖會太黑變苦。",
+      "全蛋再加入蛋黃是為了讓布丁有濃郁蛋香味與柔軟綿密口感。",
+      "布丁液過篩2次可過濾出雞蛋雜質並更加滑順細緻。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 340,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖 (布丁)",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水 (抹茶糊)",
+        "baseValue": 18,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖 (焦糖液)",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "冷水 (焦糖液)",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水 (焦糖液)",
+        "baseValue": 15,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "取焦糖液材料中的細砂糖，加入冷水搖晃一下平底鍋，使細砂糖和冷水混合均勻。"
+      },
+      {
+        "step": 2,
+        "text": "再以小火煮成茶褐色後，熄火。（加熱時如鍋邊有焦黃，可用毛刷沾水刷一下，否則鍋邊會變焦黑。開始煮的時候不要攪拌，以防砂糖結晶，等到糖色呈金黃色時，搖晃一下鍋子讓顏色均勻即可。）"
+      },
+      {
+        "step": 3,
+        "text": "倒入熱水快速攪拌均勻。"
+      },
+      {
+        "step": 4,
+        "text": "再馬上倒入布丁杯中備用(每一杯約5g)。"
+      },
+      {
+        "step": 5,
+        "text": "抹茶粉加熱水拌勻成抹茶糊。"
+      },
+      {
+        "step": 6,
+        "text": "全蛋加蛋黃拌勻，再放入細砂糖、牛奶、抹茶糊攪拌均勻。"
+      },
+      {
+        "step": 7,
+        "text": "將布丁液使用濾網過篩2次。"
+      },
+      {
+        "step": 8,
+        "text": "倒入焦糖布丁杯中(布丁液約90g)。"
+      },
+      {
+        "step": 9,
+        "text": "杯口再包裹上鋁箔紙。"
+      },
+      {
+        "step": 10,
+        "text": "放入烤盤中，再倒入1/2高度的溫水，以上火150℃、下火160℃烤約50分鐘至蛋液不會晃動，取出待涼後放入冰箱冷藏冰涼，食用前倒扣即可。"
+      }
+    ]
+  },
+  "macha_p47_dorayaki": {
+    "id": "macha_p47_dorayaki",
+    "isCustom": true,
+    "name": "抹茶銅鑼燒",
+    "englishName": "Matcha Dorayaki",
+    "description": "[頁碼] 第 47 頁 | 份量：8個",
+    "basePan": {
+      "shape": "round",
+      "size": "8",
+      "unit": "pc"
+    },
+    "tips": [
+      "冷藏保存 / 3天",
+      "蜂蜜黏稠較難與粉類材料拌開，所以先和牛奶拌勻，後續粉類加入時才不會黏結成塊狀。",
+      "若擔心麵糊黏鍋，可先在鍋中塗抹油後再加熱，而多餘的油則使用廚房紙巾擦拭乾淨，否則銅鑼燒表面顏色會不均勻。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蜂蜜",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 4,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "市售紅豆泥 (夾餡)",
+        "baseValue": 240,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "蛋加細砂糖攪打至顏色變淺黃白色。"
+      },
+      {
+        "step": 2,
+        "text": "先將蜂蜜、牛奶混拌均勻後，再倒入〈作法1〉中混拌均勻。"
+      },
+      {
+        "step": 3,
+        "text": "低筋麵粉、泡打粉和抹茶粉一起過篩加入拌勻，即為抹茶麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "平底鍋小火加熱後，舀一大匙麵糊入鍋中，使其自動攤開成圓形。"
+      },
+      {
+        "step": 5,
+        "text": "等到開始出現小泡泡時，翻面繼續煎至熟，取出放涼後，夾入適量的紅豆泥即可。"
+      }
+    ]
+  },
+  "macha_p58_59_icebox_cookies": {
+    "id": "macha_p58_59_icebox_cookies",
+    "isCustom": true,
+    "name": "雙色冷凍餅乾",
+    "englishName": "Icebox Cookies",
+    "description": "[頁碼] 第 58-59 頁 | 份量：18片",
+    "basePan": {
+      "shape": "square",
+      "size": "18",
+      "unit": "pc"
+    },
+    "tips": [
+      "杏仁粒先泡溫水20分鐘吸收水分，使其和麵糊軟硬度接近，切片時較不會掉出來。",
+      "麵皮不要冰得太硬，否則相疊後一經切割就會散成三塊。",
+      "麵皮與麵皮之間要塗抹上蛋白液，以增加麵皮間的黏度。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 140,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁粒",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白液",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "杏仁粒先泡溫水20分鐘，再取出瀝乾水分，備用。"
+      },
+      {
+        "step": 2,
+        "text": "糖粉過篩後，繼續加入奶油打發至淺黃白色。"
+      },
+      {
+        "step": 3,
+        "text": "蛋液分次加入拌勻，再將低筋麵粉過篩加入拌勻成麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "將麵糊分成1/3份量和2/3份量。"
+      },
+      {
+        "step": 5,
+        "text": "取杏仁粒放進1/3份量的麵糊中拌勻，備用。"
+      },
+      {
+        "step": 6,
+        "text": "抹茶粉加熱水拌勻後，倒入2/3份量麵糊中拌勻，即成抹茶麵糊，再均分成兩份。"
+      },
+      {
+        "step": 7,
+        "text": "將抹茶、原味共3個麵糰，分別各自放入袋中，桿平約1公分厚的麵皮，放入冷藏稍微冰硬。"
+      },
+      {
+        "step": 8,
+        "text": "剪開塑膠袋取出麵皮，以交錯相疊的方式將抹茶、原味麵皮疊成三層，稍微壓緊後用保鮮膜包好。(塗抹蛋白液增加黏度)"
+      },
+      {
+        "step": 9,
+        "text": "放入冷凍冰硬定型後，取出切成片狀。"
+      },
+      {
+        "step": 10,
+        "text": "再放入烤箱中以180℃烤約20分鐘即可。"
+      }
+    ]
+  },
+  "macha_p60_cookie": {
+    "id": "macha_p60_cookie",
+    "isCustom": true,
+    "name": "抹茶小西餅",
+    "englishName": "Matcha Cookie",
+    "description": "[頁碼] 第 60 頁 | 份量：16片",
+    "basePan": {
+      "shape": "round",
+      "size": "16",
+      "unit": "pc"
+    },
+    "tips": [
+      "室溫密封保存 / 15天",
+      "此麵糊較乾，宜用刮麵刀以壓拌法拌勻。",
+      "麵糰外層沾裹上細砂糖烘烤，可增加餅乾輕脆顆粒的口感。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁粉",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "細砂糖 (外層裝飾)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      },
+      {
+        "category": "wet",
+        "name": "水",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "少許"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "糖粉過篩，加入奶油打發至淺黃白色。"
+      },
+      {
+        "step": 2,
+        "text": "蛋液分次加入拌勻，將低筋麵粉、抹茶粉、杏仁粉一起過篩加入拌勻成麵糊。"
+      },
+      {
+        "step": 3,
+        "text": "將麵糰用保鮮膜整型成圓柱狀，再塗抹少許水於麵糰表面上。"
+      },
+      {
+        "step": 4,
+        "text": "滾裹上細砂糖，用保鮮膜包裹捲緊，冷凍冰硬。"
+      },
+      {
+        "step": 5,
+        "text": "取出冰硬的麵糰切成薄片，再以180℃烤約20分鐘即可。"
+      }
+    ]
+  },
+  "macha_p61_almond_tuile": {
+    "id": "macha_p61_almond_tuile",
+    "isCustom": true,
+    "name": "抹茶杏仁薄片",
+    "englishName": "Almond Tuile Biscuit",
+    "description": "[頁碼] 第 61 頁 | 份量：24片",
+    "basePan": {
+      "shape": "custom",
+      "size": "24",
+      "unit": "pc"
+    },
+    "tips": [
+      "室溫密封保存 / 15天",
+      "烤盤要鋪上防沾布、烤焙紙或抹上一層薄薄的奶油，再撒上一層薄薄的麵粉即可。",
+      "杏仁片務必要能均勻的沾黏住麵糊，才能烘烤一致。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁片",
+        "baseValue": 200,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油隔水加熱融化成奶油液。"
+      },
+      {
+        "step": 2,
+        "text": "蛋白、全蛋加糖拌勻，再加入鹽拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "將奶油液加入拌勻，再將低筋麵粉、抹茶粉一起過篩拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "再將杏仁片加入拌勻，即為麵糊。"
+      },
+      {
+        "step": 5,
+        "text": "烤盤鋪上防沾布，再用湯匙舀入麵糊，攤平，以180℃烤約15分鐘即可。"
+      }
+    ]
+  },
+  "macha_p63_64_matcha_senbei": {
+    "id": "macha_p63_64_matcha_senbei",
+    "isCustom": true,
+    "name": "和風抹茶煎餅",
+    "englishName": "Japanese Style Matcha Senbei",
+    "description": "[頁碼] 第 63-64 頁 | 份量：12片",
+    "basePan": {
+      "shape": "round",
+      "size": "12",
+      "unit": "pc"
+    },
+    "tips": [
+      "一般餅乾烘烤時中間會較凸起，煎餅特色就是要平整，所以需要重壓一個烤盤讓餅乾平整。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 25,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 45,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "醬油",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "中筋麵粉",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "黑芝麻",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "少許"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油隔水加熱融化成奶油液。"
+      },
+      {
+        "step": 2,
+        "text": "蛋液加入細砂糖混拌均勻。"
+      },
+      {
+        "step": 3,
+        "text": "倒入〈作法1〉的奶油液拌勻後，再倒入醬油拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "中筋麵粉、低筋麵粉、抹茶粉一起過篩加入拌勻成麵糰。"
+      },
+      {
+        "step": 5,
+        "text": "將麵糰裝入擠花袋中(使用平口花嘴)。"
+      },
+      {
+        "step": 6,
+        "text": "烤盤鋪上防沾布，擠出直徑約3公分的麵糰，覆蓋上防沾布，壓成扁圓形麵皮。"
+      },
+      {
+        "step": 7,
+        "text": "放入少許黑芝麻後，再覆蓋上防沾布。"
+      },
+      {
+        "step": 8,
+        "text": "另取一烤盤壓在上面。"
+      },
+      {
+        "step": 9,
+        "text": "放入烤箱中以180℃烤約15分鐘取出，拿掉烤盤和防沾布。"
+      },
+      {
+        "step": 10,
+        "text": "再繼續放入烤箱中續烤15分鐘至熟即可。"
+      }
+    ]
+  },
+  "macha_p69_matcha_grissini": {
+    "id": "macha_p69_matcha_grissini",
+    "isCustom": true,
+    "name": "抹茶牛奶棒",
+    "englishName": "Matcha Grissini",
+    "description": "[頁碼] 第 69 頁 | 份量：13根",
+    "basePan": {
+      "shape": "custom",
+      "size": "13",
+      "unit": "pc"
+    },
+    "tips": [
+      "室溫密封保存 / 15天",
+      "因麵糰較乾硬，粉類拌勻後，可使用塑膠袋用手壓拌成糰。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 35,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 45,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "中筋麵粉",
+        "baseValue": 130,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "奶粉",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "糖粉過篩，加入奶油打發至淺黃色。"
+      },
+      {
+        "step": 2,
+        "text": "蛋液分次加入〈作法1〉中拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "中筋麵粉、奶粉、泡打粉、抹茶粉一起過篩加入，拌勻成麵糰。"
+      },
+      {
+        "step": 4,
+        "text": "將麵糰放入塑膠袋中，桿平約1公分厚度的麵皮。"
+      },
+      {
+        "step": 5,
+        "text": "放入冰箱冷凍冰硬後，再取出切成條狀，放入烤箱中以160℃烤約20分鐘即可。"
+      }
+    ]
+  },
+  "macha_p77_matcha_snowball": {
+    "id": "macha_p77_matcha_snowball",
+    "isCustom": true,
+    "name": "抹茶雪球",
+    "englishName": "Matcha Snowball",
+    "description": "[頁碼] 第 77 頁 | 份量：16個",
+    "basePan": {
+      "shape": "round",
+      "size": "16",
+      "unit": "pc"
+    },
+    "tips": [
+      "室溫密封保存 / 15天",
+      "夏天的麵糰如會黏手，可先放冰箱冷藏約15分鐘再分割。",
+      "餅乾若放置到完全放涼才篩撒糖粉，會不易附著。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 25,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "奶粉",
+        "baseValue": 15,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁粉",
+        "baseValue": 15,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "防潮糖粉 (表面裝飾)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油放入容器中，將糖粉過篩加入打發至淺黃色。"
+      },
+      {
+        "step": 2,
+        "text": "蛋黃分次加入〈作法1〉中拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "奶粉、杏仁粉、低筋麵粉、抹茶粉一起過篩加入拌勻成麵糰。"
+      },
+      {
+        "step": 4,
+        "text": "再分割成每個15g的小麵糰，滾圓後排入烤盤中。"
+      },
+      {
+        "step": 5,
+        "text": "放入烤箱中以170℃烤約20分鐘，取出稍微放涼，再篩撒上防潮糖粉即可。"
+      }
+    ]
+  },
+  "macha_p85_87_matcha_castella": {
+    "id": "macha_p85_87_matcha_castella",
+    "isCustom": true,
+    "name": "抹茶長崎蛋糕",
+    "englishName": "Matcha Castella",
+    "description": "[頁碼] 第 85-87 頁 | 份量：3條 (長方形烤模24×19×7.5cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "24x19x7.5",
+      "unit": "cm"
+    },
+    "tips": [
+      "因蛋糕中有加蜂蜜容易烤焦，所以用二層厚紙（紙箱、厚紙板）隔熱。",
+      "全蛋加溫至40℃，是因為蛋黃含有油脂，採隔水加熱可加速蛋液打發。",
+      "先用竹籤不規則攪拌過麵糊，是為了消除麵糊中的大氣泡，使烤出來的蛋糕組織細緻。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 250,
+        "unit": "g",
+        "note": "約 5顆"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 20,
+        "unit": "g",
+        "note": "約 1顆"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "麥芽糖",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蜂蜜",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "中筋麵粉",
+        "baseValue": 160,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 8,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 60,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "烤模四周及底部鋪上烤焙紙，再加上紙箱、厚紙板隔熱。"
+      },
+      {
+        "step": 2,
+        "text": "麥芽糖、蜂蜜隔水加熱融化。"
+      },
+      {
+        "step": 3,
+        "text": "將中筋麵粉與抹茶粉一起過篩。"
+      },
+      {
+        "step": 4,
+        "text": "全蛋、蛋黃、細砂糖、鹽放入容器中，邊攪拌邊隔水加熱至40℃後離火。"
+      },
+      {
+        "step": 5,
+        "text": "將蛋液以電動打蛋器高速打至濃稠狀後轉低速。"
+      },
+      {
+        "step": 6,
+        "text": "將融化的麥芽糖和蜂蜜分次慢慢倒入麵糊中，再轉中速打至蛋液蓬鬆發白。"
+      },
+      {
+        "step": 7,
+        "text": "將過篩的粉類分次加入麵糊中拌勻。"
+      },
+      {
+        "step": 8,
+        "text": "取些許麵糊加入牛奶中拌勻，再倒回盆中輕輕拌勻。"
+      },
+      {
+        "step": 9,
+        "text": "將蛋糕麵糊倒入烤模中，用竹籤來回不規則攪拌麵糊，再重敲一下震出氣泡。"
+      },
+      {
+        "step": 10,
+        "text": "放入烤箱中以170℃烘烤約50分鐘。"
+      },
+      {
+        "step": 11,
+        "text": "蛋糕出爐倒扣在鋪烤焙紙的涼架上，撕開底紙，將蛋糕翻回正面。"
+      },
+      {
+        "step": 12,
+        "text": "待放涼後先切3等分，再切片。"
+      }
+    ]
+  },
+  "macha_p89_91_matcha_lamington": {
+    "id": "macha_p89_91_matcha_lamington",
+    "isCustom": true,
+    "name": "抹茶萊明頓",
+    "englishName": "Matcha Lamingtons",
+    "description": "[頁碼] 第 89-91 頁 | 份量：36個 (正方形烤模20×20×5cm)",
+    "basePan": {
+      "shape": "square",
+      "size": "20x20x5",
+      "unit": "cm"
+    },
+    "tips": [
+      "可依個人喜好切大小塊，若切較大塊，抹茶醬的份量可減半。",
+      "拍掉表面的蛋糕皮，可使蛋糕沾裹醬時表面更平滑。",
+      "巧克力片可用加熱後的餘溫拌融，若溫度不夠，可用隔水加熱方式拌融。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 100,
+        "unit": "g",
+        "note": "約 2顆"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 20,
+        "unit": "g",
+        "note": "約 1顆"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 0.5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "動物性鮮奶油 (抹茶醬)",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "水 (抹茶醬)",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉 (抹茶醬)",
+        "baseValue": 6,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "白巧克力片 (抹茶醬)",
+        "baseValue": 240,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "椰子粉",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "烤模鋪上烤焙紙，備用。"
+      },
+      {
+        "step": 2,
+        "text": "將奶油隔水加熱融化成奶油液，放涼備用。"
+      },
+      {
+        "step": 3,
+        "text": "低筋麵粉先過篩。"
+      },
+      {
+        "step": 4,
+        "text": "全蛋、蛋黃、細砂糖、鹽放入容器中，邊攪拌邊隔水加熱至40℃後離火。"
+      },
+      {
+        "step": 5,
+        "text": "將蛋液以電動打蛋器高速打至蓬鬆發白。"
+      },
+      {
+        "step": 6,
+        "text": "將過篩的低筋麵粉分2~3次加入中拌勻，即為蛋糕麵糊。"
+      },
+      {
+        "step": 7,
+        "text": "將牛奶加入奶油液中拌勻。"
+      },
+      {
+        "step": 8,
+        "text": "取些許麵糊和牛奶奶油液拌勻，再倒回盆中輕輕拌勻。"
+      },
+      {
+        "step": 9,
+        "text": "將麵糊倒入烤模中抹平，輕輕地將烤模摔兩下，使內部空氣擠出來。"
+      },
+      {
+        "step": 10,
+        "text": "放入烤箱中以170℃烤約30分鐘，蛋糕出爐後倒扣在涼架上，待涼用抹刀沿著蛋糕四周劃開。"
+      },
+      {
+        "step": 11,
+        "text": "倒扣取出，撕掉底紙，再將蛋糕翻回正面，拍掉表面的蛋糕皮。"
+      },
+      {
+        "step": 12,
+        "text": "待涼後切成3×3公分的塊狀。"
+      },
+      {
+        "step": 13,
+        "text": "製作抹茶醬：動物性鮮奶油加水煮滾。"
+      },
+      {
+        "step": 14,
+        "text": "加入抹茶粉拌勻，再放入白巧克力片，拌至巧克力融化即可。"
+      },
+      {
+        "step": 15,
+        "text": "裏醬：將切好的蛋糕四周沾上一層抹茶醬，再沾上椰子粉即可。"
+      }
+    ]
+  },
+  "macha_p92_financier": {
+    "id": "macha_p92_financier",
+    "isCustom": true,
+    "name": "抹茶費南雪",
+    "englishName": "Matcha Financier",
+    "description": "[頁碼] 第 92 頁 | 份量：24個 (矽膠模5×2.5×1cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "5x2.5x1",
+      "unit": "cm"
+    },
+    "tips": [
+      "室溫保存：3天 / 冷藏保存：5天",
+      "煮奶油過程要適時攪拌，煮好隔水降溫，以免餘溫繼續加熱，降溫至奶油顏色不會變深，即可取出。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁粉",
+        "baseValue": 25,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油 (煮焦奶油)",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白",
+        "baseValue": 50,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "將所有粉類一起過篩入盆中。"
+      },
+      {
+        "step": 2,
+        "text": "奶油放入小鍋中，以小火煮至冒泡泡且底部呈現咖啡色沉澱物，馬上關火隔水降溫。"
+      },
+      {
+        "step": 3,
+        "text": "加入蛋白拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "降溫的焦奶油慢慢分次加入拌勻。"
+      },
+      {
+        "step": 5,
+        "text": "將麵糊裝入擠花袋中，擠入模型中約八分滿。"
+      },
+      {
+        "step": 6,
+        "text": "放入烤箱中，以180℃先烤約15分鐘，烤盤調頭，再繼續烤約5分鐘至四周呈金黃色即可。"
+      }
+    ]
+  },
+  "macha_p93_mini_baumkuchen": {
+    "id": "macha_p93_mini_baumkuchen",
+    "isCustom": true,
+    "name": "抹茶迷你年輪蛋糕",
+    "englishName": "Matcha Mini Baumkuchen",
+    "description": "[頁碼] 第 93 頁 | 份量：12個",
+    "basePan": {
+      "shape": "round",
+      "size": "12",
+      "unit": "pc"
+    },
+    "tips": [
+      "冷藏保存：3天",
+      "平底鍋可以使用廚房紙巾抹上一層薄薄的油，會較好煎製薄餅。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 7,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 90,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油加細砂糖打發後，再將蛋液分次加入拌勻。"
+      },
+      {
+        "step": 2,
+        "text": "再將低筋麵粉、泡打粉、抹茶粉一起過篩加入拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "再倒入牛奶拌勻成抹茶麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "平底鍋加熱後，倒入適量麵糊，快速轉動平底鍋讓麵糊攤平，以小火煎至兩面上色，取出。"
+      },
+      {
+        "step": 5,
+        "text": "把薄餅鋪放在保鮮膜上，用竹筷子從一端慢慢捲起包住固定，切成小塊狀即可。"
+      }
+    ]
+  },
+  "macha_p95_96_madeleine": {
+    "id": "macha_p95_96_madeleine",
+    "isCustom": true,
+    "name": "抹茶瑪德蓮",
+    "englishName": "Matcha Madeleine",
+    "description": "[頁碼] 第 95-96 頁 | 份量：10個 (貝殼模7×7cm)",
+    "basePan": {
+      "shape": "custom",
+      "size": "7x7",
+      "unit": "cm"
+    },
+    "tips": [
+      "盆口包覆保鮮膜才不會吸取到冰箱中的氣味。",
+      "麵糊冷藏能更充分融合材料，如能放隔夜則會更好。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "中筋麵粉",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 110,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蜂蜜",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 15,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "前準備：將瑪德蓮烤模塗抹少許油(份量外)後，再撒入少許中筋麵粉(份量外)，倒除多餘粉備用。"
+      },
+      {
+        "step": 2,
+        "text": "奶油隔水加熱融化成奶油液，放涼備用。"
+      },
+      {
+        "step": 3,
+        "text": "抹茶粉加熱水拌勻成抹茶糊，備用。"
+      },
+      {
+        "step": 4,
+        "text": "全蛋、蜂蜜和細砂糖、鹽一起放入鋼盆中拌勻。"
+      },
+      {
+        "step": 5,
+        "text": "繼續加入抹茶糊拌勻。"
+      },
+      {
+        "step": 6,
+        "text": "再將中筋麵粉和泡打粉一起過篩加入拌勻。"
+      },
+      {
+        "step": 7,
+        "text": "奶油液分次加入拌勻成抹茶麵糊，放進冰箱冷藏30分鐘。"
+      },
+      {
+        "step": 8,
+        "text": "取麵糊裝入擠花袋中(使用平口花嘴)，再將麵糊擠入烤模中約8分滿。"
+      },
+      {
+        "step": 9,
+        "text": "放入烤箱，以200℃烤約12分鐘後出爐脫模，放在架子上放涼即可。"
+      }
+    ]
+  },
+  "macha_p113_115_souffle_cheesecake": {
+    "id": "macha_p113_115_souffle_cheesecake",
+    "isCustom": true,
+    "name": "抹茶輕乳酪蛋糕",
+    "englishName": "Matcha Soufflé Cheesecake",
+    "description": "[頁碼] 第 113-115 頁 | 份量：6吋1個",
+    "basePan": {
+      "shape": "round",
+      "size": "6",
+      "unit": "inch"
+    },
+    "tips": [
+      "烤盤中倒入溫水為水浴法，用水蒸氣悶熟的蛋糕，濕潤又綿密不會太乾。",
+      "可用竹籤或叉子插入蛋糕體中間，只要不沾黏麵糊，即代表蛋糕烤熟了。",
+      "乳酪蛋糕要漂亮切片，需先熱刀，刀子先泡熱水再用紙巾擦乾，每切一刀都重複此動作。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油乳酪",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋 (分蛋)",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 25,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "玉米粉",
+        "baseValue": 25,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 15,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "烤模刷上薄薄的奶油(份量外)，鋪上圍邊與底部的烘焙紙。"
+      },
+      {
+        "step": 2,
+        "text": "奶油乳酪加入牛奶拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "全蛋分蛋，取蛋黃加入乳酪牛奶中拌勻，再放入奶油拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "將低筋麵粉、玉米粉過篩加入拌勻備用。"
+      },
+      {
+        "step": 5,
+        "text": "蛋白打發至起泡，分次加入細砂糖打發至濕性偏乾性發泡成蛋白霜。"
+      },
+      {
+        "step": 6,
+        "text": "取蛋白霜分次加入乳酪蛋黃糊中拌勻成原味麵糊，分成兩份。"
+      },
+      {
+        "step": 7,
+        "text": "抹茶粉加熱水拌勻，加入其中一份原味麵糊中拌勻成抹茶麵糊。"
+      },
+      {
+        "step": 8,
+        "text": "將抹茶麵糊倒入烤模中(預留少許裝飾)，再倒入剩餘的原味麵糊。"
+      },
+      {
+        "step": 9,
+        "text": "用預留的抹茶麵糊在表面點畫圓點，拿竹籤劃出花紋。"
+      },
+      {
+        "step": 10,
+        "text": "輕敲排出空氣，放入烤盤中倒入溫水至1/2滿，以160℃烤約50分鐘，冷藏至硬後脫模。"
+      }
+    ]
+  },
+  "macha_p117_119_heavy_cheesecake_tart": {
+    "id": "macha_p117_119_heavy_cheesecake_tart",
+    "isCustom": true,
+    "name": "抹茶重乳酪塔皮蛋糕",
+    "englishName": "Matcha Heavy Cheesecake Tart",
+    "description": "[頁碼] 第 117-119 頁 | 份量：1個 (活動派盤20×3cm)",
+    "basePan": {
+      "shape": "round",
+      "size": "20x3",
+      "unit": "cm"
+    },
+    "tips": [
+      "因為是使用活動式的派盤，所以需要在下方墊一個固定式派盤，以防止倒入的水流入蛋糕內。",
+      "放入烤箱中以150℃烤約50分鐘取出，放涼冷凍後再切片食用。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "消化餅乾",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油 (餅皮)",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油乳酪",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 40,
+        "unit": "g",
+        "note": "2個"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白 (乳酪糊)",
+        "baseValue": 30,
+        "unit": "g",
+        "note": "1個"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白 (蛋白霜)",
+        "baseValue": 30,
+        "unit": "g",
+        "note": "1個"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "檸檬汁",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "可可粉",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "少許"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "消化餅乾壓碎，加入融化奶油液拌勻，倒入派盤壓實，以150℃烤10分鐘放涼成餅皮。"
+      },
+      {
+        "step": 2,
+        "text": "奶油乳酪打至乳霜狀，篩入糖粉拌勻，再加入蛋黃與1個蛋白拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "抹茶粉加熱水拌勻，加入成為抹茶乳酪麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "另取蛋白加檸檬汁打至細泡，分次加入細砂糖打至濕性發泡，再分次與抹茶乳酪麵糊拌勻。"
+      },
+      {
+        "step": 5,
+        "text": "倒入派盤，留少許麵糊加可可粉調勻，在表面畫螺紋並拉花。"
+      },
+      {
+        "step": 6,
+        "text": "派盤下墊固定派盤，倒入溫水水浴，以150℃烤約50分鐘，冷藏或冷凍後切片。"
+      }
+    ]
+  },
+  "macha_p125_126_marble_cake": {
+    "id": "macha_p125_126_marble_cake",
+    "isCustom": true,
+    "name": "抹茶大理石蛋糕",
+    "englishName": "Matcha Marble Cake",
+    "description": "[頁碼] 第 125-126 頁 | 份量：長條形1條 (模型19×10.5×7.5cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "19x10.5x7.5",
+      "unit": "cm"
+    },
+    "tips": [
+      "粉類過篩後先加入奶油拌勻，可以讓奶油被粉類裹住，後續加入蛋液後較不會油水分離。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 15,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "蜜栗子",
+        "baseValue": 50,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "模型抹油撒粉備用。"
+      },
+      {
+        "step": 2,
+        "text": "奶油加過篩低筋麵粉、泡打粉用打蛋器拌勻，再加入細砂糖、鹽拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "打散全蛋液分次加入拌勻，再分次加入牛奶拌勻成奶油麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "抹茶粉加熱水拌勻，取50g奶油麵糊混合成抹茶麵糊。"
+      },
+      {
+        "step": 5,
+        "text": "將兩色麵糊混合略微攪拌呈大理石紋路。"
+      },
+      {
+        "step": 6,
+        "text": "先倒入1/3麵糊，鋪上蜜栗子，再倒入剩餘麵糊，以180℃烤約50分鐘。"
+      }
+    ]
+  },
+  "macha_p128_129_white_chocolate_french_cake": {
+    "id": "macha_p128_129_white_chocolate_french_cake",
+    "isCustom": true,
+    "name": "抹茶白巧克力法式蛋糕",
+    "englishName": "Matcha White Chocolate French Cake",
+    "description": "[頁碼] 第 128-129 頁 | 份量：1平盤 (平烤盤34.5×24.5×3cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "34.5x24.5x3",
+      "unit": "cm"
+    },
+    "tips": [
+      "巧克力融點低，需要隔水加熱融化才不會燒焦，水溫勿超過50℃且以中小火慢慢拌融即可。",
+      "全蛋加溫至40℃可加速蛋液起泡打發。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "白巧克力",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 250,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 6,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "杏仁片",
+        "baseValue": 60,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "烤盤鋪上烤焙紙備用。"
+      },
+      {
+        "step": 2,
+        "text": "白巧克力隔水加熱融化，加入奶油拌勻成奶油巧克力液。"
+      },
+      {
+        "step": 3,
+        "text": "全蛋加細砂糖邊攪拌邊隔水加熱至40℃後離火，打至濃稠發白。"
+      },
+      {
+        "step": 4,
+        "text": "低筋麵粉與抹茶粉過篩加入打發蛋液中拌勻成抹茶麵糊。"
+      },
+      {
+        "step": 5,
+        "text": "再將奶油巧克力液分次加入抹茶麵糊中拌勻。"
+      },
+      {
+        "step": 6,
+        "text": "倒入烤盤抹平，表面撒上杏仁片，以180℃烤約20分鐘，放涼切菱形塊。"
+      }
+    ]
+  },
+  "macha_p131_132_crumble_cake": {
+    "id": "macha_p131_132_crumble_cake",
+    "isCustom": true,
+    "name": "抹茶酥菠蘿蛋糕",
+    "englishName": "Matcha Pineapple Crumble Cake",
+    "description": "[頁碼] 第 131-132 頁 | 份量：1份 (四方形烤模14.5×14.5cm)",
+    "basePan": {
+      "shape": "square",
+      "size": "14.5x14.5",
+      "unit": "cm"
+    },
+    "tips": [
+      "夏天時把酥菠蘿放入冰箱冷凍凍硬保存，要使用時再取出，否則奶油太軟易結成糰。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油 (蛋糕)",
+        "baseValue": 75,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉 (蛋糕)",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "香蕉 (切片)",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油 (酥菠蘿)",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉 (酥菠蘿)",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "高筋麵粉 (酥菠蘿)",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉 (酥菠蘿)",
+        "baseValue": 30,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "製作酥菠蘿：奶油加過篩糖粉、高粉、低粉用刮刀拌勻成粉顆粒，冷凍凍硬後捏散。"
+      },
+      {
+        "step": 2,
+        "text": "奶油加過篩糖粉打至鬆發變淺黃白色，分次加入打散蛋液拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "低筋麵粉、泡打粉、抹茶粉過篩加入拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "加入切片香蕉略拌，倒入鋪紙烤模中抹平。"
+      },
+      {
+        "step": 5,
+        "text": "表面撒上酥菠蘿，以180℃烤約35分鐘，放涼切長條狀。"
+      }
+    ]
+  },
+  "macha_p134_135_red_bean_scone": {
+    "id": "macha_p134_135_red_bean_scone",
+    "isCustom": true,
+    "name": "紅豆抹茶司康",
+    "englishName": "Red Bean Matcha Scones",
+    "description": "[頁碼] 第 134-135 頁 | 份量：24片",
+    "basePan": {
+      "shape": "custom",
+      "size": "24",
+      "unit": "pc"
+    },
+    "tips": [
+      "奶油一定要先冰硬，才有辦法切成像花生米粒大小般的小丁狀。",
+      "千萬不要以手拌勻材料，否則奶油會因手溫而融化。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "中筋麵粉",
+        "baseValue": 250,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油 (冰硬)",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "市售蜜紅豆",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "中筋麵粉 (手粉)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "少許"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "中筋麵粉、泡打粉、抹茶粉過篩至鋼盆中。"
+      },
+      {
+        "step": 2,
+        "text": "放入冰硬奶油切成小丁(使包裹粉類)，加入細砂糖拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "倒入牛奶用筷子稍微拌勻，再加入蜜紅豆拌勻成糰。"
+      },
+      {
+        "step": 4,
+        "text": "防沾布撒手粉，將麵糰對折桿壓成20×18cm長方形。"
+      },
+      {
+        "step": 5,
+        "text": "切成4長條，每條切6個三角形(共24片)，以200℃烤約20分鐘。"
+      }
+    ]
+  },
+  "macha_p141_143_angel_cake": {
+    "id": "macha_p141_143_angel_cake",
+    "isCustom": true,
+    "name": "抹綠天使蛋糕",
+    "englishName": "Matcha Angel Cake Roll",
+    "description": "[頁碼] 第 141-143 頁 | 份量：1平盤 (平烤盤34.5×24.5×3cm)",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "34.5x24.5x3",
+      "unit": "cm"
+    },
+    "tips": [
+      "吉利丁遇熱會融化，所以要泡在冰水裡。",
+      "剩餘的抹茶鮮奶油霜要留做天使蛋糕卷的抹餡使用。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白",
+        "baseValue": 160,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖 (蛋糕)",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 1,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "檸檬汁",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "動物性鮮奶油",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖 (鮮奶油霜)",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "吉利丁片",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "熱水",
+        "baseValue": 10,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "製作抹茶鮮奶油霜：鮮奶油加糖打發，拌入抹茶糊與融化吉利丁液。"
+      },
+      {
+        "step": 2,
+        "text": "製作鮮奶油凍：取80g鮮奶油霜在保鮮膜上拉長條，捲緊冷凍冰硬成圓柱凍。"
+      },
+      {
+        "step": 3,
+        "text": "蛋白加檸檬汁打細泡，分次加糖、鹽打至濕性偏乾性發泡，拌入低粉。"
+      },
+      {
+        "step": 4,
+        "text": "倒入烤盤抹平，以上火180℃、下火160℃烤約15分鐘，出爐放涼。"
+      },
+      {
+        "step": 5,
+        "text": "蛋糕體抹上剩餘抹茶鮮奶油霜，底端放上冰硬抹茶鮮奶油凍，捲起冷凍定型。"
+      }
+    ]
+  },
+  "macha_p147_brownie": {
+    "id": "macha_p147_brownie",
+    "isCustom": true,
+    "name": "抹茶布朗尼蛋糕",
+    "englishName": "Matcha Brownie Cake",
+    "description": "[頁碼] 第 147 頁 | 份量：1平盤",
+    "basePan": {
+      "shape": "rectangle",
+      "size": "1",
+      "unit": "pan"
+    },
+    "tips": [
+      "奶油和蛋的份量相同，攪拌時易造成油水分離，所以蛋要打散後分次加入拌勻。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 250,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 250,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 250,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 6,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "泡打粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "巧克力豆",
+        "baseValue": 80,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油加細砂糖打發至淺黃白色。"
+      },
+      {
+        "step": 2,
+        "text": "全蛋打散成蛋液，分次加入拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "再將低筋麵粉、抹茶粉、泡打粉一起過篩加入拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "巧克力豆加入拌勻後，倒入鋪紙烤盤中抹平。"
+      },
+      {
+        "step": 5,
+        "text": "放入烤箱中以180℃烤約25分鐘，取出放涼後切成方塊即可。"
+      }
+    ]
+  },
+  "macha_p157_lava_cake": {
+    "id": "macha_p157_lava_cake",
+    "isCustom": true,
+    "name": "抹茶半熟凹蛋糕",
+    "englishName": "Matcha Hanjuku Lava Cake",
+    "description": "[頁碼] 第 157 頁 | 份量：6吋1個 (模型15×7cm)",
+    "basePan": {
+      "shape": "round",
+      "size": "6",
+      "unit": "inch"
+    },
+    "tips": [
+      "冷藏保存 / 3天",
+      "蛋液打到濃稠發白，即舉起攪拌器時滴落下來的蛋糊緩慢，且可留下清楚的痕跡不會立即攤平。"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋黃",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 35,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "全蛋加蛋黃及細砂糖混合均勻。"
+      },
+      {
+        "step": 2,
+        "text": "邊攪拌邊隔水加熱至40℃後離火，繼續將蛋液打到濃稠發白。"
+      },
+      {
+        "step": 3,
+        "text": "將低筋麵粉、抹茶粉過篩後加入拌勻成麵糊。"
+      },
+      {
+        "step": 4,
+        "text": "將麵糊倒入鋪紙烤模中，放入烤箱中以180℃烤約12分鐘即可。"
+      }
+    ]
+  },
+  "macha_p169_red_bean_jelly": {
+    "id": "macha_p169_red_bean_jelly",
+    "isCustom": true,
+    "name": "抹茶紅豆涼糕",
+    "englishName": "Matcha Red Bean Jelly Cake",
+    "description": "[頁碼] 第 169 頁 | 份量：一盤 (四方形模型15×15×4cm)",
+    "basePan": {
+      "shape": "square",
+      "size": "15x15x4",
+      "unit": "cm"
+    },
+    "tips": [
+      "冷藏保存 / 2天",
+      "要趁熱鋪粉漿糊，因冷掉凝固就不易推開，無法均勻的鋪在容器內。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "蓮藕粉",
+        "baseValue": 85,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "日本太白粉 (粉漿)",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "冷水 (粉漿)",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "冷水 (糖水)",
+        "baseValue": 280,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "紅豆餡",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "日本太白粉 (表面沾裹)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "蓮藕粉、太白粉、抹茶粉加冷水120g拌勻。"
+      },
+      {
+        "step": 2,
+        "text": "細砂糖與水280g煮滾至糖融化，沖入粉漿中攪拌成糊狀。"
+      },
+      {
+        "step": 3,
+        "text": "趁熱將半數粉漿倒入模型抹平，鋪上紅豆餡，再倒入剩餘粉漿抹平。"
+      },
+      {
+        "step": 4,
+        "text": "放入蒸籠大火蒸10分鐘至透明狀，倒扣待涼，表面沾裹日本太白粉切塊。"
+      }
+    ]
+  },
+  "macha_p171_cupcake": {
+    "id": "macha_p171_cupcake",
+    "isCustom": true,
+    "name": "抹茶蜂蜜杯子蛋糕",
+    "englishName": "Matcha Honey Cupcakes",
+    "description": "[頁碼] 第 171 頁 | 份量：12個 (油力士紙杯底52mm)",
+    "basePan": {
+      "shape": "round",
+      "size": "12",
+      "unit": "pc"
+    },
+    "tips": [
+      "蛋液打到濃稠發白，即舉起攪拌器時滴落下來的蛋糊緩慢，且可留下清楚痕跡。",
+      "取少許麵糊加入奶油液中拌勻，是因為麵糊比重較輕，直接加入奶油會沉底。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "牛奶",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蜂蜜",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 3,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "全蛋、細砂糖、蜂蜜隔水加熱至40℃，高速打至蓬鬆發白。"
+      },
+      {
+        "step": 2,
+        "text": "低筋麵粉、抹茶粉過篩分次加入拌勻。"
+      },
+      {
+        "step": 3,
+        "text": "融化奶油加牛奶拌勻，取少許麵糊混合後再倒回大盆輕輕拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "倒入紙杯中約9分滿，以180℃烤約15分鐘即可。"
+      }
+    ]
+  },
+  "macha_p172_173_red_bean_shortbread": {
+    "id": "macha_p172_173_red_bean_shortbread",
+    "isCustom": true,
+    "name": "紅豆抹茶酥餅",
+    "englishName": "Red Bean Matcha Shortbread",
+    "description": "[頁碼] 第 172-173 頁 | 份量：12個 (圓形模6×1.5cm)",
+    "basePan": {
+      "shape": "round",
+      "size": "6x1.5",
+      "unit": "cm"
+    },
+    "tips": [
+      "室溫保存 / 3天"
+    ],
+    "ingredients": [
+      {
+        "category": "wet",
+        "name": "奶油",
+        "baseValue": 80,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "全蛋液",
+        "baseValue": 30,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "奶粉",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "市售抹茶餡",
+        "baseValue": 240,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "市售蜜紅豆",
+        "baseValue": 40,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "黑芝麻",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "奶油加糖粉打發至淺黃色，分次加入蛋液拌勻。"
+      },
+      {
+        "step": 2,
+        "text": "低筋麵粉、奶粉、抹茶粉過篩加入拌成外皮麵糰，均分12個(約25g)。"
+      },
+      {
+        "step": 3,
+        "text": "抹茶餡均分12份(20g)，包入3g蜜紅豆搓圓成餡。"
+      },
+      {
+        "step": 4,
+        "text": "外皮壓扁包入餡料，放入圓形模壓平，撒黑芝麻，以180℃烤約20分鐘。"
+      }
+    ]
+  },
+  "macha_p181_182_dacquoise": {
+    "id": "macha_p181_182_dacquoise",
+    "isCustom": true,
+    "name": "抹茶達克瓦茲",
+    "englishName": "Matcha Dacquoise",
+    "description": "[頁碼] 第 181-182 頁 | 份量：12片",
+    "basePan": {
+      "shape": "custom",
+      "size": "12",
+      "unit": "pc"
+    },
+    "tips": [
+      "模型邊緣先噴一點水待麵糊抹平後，模型較易取下。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "低筋麵粉",
+        "baseValue": 10,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "糖粉 (粉類)",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "杏仁粉",
+        "baseValue": 70,
+        "unit": "g"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶粉",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "蛋白",
+        "baseValue": 90,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "細砂糖",
+        "baseValue": 20,
+        "unit": "g"
+      },
+      {
+        "category": "decoration",
+        "name": "糖粉 (表面灑粉)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      },
+      {
+        "category": "flavor",
+        "name": "抹茶奶油醬 (夾餡)",
+        "baseValue": 0,
+        "unit": "g",
+        "note": "適量"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "低筋麵粉、糖粉、杏仁粉、抹茶粉過篩備用。"
+      },
+      {
+        "step": 2,
+        "text": "蛋白打至細泡，分次加細砂糖打至乾性發泡成蛋白霜。"
+      },
+      {
+        "step": 3,
+        "text": "蛋白霜分次與過篩粉類拌勻成麵糊，裝入擠花袋。"
+      },
+      {
+        "step": 4,
+        "text": "擠入達克瓦茲模，抹平後取下模型，篩兩次糖粉。"
+      },
+      {
+        "step": 5,
+        "text": "以170℃烤約30分鐘放涼，兩片夾入法式抹茶奶油醬即可。"
+      }
+    ]
   }
 };
