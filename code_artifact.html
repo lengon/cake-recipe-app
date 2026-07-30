@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烘焙比例魔法師 - 智慧蛋糕食譜計算機</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            background-color: #fcfbf7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .recipe-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="recipes_data.js"></script>
+    <script type="text/babel">
+
+        const { useState, useEffect } = React;
+
+        // Recipes Data (全庫不萊嗯食譜 + 預設食譜)
+        const recipes = window.recipes || {};
+        const savedRecipes = {};
+
+        const emptyIngredient = () => ({ category: "dry", name: "", baseValue: "", unit: "克", note: "" });
+        const emptyStep = (num) => ({ step: num, text: "" });
+
+        function App() {
+            // 從 LocalStorage 載入自訂食譜，並合併檔案內的 savedRecipes（扣除已刪除的）
+            const [customRecipes, setCustomRecipes] = useState(() => {
+                try {
+                    const saved = localStorage.getItem("magic_baking_custom_recipes");
+                    return saved ? JSON.parse(saved) : {};
+                } catch (e) {
+                    return {};
+                }
+            });
+
+            const [deletedIds, setDeletedIds] = useState(() => {
+                try {
+                    const saved = localStorage.getItem("magic_baking_deleted_recipes");
+                    return saved ? JSON.parse(saved) : [];
+                } catch (e) {
+                    return [];
+                }
+            });
+
+            const rawAllRecipes = { ...recipes, ...customRecipes };
+            const allRecipes = {};
+            for (const [id, r] of Object.entries(rawAllRecipes)) {
+                if (!deletedIds.includes(id)) {
+                    allRecipes[id] = r;
+                }
+            }
+            const [activeRecipeId, setActiveRecipeId] = useState(() => Object.keys(allRecipes)[0] || "almondCitrus");
+            const [scaleMode, setScaleMode] = useState("factor"); // 'factor' or 'pan'
+            const [scaleFactor, setScaleFactor] = useState(1.0);
+            
+            // Pan size calculations
+            const [panType, setPanType] = useState("round");
+            const [roundSize, setRoundSize] = useState(9); // Default target is 9-inch round
+            const [squareLength, setSquareLength] = useState(8);
+            const [squareWidth, setSquareWidth] = useState(8);
+
+            // Timer state
+            const [timerSeconds, setTimerSeconds] = useState(1800); // 30 mins default
+            const [isTimerRunning, setIsTimerRunning] = useState(false);
+            const [timerDisplay, setTimerDisplay] = useState("30:00");
+
+            // Interactive checklist
+            const [checkedSteps, setCheckedSteps] = useState({});
+
+            // 新增食譜 Modal 相關狀態
+            const [isModalOpen, setIsModalOpen] = useState(false);
+            const [editingRecipeId, setEditingRecipeId] = useState(null);
+            const [formError, setFormError] = useState("");
+            const [formName, setFormName] = useState("");
+            const [formEngName, setFormEngName] = useState("");
+            const [formDesc, setFormDesc] = useState("");
+            const [formPanShape, setFormPanShape] = useState("round");
+            const [formBaseSize, setFormBaseSize] = useState(9);
+            const [formPanLength, setFormPanLength] = useState(9);
+            const [formPanWidth, setFormPanWidth] = useState(5);
+            const [formIngredients, setFormIngredients] = useState([emptyIngredient()]);
+            const [formInstructions, setFormInstructions] = useState([emptyStep(1)]);
+            const [formTips, setFormTips] = useState([""]);
+
+            // AI 智慧匯入相關狀態
+            const [importMode, setImportMode] = useState("manual"); // "manual" | "ai"
+            const [rawRecipeText, setRawRecipeText] = useState("");
+            const [apiKey, setApiKey] = useState(() => {
+                try {
+                    return localStorage.getItem("magic_baking_gemini_api_key") || "";
+                } catch (e) {
+                    return "";
+                }
+            });
+            const [apiModel, setApiModel] = useState(() => {
+                try {
+                    return localStorage.getItem("magic_baking_gemini_model") || "gemini-2.0-flash";
+                } catch (e) {
+                    return "gemini-2.0-flash";
+                }
+            });
+            const [isImporting, setIsImporting] = useState(false);
+
+            const activeRecipe = allRecipes[activeRecipeId] || Object.values(allRecipes)[0] || {};
+
+            // 切換食譜時更新預設計時器時間
+            useEffect(() => {
+                let defaultMins = 30; // 預設 30 分鐘
+                if (activeRecipeId === "almondCitrus" || activeRecipeId === "coconutCake" || activeRecipeId === "almondCardamom" || activeRecipeId === "almondLemonOliveOil") {
+                    defaultMins = 25;
+                } else if (activeRecipeId === "appleCustard" || activeRecipeId === "mandarinOliveOil" || activeRecipeId === "appleSpiceLoaf" || activeRecipeId === "orangeAlmondButter") {
+                    defaultMins = 50;
+                } else if (activeRecipeId === "honeyOrangeCornmealLoaf") {
+                    defaultMins = 45;
+                } else if (activeRecipeId === "chocolateCreamCheesePound") {
+                    defaultMins = 90; // 萬丈高蛋糕需要超長烘烤時間
+                }
+                setTimerSeconds(defaultMins * 60);
+                setIsTimerRunning(false);
+            }, [activeRecipeId]);
+
+            // Calculate Scale Factor based on mode
+            useEffect(() => {
+                if (scaleMode === "pan") {
+                    const basePan = activeRecipe.basePan || { shape: "round", size: 9 };
+                    let baseArea = 0;
+
+                    // 算出基準烤模的面積 (平方英吋)
+                    if (basePan.shape === "round") {
+                        baseArea = Math.PI * Math.pow(basePan.size / 2, 2);
+                    } else if (basePan.shape === "loaf") {
+                        const len = basePan.length || 9;
+                        const wid = basePan.width || 5;
+                        baseArea = len * wid;
+                    } else if (basePan.shape === "square") {
+                        const size = basePan.size || 8;
+                        baseArea = size * size;
+                    }
+
+                    // 算出目標烤模的面積 (平方英吋)
+                    let targetArea = baseArea;
+                    if (panType === "round") {
+                        targetArea = Math.PI * Math.pow(roundSize / 2, 2);
+                    } else if (panType === "square") {
+                        targetArea = squareLength * squareWidth;
+                    }
+
+                    const calculatedFactor = targetArea / baseArea;
+                    setScaleFactor(Math.round(calculatedFactor * 100) / 100);
+                }
+            }, [scaleMode, panType, roundSize, squareLength, squareWidth, activeRecipeId]);
+
+            // Reset checklist when recipe changes
+            useEffect(() => {
+                setCheckedSteps({});
+            }, [activeRecipeId]);
+
+            // Timer Logic
+            useEffect(() => {
+                let interval = null;
+                if (isTimerRunning && timerSeconds > 0) {
+                    interval = setInterval(() => {
+                        setTimerSeconds(prev => prev - 1);
+                    }, 1000);
+                } else if (timerSeconds === 0) {
+                    setIsTimerRunning(false);
+                }
+                return () => clearInterval(interval);
+            }, [isTimerRunning, timerSeconds]);
+
+            useEffect(() => {
+                const mins = Math.floor(timerSeconds / 60);
+                const secs = timerSeconds % 60;
+                setTimerDisplay(`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`);
+            }, [timerSeconds]);
+
+            // Scale calculations helper
+            const getScaledValue = (ingredient) => {
+                if (ingredient.isStatic) return ingredient.unit;
+                const value = ingredient.baseValue * scaleFactor;
+                if (value % 1 === 0) return value;
+                return value.toFixed(1);
+            };
+
+            // Dynamic instruction text with scaled amounts (Safely HTML Escaped for XSS security)
+            const renderInstructionText = (text) => {
+                if (!text) return null;
+                const escapeHtml = (str) => String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+
+                let formattedText = escapeHtml(text);
+                activeRecipe.ingredients.forEach(ing => {
+                    if (!ing.name) return;
+                    const safeName = escapeHtml(ing.name);
+                    const placeholder = `{${safeName}}`;
+                    if (formattedText.includes(placeholder)) {
+                        const scaledVal = getScaledValue(ing);
+                        const safeUnit = escapeHtml(ing.unit || '');
+                        formattedText = formattedText.replace(
+                            new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+                            `<span class="text-amber-700 font-semibold border-b-2 border-amber-200">${safeName} ${scaledVal}${ing.isStatic ? '' : safeUnit}</span>`
+                        );
+                    }
+                });
+                return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
+            };
+
+            // 自訂食譜表單控制
+            const handleAddIngredientRow = () => {
+                setFormIngredients([...formIngredients, emptyIngredient()]);
+            };
+
+            const handleRemoveIngredientRow = (index) => {
+                const updated = formIngredients.filter((_, i) => i !== index);
+                setFormIngredients(updated.length ? updated : [emptyIngredient()]);
+            };
+
+            const handleIngredientChange = (index, field, value) => {
+                const updated = formIngredients.map((ing, i) => {
+                    if (i === index) return { ...ing, [field]: value };
+                    return ing;
+                });
+                setFormIngredients(updated);
+            };
+
+            const handleAddStepRow = () => {
+                const nextStepNum = formInstructions.length + 1;
+                setFormInstructions([...formInstructions, emptyStep(nextStepNum)]);
+            };
+
+            const handleRemoveStepRow = (index) => {
+                const updated = formInstructions.filter((_, i) => i !== index).map((step, idx) => ({
+                    ...step,
+                    step: idx + 1
+                }));
+                setFormInstructions(updated.length ? updated : [emptyStep(1)]);
+            };
+
+            const handleStepChange = (index, value) => {
+                const updated = formInstructions.map((step, i) => {
+                    if (i === index) return { ...step, text: value };
+                    return step;
+                });
+                setFormInstructions(updated);
+            };
+
+            const handleAddTipRow = () => {
+                setFormTips([...formTips, ""]);
+            };
+
+            const handleRemoveTipRow = (index) => {
+                const updated = formTips.filter((_, i) => i !== index);
+                setFormTips(updated.length ? updated : [""]);
+            };
+
+            const handleTipChange = (index, value) => {
+                const updated = formTips.map((tip, i) => {
+                    if (i === index) return value;
+                    return tip;
+                });
+                setFormTips(updated);
+            };
+
+            const handleAIImport = async () => {
+                if (!apiKey.trim()) {
+                    setFormError("請填寫 Gemini API 金鑰！");
+                    return;
+                }
+                if (!rawRecipeText.trim()) {
+                    setFormError("請貼上要轉換的食譜文字！");
+                    return;
+                }
+
+                setIsImporting(true);
+                setFormError("");
+
+                try {
+                    localStorage.setItem("magic_baking_gemini_api_key", apiKey.trim());
+                    localStorage.setItem("magic_baking_gemini_model", apiModel);
+                    
+                    const prompt = `你是一個專業的烘焙大師與 JSON 結構化轉換器。請將以下食譜文字轉換為繁體中文，並將所有的英制或體積單位轉換為烘焙專用的公制單位（例如：克、毫升、顆、個、適量）。
+
+請嚴格遵守以下轉換邏輯（烘焙密度換算）：
+1. 麵粉 (Flour): 1 cup = 120g
+2. 細砂糖 (Granulated Sugar): 1 cup = 200g
+3. 黑糖 (Brown Sugar): 1 cup = 200g
+4. 糖粉 (Powdered Sugar): 1 cup = 120g
+5. 奶油 (Butter): 1 cup = 227g, 1 stick = 113g, 1 tbsp = 14g, 1 tsp = 5g
+6. 水/牛奶/鮮奶油 (Water/Milk/Cream): 1 cup = 240ml, 1 tbsp = 15ml, 1 tsp = 5ml
+7. 泡打粉/小蘇打/鹽 (Baking Powder/Soda/Salt): 1 tsp = 5g, 1/2 tsp = 2.5g, 1/4 tsp = 1.5g
+8. 溫度轉換：將華氏溫度 (°F) 轉換為攝氏溫度 (°C)（例如：350°F ➔ 175°C, 325°F ➔ 163°C）。
+9. 步驟大括號佔位符：在製作步驟 (instructions) 的文字中，只要提到成分名稱，必須使用大括號格式，例如「將軟化的 {無鹽奶油 (軟化)} 和 {細砂糖} 徹底打發」。大括號內的名稱必須與 ingredients 列表中的 name 完全一致。
+10. 若有些食材是裝飾或裝飾用（非計量），請設置 isStatic: true，且 unit 設為 "適量"。
+
+要轉換的原始食譜如下：
+${rawRecipeText}`;
+
+                    const targetModel = apiModel || "gemini-2.0-flash";
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey.trim()}`;
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: {
+                                responseMimeType: "application/json",
+                                responseSchema: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        name: { type: "STRING" },
+                                        englishName: { type: "STRING" },
+                                        description: { type: "STRING" },
+                                        basePan: {
+                                            type: "OBJECT",
+                                            properties: {
+                                                shape: { type: "STRING", enum: ["round", "loaf", "square"] },
+                                                size: { type: "NUMBER" },
+                                                length: { type: "NUMBER" },
+                                                width: { type: "NUMBER" },
+                                                unit: { type: "STRING" }
+                                            },
+                                            required: ["shape", "unit"]
+                                        },
+                                        tips: {
+                                            type: "ARRAY",
+                                            items: { type: "STRING" }
+                                        },
+                                        ingredients: {
+                                            type: "ARRAY",
+                                            items: {
+                                                type: "OBJECT",
+                                                properties: {
+                                                    category: { type: "STRING", enum: ["dry", "wet", "flavor", "glaze", "decor"] },
+                                                    name: { type: "STRING" },
+                                                    baseValue: { type: "NUMBER" },
+                                                    unit: { type: "STRING" },
+                                                    note: { type: "STRING" },
+                                                    isStatic: { type: "BOOLEAN" }
+                                                },
+                                                required: ["category", "name", "baseValue", "unit"]
+                                            }
+                                        },
+                                        instructions: {
+                                            type: "ARRAY",
+                                            items: {
+                                                type: "OBJECT",
+                                                properties: {
+                                                    step: { type: "NUMBER" },
+                                                    text: { type: "STRING" }
+                                                },
+                                                required: ["step", "text"]
+                                            }
+                                        }
+                                    },
+                                    required: ["name", "description", "basePan", "ingredients", "instructions"]
+                                }
+                            }
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errData = await response.json().catch(() => ({}));
+                        if (response.status === 429) {
+                            throw new Error("⚠️ Gemini API 免費額度已用盡 (Quota Exceeded)。請至 Google AI Studio 建立新 Project 獲取新 Key，或切換模型。");
+                        }
+                        throw new Error(errData.error?.message || `HTTP 錯誤 ${response.status}`);
+                    }
+
+                    const resJson = await response.json();
+                    const textResult = resJson.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!textResult) {
+                        throw new Error("API 沒有傳回有效內容");
+                    }
+
+                    const parsed = JSON.parse(textResult);
+
+                    // 自動填入 Form State
+                    setFormName(parsed.name || "");
+                    setFormEngName(parsed.englishName || "");
+                    setFormDesc(parsed.description || "");
+                    
+                    if (parsed.basePan) {
+                        setFormPanShape(parsed.basePan.shape || "round");
+                        if (parsed.basePan.shape === "loaf") {
+                            setFormPanLength(parsed.basePan.length || 9);
+                            setFormPanWidth(parsed.basePan.width || 5);
+                        } else {
+                            setFormBaseSize(parsed.basePan.size || 9);
+                        }
+                    }
+
+                    if (parsed.tips && parsed.tips.length > 0) {
+                        setFormTips(parsed.tips);
+                    } else {
+                        setFormTips([""]);
+                    }
+
+                    if (parsed.ingredients && parsed.ingredients.length > 0) {
+                        setFormIngredients(parsed.ingredients.map(ing => ({
+                            category: ing.category || "dry",
+                            name: ing.name || "",
+                            baseValue: ing.baseValue || 0,
+                            unit: ing.unit || "克",
+                            note: ing.note || "",
+                            isStatic: ing.isStatic || false
+                        })));
+                    } else {
+                        setFormIngredients([emptyIngredient()]);
+                    }
+
+                    if (parsed.instructions && parsed.instructions.length > 0) {
+                        setFormInstructions(parsed.instructions.map((step, idx) => ({
+                            step: idx + 1,
+                            text: step.text || ""
+                        })));
+                    } else {
+                        setFormInstructions([emptyStep(1)]);
+                    }
+
+                    // 切回手動填寫模式，讓使用者核對並微調
+                    setImportMode("manual");
+                    setRawRecipeText(""); // 清空貼上的文字
+                } catch (e) {
+                    console.error("AI 轉換錯誤:", e);
+                    setFormError("轉換失敗: " + e.message);
+                } finally {
+                    setIsImporting(false);
+                }
+            };
+
+            const handleOpenEditModal = (recipeToEdit, e) => {
+                if (e) e.stopPropagation();
+                const target = recipeToEdit || activeRecipe;
+                if (!target) return;
+
+                setEditingRecipeId(target.id);
+                setFormName(target.name || "");
+                setFormEngName(target.englishName || "");
+                setFormDesc(target.description || "");
+                
+                const shape = target.basePan?.shape || "round";
+                setFormPanShape(shape);
+                if (shape === "round" || shape === "square") {
+                    setFormBaseSize(target.basePan?.size || 8);
+                } else if (shape === "loaf") {
+                    setFormPanLength(target.basePan?.length || 9);
+                    setFormPanWidth(target.basePan?.width || 5);
+                }
+
+                setFormIngredients(
+                    target.ingredients && target.ingredients.length
+                        ? target.ingredients.map(ing => ({
+                            category: ing.category || "dry",
+                            name: ing.name || "",
+                            baseValue: ing.baseValue !== undefined ? ing.baseValue : "",
+                            unit: ing.unit || "克",
+                            note: ing.note || "",
+                            isStatic: ing.isStatic || false
+                        }))
+                        : [emptyIngredient()]
+                );
+
+                setFormInstructions(
+                    target.instructions && target.instructions.length
+                        ? target.instructions.map(st => ({ step: st.step, text: st.text || "" }))
+                        : [emptyStep(1)]
+                );
+
+                setFormTips(target.tips && target.tips.length ? target.tips : [""]);
+                setImportMode("manual");
+                setFormError("");
+                setIsModalOpen(true);
+            };
+
+            const handleSaveRecipe = (e) => {
+                e.preventDefault();
+                setFormError("");
+
+                if (!formName.trim()) {
+                    setFormError("請填寫食譜名稱！");
+                    return;
+                }
+
+                const filteredIngredients = formIngredients.filter(ing => ing.name.trim() !== "");
+                if (filteredIngredients.length === 0) {
+                    setFormError("請至少填寫一個有效食材名稱！");
+                    return;
+                }
+
+                const filteredInstructions = formInstructions.filter(step => step.text.trim() !== "");
+                if (filteredInstructions.length === 0) {
+                    setFormError("請至少填寫一個步驟內容！");
+                    return;
+                }
+
+                const targetId = editingRecipeId || ("custom_" + Date.now());
+                const newRecipe = {
+                    id: targetId,
+                    isCustom: true,
+                    name: formName,
+                    englishName: formEngName || "Custom Recipe",
+                    description: formDesc || "自訂烘焙食譜，完美比例調整中。",
+                    basePan: formPanShape === "round"
+                        ? { shape: "round", size: Number(formBaseSize), unit: "inch" }
+                        : formPanShape === "square"
+                        ? { shape: "square", size: Number(formBaseSize), unit: "inch" }
+                        : { shape: "loaf", length: Number(formPanLength), width: Number(formPanWidth), unit: "inch" },
+                    tips: formTips.filter(t => t.trim() !== ""),
+                    ingredients: filteredIngredients.map(ing => ({
+                        category: ing.category,
+                        name: ing.name.trim(),
+                        baseValue: Number(ing.baseValue) || 0,
+                        unit: ing.unit,
+                        note: ing.note.trim() || undefined,
+                        isStatic: ing.isStatic || undefined
+                    })),
+                    instructions: filteredInstructions.map((step, idx) => ({
+                        step: idx + 1,
+                        text: step.text.trim()
+                    }))
+                };
+
+                const updated = { ...customRecipes, [targetId]: newRecipe };
+                setCustomRecipes(updated);
+                localStorage.setItem("magic_baking_custom_recipes", JSON.stringify(updated));
+                setActiveRecipeId(targetId);
+                setIsModalOpen(false);
+                resetForm();
+            };
+
+            const handleDeleteRecipe = (id, e) => {
+                if (e) e.stopPropagation();
+                const targetRecipe = rawAllRecipes[id];
+                const recipeName = targetRecipe ? targetRecipe.name : "此食譜";
+                if (!window.confirm(`確定要刪除「${recipeName}」食譜嗎？刪除後將移出列表。`)) {
+                    return;
+                }
+
+                const newDeleted = deletedIds.includes(id) ? deletedIds : [...deletedIds, id];
+                setDeletedIds(newDeleted);
+                localStorage.setItem("magic_baking_deleted_recipes", JSON.stringify(newDeleted));
+
+                if (customRecipes[id]) {
+                    const updatedCustom = { ...customRecipes };
+                    delete updatedCustom[id];
+                    setCustomRecipes(updatedCustom);
+                    localStorage.setItem("magic_baking_custom_recipes", JSON.stringify(updatedCustom));
+                }
+
+                const remainingKeys = Object.keys(rawAllRecipes).filter(k => !newDeleted.includes(k));
+                if (remainingKeys.length > 0) {
+                    setActiveRecipeId(remainingKeys[0]);
+                }
+            };
+
+            
+
+            const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes);
+
+            const generateUpdatedHtml = async (updatedCustomRecipes) => {
+                let rawHtml = "";
+                try {
+                    const response = await fetch(window.location.href);
+                    rawHtml = await response.text();
+                } catch (e) {
+                    console.warn("無法透過 fetch 取得 HTML 原始碼，將使用備用方案重建:", e);
+                }
+
+                const jsonStr = JSON.stringify(updatedCustomRecipes, null, 4);
+                const placeholderStart = "// [SAVED_RECIPES_PLACEHOLDER]";
+                const placeholderEnd = "// [/SAVED_RECIPES_PLACEHOLDER]";
+
+                if (rawHtml && rawHtml.includes(placeholderStart) && rawHtml.includes(placeholderEnd)) {
+                    const startIndex = rawHtml.indexOf(placeholderStart) + placeholderStart.length;
+                    const endIndex = rawHtml.indexOf(placeholderEnd);
+                    return rawHtml.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + rawHtml.substring(endIndex);
+                } else {
+                    // 備用方案：使用 DOM 重建 HTML
+                    const babelScript = document.querySelector('script[type="text/babel"]').textContent;
+                    let updatedScript = babelScript;
+                    if (updatedScript.includes(placeholderStart) && updatedScript.includes(placeholderEnd)) {
+                        const startIndex = updatedScript.indexOf(placeholderStart) + placeholderStart.length;
+                        const endIndex = updatedScript.indexOf(placeholderEnd);
+                        updatedScript = updatedScript.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + updatedScript.substring(endIndex);
+                    }
+                    const styleContent = document.querySelector('style')?.textContent || "";
+
+                    return `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${document.title}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">\x3C/script>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin>\x3C/script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin>\x3C/script>
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js">\x3C/script>
+    <style>
+        ${styleContent}
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    \x3Cscript type="text/babel">
+${updatedScript}
+    \x3C/script>
+</body>
+</html>`;
+                }
+            };
+
+            const handleSaveToFile = async () => {
+                const updatedHtml = await generateUpdatedHtml(customRecipes);
+                try {
+                    if (window.showSaveFilePicker) {
+                        const handle = await window.showSaveFilePicker({
+                            suggestedName: "code_artifact.html",
+                            types: [{
+                                description: "HTML Files",
+                                accept: { "text/html": [".html"] }
+                            }]
+                        });
+                        const writable = await handle.createWritable();
+                        await writable.write(updatedHtml);
+                        await writable.close();
+                        
+                        // 儲存成功，清除 LocalStorage 中的暫存與已刪除清單
+                        localStorage.removeItem("magic_baking_custom_recipes");
+                        localStorage.removeItem("magic_baking_deleted_recipes");
+                        alert("🎉 成功儲存至檔案本身！此網頁重新整理後自訂食譜依然存在。");
+                        window.location.reload();
+                        return;
+                    }
+                } catch (e) {
+                    if (e.name !== "AbortError") {
+                        console.error("無法使用 File System Access API 寫入檔案:", e);
+                    } else {
+                        return; // 使用者取消
+                    }
+                }
+
+                // 備用下載機制
+                const blob = new Blob([updatedHtml], { type: "text/html" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "code_artifact.html";
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                alert("📢 瀏覽器不支援直接寫入檔案，已為您下載最新的 code_artifact.html。\n請將其覆蓋/替換掉您原本的檔案以完成儲存！");
+            };
+
+            const resetForm = () => {
+                setEditingRecipeId(null);
+                setFormName("");
+                setFormEngName("");
+                setFormDesc("");
+                setFormPanShape("round");
+                setFormBaseSize(9);
+                setFormPanLength(9);
+                setFormPanWidth(5);
+                setFormIngredients([emptyIngredient()]);
+                setFormInstructions([emptyStep(1)]);
+                setFormTips([""]);
+                setFormError("");
+                setImportMode("manual");
+                setRawRecipeText("");
+            };
+
+            const getPanName = (pan) => {
+                if (!pan) return "9 吋圓模";
+                if (pan.shape === "round") return `${pan.size} 吋圓模`;
+                if (pan.shape === "loaf") return `${pan.length}x${pan.width} 吋長條模`;
+                if (pan.shape === "square") return `${pan.size} 吋方模`;
+                return "標準模";
+            };
+
+            return (
+                <div className="min-h-screen pb-16">
+                    {/* Header Banner */}
+                    <header className="bg-gradient-to-r from-amber-500 to-orange-600 text-white text-center py-8 px-4 shadow-md">
+                        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">🍰 烘焙比例魔法師</h1>
+                        <p className="mt-2 text-amber-100 max-w-xl mx-auto text-sm md:text-base">
+                            自由變更烘焙份量，不論是 6 吋、8 吋、長條模還是特殊尺寸烤模，完美維持原食譜黃金比例！
+                        </p>
+                    </header>
+
+                    {/* Main Layout Container */}
+                    <div className="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        
+                        {/* LEFT COLUMN: Controls & Settings */}
+                        <div className="lg:col-span-5 space-y-6">
+                            
+                            {}
+                            {/* Card 1: Select Recipe */}
+                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-lg font-bold text-stone-800 flex items-center">
+                                        <span className="mr-2">📖</span> 選擇或新增食譜
+                                    </h2>
+                                    <div className="flex gap-2">
+                                        {hasUnsavedChanges && (
+                                            <button 
+                                                onClick={handleSaveToFile}
+                                                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1 transition shadow-xs animate-pulse"
+                                                title="有未儲存的變更，點擊寫入檔案"
+                                            >
+                                                💾 儲存至檔案
+                                            </button>
+                                        )}
+                                        
+                                        <button 
+                                            onClick={() => setIsModalOpen(true)}
+                                            className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1 transition shadow-xs"
+                                        >
+                                            ➕ 新增食譜
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 gap-3 max-h-[420px] overflow-y-auto pr-1">
+                                    {Object.values(allRecipes).map(recipe => (
+                                        <div
+                                            key={recipe.id}
+                                            onClick={() => setActiveRecipeId(recipe.id)}
+                                            className={`p-4 rounded-xl text-left recipe-card border transition cursor-pointer relative group ${
+                                                activeRecipeId === recipe.id
+                                                    ? 'bg-amber-50/70 border-amber-400 ring-2 ring-amber-400/20'
+                                                    : 'bg-stone-50 border-stone-200 hover:bg-stone-100/80'
+                                            }`}
+                                        >
+                                            <div className="absolute top-2.5 right-2.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition bg-stone-100/90 p-1 rounded-lg border border-stone-200/60 shadow-xs">
+                                                <button
+                                                    onClick={(e) => handleOpenEditModal(recipe, e)}
+                                                    className="text-stone-500 hover:text-amber-600 p-1 rounded hover:bg-amber-50 text-xs font-bold"
+                                                    title="編輯此食譜"
+                                                >
+                                                    ✏️
+                                                </button>
+                                                <button
+                                                    onClick={(e) => handleDeleteRecipe(recipe.id, e)}
+                                                    className="text-stone-500 hover:text-red-600 p-1 rounded hover:bg-red-50 text-xs font-bold"
+                                                    title="刪除此食譜"
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                            <div className="font-bold text-stone-900 pr-6">{recipe.name}</div>
+                                            <div className="text-xs text-stone-500 italic mt-0.5">{recipe.englishName}</div>
+                                            <div className="text-xs text-stone-600 mt-2 line-clamp-2">{recipe.description}</div>
+                                            <div className="mt-2 flex flex-wrap gap-1.5">
+                                                <span className="text-[10px] bg-stone-200 text-stone-700 px-1.5 py-0.5 rounded">
+                                                    基準：{getPanName(recipe.basePan)}
+                                                </span>
+                                                {recipe.id === "almondCardamom" && (
+                                                    <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-semibold">
+                                                        無麩質 Gluten-Free
+                                                    </span>
+                                                )}
+                                                {recipe.isCustom && (
+                                                    <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">
+                                                        自訂食譜
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {}
+                            {/* Card 2: Proportion Settings */}
+                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                                <h2 className="text-lg font-bold text-stone-800 mb-4 flex items-center">
+                                    <span className="mr-2">⚖️</span> 比例與份量設定
+                                </h2>
+                                
+                                {/* Mode Toggle */}
+                                <div className="flex bg-stone-100 p-1 rounded-xl mb-6">
+                                    <button
+                                        onClick={() => setScaleMode("factor")}
+                                        className={`flex-1 py-2 text-sm font-medium rounded-lg transition ${
+                                            scaleMode === "factor" ? 'bg-white text-amber-600 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                                        }`}
+                                    >
+                                        按倍率調整
+                                    </button>
+                                    <button
+                                        onClick={() => setScaleMode("pan")}
+                                        className={`flex-1 py-2 text-sm font-medium rounded-lg transition ${
+                                            scaleMode === "pan" ? 'bg-white text-amber-600 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                                        }`}
+                                    >
+                                        依烤模尺寸換算
+                                    </button>
+                                </div>
+
+                                {/* Mode A: Direct Factor Slider */}
+                                {scaleMode === "factor" && (
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm font-semibold text-stone-600">調整倍率</span>
+                                            <span className="text-2xl font-black text-amber-600 bg-amber-50 px-3 py-1 rounded-lg">
+                                                {scaleFactor.toFixed(2)}x
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="0.2"
+                                            max="3.0"
+                                            step="0.1"
+                                            value={scaleFactor}
+                                            onChange={(e) => setScaleFactor(parseFloat(e.target.value))}
+                                            className="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                                        />
+                                        <div className="flex justify-between text-xs text-stone-400 px-1">
+                                            <span>0.2x (迷你版)</span>
+                                            <span>1.0x (原配方基準)</span>
+                                            <span>3.0x (大份量)</span>
+                                        </div>
+                                        
+                                        {/* Quick select buttons */}
+                                        <div className="grid grid-cols-4 gap-2 mt-2">
+                                            {[0.5, 1.0, 1.5, 2.0].map(val => (
+                                                <button
+                                                    key={val}
+                                                    onClick={() => setScaleFactor(val)}
+                                                    className={`py-1.5 text-xs font-semibold rounded-lg border transition ${
+                                                        scaleFactor === val 
+                                                            ? 'bg-amber-500 border-amber-500 text-white' 
+                                                            : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                                                    }`}
+                                                >
+                                                    {val === 1.0 ? "原版 1.0x" : `${val}x`}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Mode B: Cake Pan Calculator */}
+                                {scaleMode === "pan" && (
+                                    <div className="space-y-4">
+                                        <div className="bg-amber-50/50 p-3 rounded-lg border border-amber-100/50 mb-3 text-xs text-amber-800 leading-relaxed">
+                                            📌 當前食譜原始設計為 <strong>{getPanName(activeRecipe.basePan)}</strong>。下方選擇您手邊的烤模，將為您自動計算精確的面積比例！
+                                        </div>
+
+                                        {/* Target Shape Select */}
+                                        <div className="grid grid-cols-2 gap-2 mb-4">
+                                            <button
+                                                onClick={() => setPanType("round")}
+                                                className={`py-2 text-sm font-medium rounded-lg border transition flex items-center justify-center gap-1.5 ${
+                                                    panType === "round"
+                                                        ? 'bg-amber-50 border-amber-300 text-amber-700 font-bold'
+                                                        : 'bg-stone-50 border-stone-200 text-stone-600'
+                                                }`}
+                                            >
+                                                ⭕ 圓形烤模
+                                            </button>
+                                            <button
+                                                onClick={() => setPanType("square")}
+                                                className={`py-2 text-sm font-medium rounded-lg border transition flex items-center justify-center gap-1.5 ${
+                                                    panType === "square"
+                                                        ? 'bg-amber-50 border-amber-300 text-amber-700 font-bold'
+                                                        : 'bg-stone-50 border-stone-200 text-stone-600'
+                                                }`}
+                                            >
+                                                ⬜ 方形烤模
+                                            </button>
+                                        </div>
+
+                                        {/* Parameters Input */}
+                                        {panType === "round" ? (
+                                            <div className="space-y-2">
+                                                <label className="text-xs font-semibold text-stone-500 block">圓形模直徑 (英吋)</label>
+                                                <div className="grid grid-cols-6 gap-1.5">
+                                                    {[5, 6, 7, 8, 9, 10].map(sz => (
+                                                        <button
+                                                            key={sz}
+                                                            onClick={() => setRoundSize(sz)}
+                                                            className={`py-2 text-xs font-bold rounded-lg border transition ${
+                                                                roundSize === sz
+                                                                    ? 'bg-amber-500 border-amber-500 text-white'
+                                                                    : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                                                            }`}
+                                                        >
+                                                            {sz}吋
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="text-xs font-semibold text-stone-500 block mb-1">長 (英吋)</label>
+                                                    <input 
+                                                        type="number" 
+                                                        value={squareLength} 
+                                                        onChange={(e) => setSquareLength(Math.max(1, parseFloat(e.target.value) || 1))}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2 text-center text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-500" 
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-semibold text-stone-500 block mb-1">寬 (英吋)</label>
+                                                    <input 
+                                                        type="number" 
+                                                        value={squareWidth} 
+                                                        onChange={(e) => setSquareWidth(Math.max(1, parseFloat(e.target.value) || 1))}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2 text-center text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-500" 
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="mt-4 pt-4 border-t border-stone-100 flex justify-between items-center">
+                                            <span className="text-sm font-semibold text-stone-600">最終換算倍率</span>
+                                            <span className="text-xl font-extrabold text-amber-600 bg-amber-50 px-3 py-1 rounded-lg">
+                                                {scaleFactor}x
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {}
+                            {/* Card 3: Baking Helper (Timer) */}
+                            <div className="bg-stone-900 text-white p-6 rounded-2xl shadow-sm">
+                                <h2 className="text-lg font-bold mb-4 flex items-center text-amber-400">
+                                    <span className="mr-2">⏱️</span> 烤箱烘焙計時器
+                                </h2>
+                                <div className="text-center py-4 bg-stone-800 rounded-xl border border-stone-700">
+                                    <div className="text-4xl font-mono font-black tracking-widest text-amber-300">{timerDisplay}</div>
+                                    <div className="text-xs text-stone-400 mt-1">目前食譜建議烘烤計時</div>
+                                </div>
+                                <div className="grid grid-cols-3 gap-2 mt-4">
+                                    <button 
+                                        onClick={() => setIsTimerRunning(!isTimerRunning)}
+                                        className={`py-2 text-xs font-bold rounded-lg transition ${
+                                            isTimerRunning ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                                        }`}
+                                    >
+                                        {isTimerRunning ? "暫停" : "開始"}
+                                    </button>
+                                    <button 
+                                        onClick={() => { setTimerSeconds(1500); setIsTimerRunning(false); }}
+                                        className="bg-stone-700 text-stone-300 py-2 text-xs font-bold rounded-lg hover:bg-stone-600 transition"
+                                    >
+                                        25 分
+                                    </button>
+                                    <button 
+                                        onClick={() => { setTimerSeconds(5400); setIsTimerRunning(false); }}
+                                        className="bg-stone-700 text-stone-300 py-2 text-xs font-bold rounded-lg hover:bg-stone-600 transition"
+                                    >
+                                        90 分
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* RIGHT COLUMN: Interactive Recipe Display */}
+                        <div className="lg:col-span-7 space-y-6">
+                            
+                            {}
+                            {/* Card 4: Ingredients List */}
+                            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-stone-100">
+                                <div className="flex flex-wrap justify-between items-start border-b border-stone-100 pb-4 mb-6 gap-3">
+                                    <div>
+                                        <h2 className="text-2xl font-black text-stone-900">{activeRecipe.name}</h2>
+                                        <p className="text-xs text-stone-400 italic mt-0.5">{activeRecipe.englishName}</p>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        {activeRecipe.sourceUrl && (
+                                            <a 
+                                                href={activeRecipe.sourceUrl} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold py-1.5 px-3 rounded-xl transition flex items-center gap-1"
+                                                title="開啟不萊嗯原創食譜網頁"
+                                            >
+                                                🔗 原食譜 ↗
+                                            </a>
+                                        )}
+                                        <button
+                                            onClick={(e) => handleOpenEditModal(activeRecipe, e)}
+                                            className="bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-800 border border-stone-200 text-xs font-bold py-1.5 px-3 rounded-xl transition flex items-center gap-1"
+                                            title="編輯這道食譜"
+                                        >
+                                            ✏️ 編輯
+                                        </button>
+                                        <button
+                                            onClick={(e) => handleDeleteRecipe(activeRecipe.id, e)}
+                                            className="bg-stone-100 hover:bg-red-100 text-stone-700 hover:text-red-700 border border-stone-200 text-xs font-bold py-1.5 px-3 rounded-xl transition flex items-center gap-1"
+                                            title="刪除這道食譜"
+                                        >
+                                            🗑️ 刪除
+                                        </button>
+                                        <div className="bg-amber-50 border border-amber-200 text-amber-800 text-xs px-2.5 py-1.5 rounded-xl font-bold">
+                                            {scaleFactor}x
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 className="text-sm font-bold text-stone-400 uppercase tracking-wider mb-3">
+                                    📋 調整後材料清單 (以公制為主)
+                                </h3>
+
+                                <div className="divide-y divide-stone-100">
+                                    {activeRecipe.ingredients.map((ing, idx) => (
+                                        <div key={idx} className="py-3 flex justify-between items-center text-sm md:text-base hover:bg-stone-50/50 px-2 rounded-lg transition">
+                                            <div className="flex items-center space-x-2">
+                                                <span className={`inline-block w-2.5 h-2.5 rounded-full ${
+                                                    ing.category === 'dry' ? 'bg-amber-300' :
+                                                    ing.category === 'wet' ? 'bg-sky-300' :
+                                                    ing.category === 'flavor' ? 'bg-emerald-300' :
+                                                    ing.category === 'glaze' ? 'bg-indigo-300' : 'bg-orange-300'
+                                                }`}></span>
+                                                <span className="text-stone-800 font-medium">{ing.name}</span>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className="font-extrabold text-stone-900 text-lg">
+                                                    {getScaledValue(ing)}
+                                                </span>
+                                                {!ing.isStatic && <span className="text-stone-600 ml-1 text-sm">{ing.unit}</span>}
+                                                {ing.note && (
+                                                    <span className="block text-xs text-stone-400 font-normal">{ing.note}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {}
+                            {/* Card 5: Step-by-step Instructions */}
+                            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-stone-100">
+                                <h3 className="text-lg font-black text-stone-900 mb-6 flex items-center">
+                                    <span className="mr-2">👩‍🍳</span> 互動製作步驟
+                                    <span className="ml-3 text-xs font-normal text-stone-400">(材料已自動換算成 {scaleFactor}x 份量，可打勾記錄進度)</span>
+                                </h3>
+
+                                <div className="space-y-6">
+                                    {activeRecipe.instructions.map((step) => (
+                                        <div 
+                                            key={step.step} 
+                                            onClick={() => setCheckedSteps(prev => ({...prev, [step.step]: !prev[step.step]}))}
+                                            className={`p-4 rounded-2xl border transition cursor-pointer flex items-start space-x-4 ${
+                                                checkedSteps[step.step]
+                                                    ? 'bg-stone-50/70 border-stone-200 opacity-60'
+                                                    : 'bg-stone-50/30 border-stone-100 hover:border-stone-200'
+                                            }`}
+                                        >
+                                            {/* Checkbox */}
+                                            <div className="mt-1">
+                                                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition ${
+                                                    checkedSteps[step.step]
+                                                        ? 'bg-amber-500 border-amber-500 text-white'
+                                                        : 'border-stone-300 bg-white'
+                                                }`}>
+                                                    {checkedSteps[step.step] && (
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Step Number and Description */}
+                                            <div className="flex-1">
+                                                <div className={`text-xs font-black uppercase mb-1 tracking-wider ${
+                                                    checkedSteps[step.step] ? 'text-stone-400' : 'text-amber-600'
+                                                }`}>
+                                                    STEP {step.step}
+                                                </div>
+                                                <div className={`text-sm md:text-base leading-relaxed ${
+                                                    checkedSteps[step.step] ? 'line-through text-stone-400' : 'text-stone-700'
+                                                }`}>
+                                                    {renderInstructionText(step.text)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Card 6: Cooking Tips */}
+                            <div className="bg-amber-50 border border-amber-100 p-6 md:p-8 rounded-3xl">
+                                <h3 className="text-md font-bold text-amber-900 mb-4 flex items-center">
+                                    <span className="mr-2">💡</span> 主廚溫馨貼士 (Baking Tips)
+                                </h3>
+                                <ul className="space-y-2.5 text-sm text-amber-800">
+                                    {activeRecipe.tips && activeRecipe.tips.map((tip, idx) => (
+                                        <li key={idx} className="flex items-start">
+                                            <span className="mr-2 mt-1">✨</span>
+                                            <span>{tip}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {}
+                    {/* Add Custom Recipe Modal */}
+                    {isModalOpen && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
+                            <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-stone-100 flex flex-col">
+                                <div className="p-6 border-b border-stone-100 flex justify-between items-center bg-amber-50/50">
+                                    <div>
+                                        <h3 className="text-xl font-bold text-stone-900">📝 新增您的專屬食譜</h3>
+                                        <p className="text-xs text-stone-500 mt-1">輸入您喜愛的烘焙配方，系統會為您自動實現完美縮放。</p>
+                                    </div>
+                                    <button 
+                                        onClick={() => { setIsModalOpen(false); resetForm(); }}
+                                        className="text-stone-400 hover:text-stone-700 text-2xl font-bold"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+
+                                <div className="p-6 space-y-6 overflow-y-auto">
+                                    {/* Tab Switcher */}
+                                    <div className="flex border-b border-stone-200">
+                                        <button
+                                            type="button"
+                                            onClick={() => { setImportMode("manual"); setFormError(""); }}
+                                            className={`flex-1 py-3 text-sm font-semibold transition-all border-b-2 text-center ${
+                                                importMode === "manual"
+                                                    ? 'border-amber-500 text-amber-600'
+                                                    : 'border-transparent text-stone-500 hover:text-stone-700'
+                                            }`}
+                                        >
+                                            {editingRecipeId ? "✏️ 編輯與調整食譜" : "✍️ 手動輸入 / 校對食譜"}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setImportMode("ai"); setFormError(""); }}
+                                            className={`flex-1 py-3 text-sm font-semibold transition-all border-b-2 text-center flex items-center justify-center gap-1.5 ${
+                                                importMode === "ai"
+                                                    ? 'border-amber-500 text-amber-600'
+                                                    : 'border-transparent text-stone-500 hover:text-stone-700'
+                                            }`}
+                                        >
+                                            ✨ AI 智慧貼上匯入
+                                            <span className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded-full font-bold">PRO</span>
+                                        </button>
+                                    </div>
+
+                                    {formError && (
+                                        <div className="bg-red-50 border-l-4 border-red-500 text-red-800 p-3 rounded-r-lg text-sm font-medium">
+                                            ⚠️ {formError}
+                                        </div>
+                                    )}
+
+                                    {importMode === "ai" ? (
+                                        <div className="space-y-4">
+                                            <div className="bg-stone-50 p-4 rounded-2xl border border-stone-200/60 space-y-3">
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-700 block mb-1.5 flex items-center justify-between">
+                                                        <span>🔑 Gemini API 金鑰 (API Key)</span>
+                                                        <a 
+                                                            href="https://aistudio.google.com/" 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer" 
+                                                            className="text-amber-600 hover:text-amber-700 font-semibold underline text-[11px]"
+                                                        >
+                                                            免費申請金鑰 (Google AI Studio) ↗
+                                                        </a>
+                                                    </label>
+                                                    <input 
+                                                        type="password" 
+                                                        placeholder="貼上您的 AI Studio API Key (AIzaSy...)" 
+                                                        value={apiKey}
+                                                        onChange={e => setApiKey(e.target.value)}
+                                                        className="w-full bg-white border border-stone-200 rounded-xl p-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-700 block mb-1">
+                                                        🤖 選擇 AI 模型 (Model)
+                                                    </label>
+                                                    <select 
+                                                        value={apiModel}
+                                                        onChange={e => {
+                                                            setApiModel(e.target.value);
+                                                            try { localStorage.setItem("magic_baking_gemini_model", e.target.value); } catch(err){}
+                                                        }}
+                                                        className="w-full bg-white border border-stone-200 rounded-xl p-2 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    >
+                                                        <option value="gemini-2.0-flash">gemini-2.0-flash (推薦 / 免費且速度最快)</option>
+                                                        <option value="gemini-1.5-flash">gemini-1.5-flash (穩定舊版備用)</option>
+                                                        <option value="gemini-2.5-flash">gemini-2.5-flash (最新預覽版)</option>
+                                                    </select>
+                                                </div>
+
+                                                <p className="text-[10px] text-stone-400 leading-relaxed">
+                                                    🔒 您的金鑰只會安全儲存在本機 LocalStorage 中，直接發送至 Google 官方 API。<br/>
+                                                    💡 若遇到額度用盡 (Quota Exceeded)，可在 Google AI Studio 中「建立新 Project」獲取新 Key，或切換模型。
+                                                </p>
+                                            </div>
+
+                                            <div className="space-y-1.5">
+                                                <label className="text-xs font-bold text-stone-700 block">
+                                                    📋 貼上原始食譜文字 (支援中/英/日等任何語言，包含任何單位)
+                                                </label>
+                                                <textarea 
+                                                    placeholder={`範例：
+Lemon Sugar Cake
+Ingredients:
+- 1 cup white sugar
+- 1/2 cup unsalted butter, softened
+- 2 large eggs
+- 1.5 cups all-purpose flour
+- 1/2 cup whole milk
+- 350F for 30 minutes in a 9-inch round pan.
+
+Instructions:
+1. Preheat...`} 
+                                                    value={rawRecipeText}
+                                                    onChange={e => setRawRecipeText(e.target.value)}
+                                                    rows="10"
+                                                    className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                ></textarea>
+                                            </div>
+
+                                            <div className="pt-2">
+                                                <button
+                                                    type="button"
+                                                    disabled={isImporting}
+                                                    onClick={handleAIImport}
+                                                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-sm flex items-center justify-center gap-2 disabled:bg-amber-300 disabled:cursor-not-allowed"
+                                                >
+                                                    {isImporting ? (
+                                                        <>
+                                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                            </svg>
+                                                            正在智慧解析中，請稍候...
+                                                        </>
+                                                    ) : (
+                                                        <>🚀 開始 AI 智慧轉換</>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {/* Basic Info */}
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">中文食譜名稱 <span className="text-red-500">*</span></label>
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="例：經典老奶奶檸檬蛋糕" 
+                                                        value={formName}
+                                                        onChange={e => setFormName(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">英文食譜名稱</label>
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="例：Classic Lemon Cake" 
+                                                        value={formEngName}
+                                                        onChange={e => setFormEngName(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+                                                <div className="md:col-span-2">
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">食譜簡介</label>
+                                                    <textarea 
+                                                        placeholder="簡短描述這款蛋糕的特色與風味..." 
+                                                        value={formDesc}
+                                                        onChange={e => setFormDesc(e.target.value)}
+                                                        rows="2"
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    ></textarea>
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">配方原設計烤模形狀 <span className="text-red-500">*</span></label>
+                                                    <select 
+                                                        value={formPanShape}
+                                                        onChange={e => setFormPanShape(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    >
+                                                        <option value="round">⭕ 圓形烤模</option>
+                                                        <option value="square">⬜ 方形烤模</option>
+                                                        <option value="loaf">🍞 長條烤模</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    {formPanShape === "round" && (
+                                                        <>
+                                                            <label className="text-xs font-bold text-stone-600 block mb-1">圓模直徑 (英吋) <span className="text-red-500">*</span></label>
+                                                            <select 
+                                                                value={formBaseSize}
+                                                                onChange={e => setFormBaseSize(Number(e.target.value))}
+                                                                className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                            >
+                                                                {[5, 6, 7, 8, 9, 10, 12].map(n => (
+                                                                    <option key={n} value={n}>{n} 吋</option>
+                                                                ))}
+                                                            </select>
+                                                        </>
+                                                    )}
+                                                    {formPanShape === "square" && (
+                                                        <>
+                                                            <label className="text-xs font-bold text-stone-600 block mb-1">方模邊長 (英吋) <span className="text-red-500">*</span></label>
+                                                            <input 
+                                                                type="number" 
+                                                                value={formBaseSize}
+                                                                onChange={e => setFormBaseSize(Number(e.target.value))}
+                                                                className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                            />
+                                                        </>
+                                                    )}
+                                                    {formPanShape === "loaf" && (
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <div>
+                                                                <label className="text-xs font-bold text-stone-600 block mb-1">長 (英吋) <span className="text-red-500">*</span></label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    value={formPanLength}
+                                                                    onChange={e => setFormPanLength(Number(e.target.value))}
+                                                                    className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <label className="text-xs font-bold text-stone-600 block mb-1">寬 (英吋) <span className="text-red-500">*</span></label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    value={formPanWidth}
+                                                                    onChange={e => setFormPanWidth(Number(e.target.value))}
+                                                                    className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Dynamic Ingredients */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-3">
+                                                    <h4 className="text-sm font-bold text-stone-800">📋 材料明細設定</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddIngredientRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增材料行
+                                                    </button>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {formIngredients.map((ing, idx) => (
+                                                        <div key={idx} className="grid grid-cols-12 gap-1.5 items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <select 
+                                                                value={ing.category}
+                                                                onChange={e => handleIngredientChange(idx, 'category', e.target.value)}
+                                                                className="col-span-3 bg-white border border-stone-200 rounded-lg p-1.5 text-xs"
+                                                            >
+                                                                <option value="dry">🌾 乾料</option>
+                                                                <option value="wet">🥛 濕料</option>
+                                                                <option value="flavor">🍋 調味</option>
+                                                                <option value="glaze">🍯 淋醬</option>
+                                                                <option value="decor">🍓 裝飾/其他</option>
+                                                            </select>
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="材料名稱" 
+                                                                value={ing.name}
+                                                                onChange={e => handleIngredientChange(idx, 'name', e.target.value)}
+                                                                className="col-span-3 bg-white border border-stone-200 rounded-lg p-1.5 text-xs"
+                                                            />
+                                                            <input 
+                                                                type="number" 
+                                                                step="any"
+                                                                placeholder="基準量" 
+                                                                value={ing.baseValue}
+                                                                onChange={e => handleIngredientChange(idx, 'baseValue', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-xs text-center"
+                                                            />
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="單位 (克/毫升)" 
+                                                                value={ing.unit}
+                                                                onChange={e => handleIngredientChange(idx, 'unit', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-xs text-center"
+                                                            />
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="備註" 
+                                                                value={ing.note || ""}
+                                                                onChange={e => handleIngredientChange(idx, 'note', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-[10px]"
+                                                            />
+                                                            <div className="col-span-12 md:col-span-1 flex justify-end">
+                                                                <button 
+                                                                    type="button"
+                                                                    onClick={() => handleRemoveIngredientRow(idx)}
+                                                                    className="text-red-500 hover:text-red-700 font-bold text-sm p-1"
+                                                                    title="移除此行"
+                                                                >
+                                                                    ✕
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Dynamic Steps */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <h4 className="text-sm font-bold text-stone-800">👩‍🍳 製作步驟</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddStepRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增步驟
+                                                    </button>
+                                                </div>
+                                                <p className="text-[10px] text-stone-500 mb-3 bg-amber-50 p-2 rounded-lg border border-amber-100">
+                                                    💡 <strong>魔法提示：</strong>在步驟文字中填入大括號材料 <code>&#123;材料名稱&#125;</code> (如：<code>將乾粉類 &#123;中筋麵粉&#125; 混勻</code>)，網頁會自動依照當前縮放倍率顯示克數！
+                                                </p>
+                                                <div className="space-y-2">
+                                                    {formInstructions.map((step, idx) => (
+                                                        <div key={idx} className="flex gap-2 items-start bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <span className="text-xs font-black text-amber-600 bg-amber-100 w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-1">
+                                                                {step.step}
+                                                            </span>
+                                                            <textarea 
+                                                                placeholder={`步驟 ${step.step} 敘述...`} 
+                                                                value={step.text}
+                                                                onChange={e => handleStepChange(idx, e.target.value)}
+                                                                rows="2"
+                                                                className="flex-1 bg-white border border-stone-200 rounded-lg p-2 text-xs focus:outline-none focus:ring-1 focus:ring-amber-500"
+                                                            ></textarea>
+                                                            <button 
+                                                                type="button"
+                                                                onClick={() => handleRemoveStepRow(idx)}
+                                                                className="text-red-500 hover:text-red-700 font-bold text-sm p-1 mt-1"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Cooking Tips */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-3">
+                                                    <h4 className="text-sm font-bold text-stone-800">✨ 烘焙小貼士 / 溫馨提示</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddTipRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增貼士
+                                                    </button>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {formTips.map((tip, idx) => (
+                                                        <div key={idx} className="flex gap-2 items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="例如：奶油切丁軟化得比較快" 
+                                                                value={tip}
+                                                                onChange={e => handleTipChange(idx, e.target.value)}
+                                                                className="flex-1 bg-white border border-stone-200 rounded-lg p-1.5 text-xs focus:outline-none"
+                                                            />
+                                                            <button 
+                                                                type="button"
+                                                                onClick={() => handleRemoveTipRow(idx)}
+                                                                className="text-red-500 hover:text-red-700 font-bold text-sm p-1"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+
+                                <div className="p-6 border-t border-stone-100 bg-stone-50 flex justify-end gap-3 rounded-b-3xl">
+                                    <button 
+                                        type="button"
+                                        onClick={() => { setIsModalOpen(false); resetForm(); }}
+                                        className="bg-stone-200 hover:bg-stone-300 text-stone-700 text-sm font-bold py-2 px-4 rounded-xl transition"
+                                    >
+                                        取消
+                                    </button>
+                                    {importMode === "manual" && (
+                                        <button 
+                                            type="button"
+                                            onClick={handleSaveRecipe}
+                                            className="bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold py-2 px-6 rounded-xl transition shadow-xs"
+                                        >
+                                            {editingRecipeId ? "更新並儲存食譜" : "儲存食譜"}
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    
+    
+    
+    </script>
+</body>
+</html>

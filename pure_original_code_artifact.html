@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烘焙比例魔法師 - 智慧蛋糕食譜計算機</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        
+        
+        
+        body {
+            background-color: #fcfbf7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .recipe-card:hover {
+            transform: translateY(-2px);
+        }
+    
+    
+    
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+
+
+        const { useState, useEffect } = React;
+
+        // Recipes Data (預設內建食譜)
+        const recipes = {
+            almondCitrus: {
+                id: "almondCitrus",
+                name: "杏仁蜂蜜柑橘夢幻蛋糕",
+                englishName: "Almond Honey Citrus Dream Cake",
+                description: "散發迷人杏仁與橙檸清香的蓬鬆蛋糕，搭配香甜的蜂蜜柑橘淋醬，下午茶的最佳主角。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "增加口感：如果想要更多層次，可以在麵糊中加入適量的杏仁碎粒。",
+                    "完美搭配：這款蛋糕與一杯熱茶或咖啡是絕配。",
+                    "保存方式：吃不完的蛋糕可放入密封容器中，在室溫下最多可保存 3 天。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 190, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆", note: "約 150g 蛋液" },
+                    { category: "wet", name: "白脫牛奶 (Buttermilk)", baseValue: 240, unit: "毫升", displayUnit: "毫升", note: "可用 230ml 鮮奶加 10ml 檸檬汁代替" },
+                    { category: "flavor", name: "杏仁萃取物 (Almond extract)", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 毫升" },
+                    { category: "flavor", name: "香草精", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 毫升" },
+                    { category: "dry", name: "泡打粉", baseValue: 2, unit: "茶匙", displayUnit: "茶匙", note: "約 10 克" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 0.5, unit: "茶匙", displayUnit: "茶匙", note: "約 2.5 克" },
+                    { category: "dry", name: "鹽", baseValue: 0.5, unit: "茶匙", displayUnit: "茶匙", note: "約 3 克" },
+                    { category: "flavor", name: "柳橙皮屑", baseValue: 1, unit: "顆量", displayUnit: "顆量" },
+                    { category: "flavor", name: "檸檬皮屑", baseValue: 1, unit: "顆量", displayUnit: "顆量" },
+                    { category: "glaze", name: "蜂蜜 (淋醬用)", baseValue: 85, unit: "克", displayUnit: "克", note: "約 60 毫升" },
+                    { category: "glaze", name: "新鮮柳橙汁 (淋醬用)", baseValue: 15, unit: "毫升", displayUnit: "毫升", note: "約 1 大匙" },
+                    { category: "glaze", name: "新鮮檸檬汁 (淋醬用)", baseValue: 15, unit: "毫升", displayUnit: "毫升", note: "約 1 大匙" },
+                    { category: "decor", name: "新鮮柑橘片 (裝飾用)", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在一個蛋糕模塗上薄薄一層奶油並撒上麵粉，或鋪上烘焙紙防沾。" },
+                    { step: 2, text: "【乾料】在一個中型碗中，將麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 和鹽 {鹽} 混勻，放置一旁。" },
+                    { step: 3, text: "【打發】在一個大攪拌碗中，用電動攪拌器以中速將軟化的奶油 {無鹽奶油 (軟化)} 和砂糖 {細砂糖} 打發，直到質地變得蓬鬆輕盈，大約 3-4 分鐘。" },
+                    { step: 4, text: "【蛋液】將雞蛋 {雞蛋 (大號)} 分次加入打發奶油中（一次一顆），每次加入都要充分拌勻。接著加入杏仁萃取物 {杏仁萃取物 (Almond extract)} 與香草精 {香草精} 攪拌均勻。" },
+                    { step: 5, text: "【攪拌】將乾粉類與白脫牛奶 {白脫牛奶 (Buttermilk)} 交替、分次加入奶油糊中（以乾粉類開始與結束）。輕輕攪拌至剛好均勻即可，切勿過度攪拌以免出筋。" },
+                    { step: 6, text: "【果皮】輕輕將柳橙皮屑 {柳橙皮屑} 與檸檬皮屑 {檸檬皮屑} 翻拌入麵糊中，直到均勻分布。" },
+                    { step: 7, text: "【烘烤】將麵糊倒入準備好的蛋糕模中抹平。放入預熱好的烤箱中烘烤 25-30 分鐘，直到竹籤插入中心拉出後無粉漿沾黏。" },
+                    { step: 8, text: "【放涼】出爐後，先在烤模中靜置冷卻 10 分鐘，接著脫模移至鐵絲架上完全放涼。" },
+                    { step: 9, text: "【淋醬】在小碗中將蜂蜜 {蜂蜜 (淋醬用)}、柳橙汁 {新鮮柳橙汁 (淋醬用)} 與檸檬汁 {新鮮檸檬汁 (淋醬用)} 攪拌均勻至質地滑順。" },
+                    { step: 10, text: "【點綴】蛋糕完全放涼後，均勻淋上剛剛調好的蜂蜜柑橘淋醬，靜置數分鐘讓其吸收。" },
+                    { step: 11, text: "【裝飾】在表面鋪上新鮮的柑橘切片進行裝飾，即可切塊上桌享用！" }
+                ]
+            },
+            coconutCake: {
+                id: "coconutCake",
+                name: "蜂蜜烘烤椰子蛋糕",
+                englishName: "Honey Roasted Coconut Cake",
+                description: "迷人又濃郁的椰香搭配香甜蜂蜜，每一口都能吃到充滿異國情調的酥脆椰絲風味。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "香氣升級：在將椰子絲加入麵糊前，可以先放入乾鍋中以中火翻炒至金黃色，椰香更濃烈！",
+                    "奢華吃法：這款蛋糕非常適合搭配一球香草冰淇淋或打發鮮奶油一起享用。",
+                    "保存方式：未吃完的蛋糕可放入密封容器中，在室溫下最多可保存 3 天。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 125, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "無糖椰子絲 (Shredded coconut)", baseValue: 40, unit: "克", displayUnit: "克", note: "加入麵糊中" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆", note: "約 100g 蛋液" },
+                    { category: "wet", name: "鮮奶", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "泡打粉", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 克" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 0.5, unit: "茶匙", displayUnit: "茶匙", note: "約 2.5 克" },
+                    { category: "dry", name: "鹽", baseValue: 0.25, unit: "茶匙", displayUnit: "茶匙", note: "約 1.5 克" },
+                    { category: "flavor", name: "香草精", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 毫升" },
+                    { category: "wet", name: "蜂蜜 (麵糊用)", baseValue: 85, unit: "克", displayUnit: "克", note: "約 60 毫升" },
+                    { category: "decor", name: "烘烤椰子脆片 (裝飾用)", baseValue: 30, unit: "克", displayUnit: "克" },
+                    { category: "decor", name: "蜂蜜 (最後淋面用)", baseValue: 15, unit: "克", displayUnit: "克", note: "約 1 大匙" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。將蛋糕模塗上薄薄一層奶油並撒上麵粉，或鋪上烘焙紙以利後續脫模。" },
+                    { step: 2, text: "【打發】在大攪拌碗中，用電動攪拌器以中速將軟奶油 {無鹽奶油 (軟化)} 和砂糖 {細砂糖} 打發，直到質地變得蓬鬆輕盈，約 3-4 分鐘。" },
+                    { step: 3, text: "【香料】分次加入雞蛋 {雞蛋 (大號)}（一次一顆）並徹底攪勻。接著加入香草精 {香草精} 與蜂蜜 {蜂蜜 (麵糊用)}，攪拌至滑順。" },
+                    { step: 4, text: "【乾料】在另一個碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉}、鹽 {鹽} 和無糖椰子絲 {無糖椰子絲 (Shredded coconut)} 攪拌均勻。" },
+                    { step: 5, text: "【融合】將乾粉料與鮮奶 {鮮奶}，交替、分次加入奶油糊中（以乾粉開始與結束）。輕輕攪拌至剛好均勻，切勿過度攪拌。" },
+                    { step: 6, text: "【烘烤】將麵糊倒入蛋糕模中抹平表面，烘烤 25-30 分鐘，直到竹籤插入蛋糕中心拔出無沾黏即可。" },
+                    { step: 7, text: "【冷卻】烘烤完成後，先留在模中冷卻 10 分鐘，再轉移到鐵絲架上完全放涼。" },
+                    { step: 8, text: "【點綴】待完全冷卻，在蛋糕表面均勻淋上額外的蜂蜜 {蜂蜜 (最後淋面用)}，並均勻撒上烘烤椰子脆片 {烘烤椰子脆片 (裝飾用)} 作為裝飾。" },
+                    { step: 9, text: "【享用】將蛋糕切塊即可上桌！無論是做為下午茶或搭配咖啡，都非常迷人。" }
+                ]
+            },
+            coconutOrangeSpice: {
+                id: "coconutOrangeSpice",
+                name: "椰香香橙香料蛋糕",
+                englishName: "Coconut Orange Spice Cake",
+                description: "豐富的椰香與清新的橙汁完美融合，搭配肉桂和肉豆蔻的溫暖香氣，口感層次豐富、暖心迷人。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "風味加分：如果您喜歡更深沉溫暖的風味，可以在乾料中加入一小撮薑粉或丁香粉。",
+                    "新鮮至上：建議使用現榨的新鮮柳橙汁與現磨皮屑，香氣會比市售濃縮果汁更天然濃郁。",
+                    "保存方式：吃不完的蛋糕可放入密封容器中，在室溫下最多可保存 3 天，或放冰箱冷藏保存至 1 週。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 240, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 300, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 2, unit: "茶匙", displayUnit: "茶匙", note: "約 10 克" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 克" },
+                    { category: "dry", name: "肉桂粉", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 3 克" },
+                    { category: "dry", name: "肉豆蔻粉", baseValue: 0.5, unit: "茶匙", displayUnit: "茶匙", note: "約 1.5 克" },
+                    { category: "dry", name: "鹽", baseValue: 0.5, unit: "茶匙", displayUnit: "茶匙", note: "約 3 克" },
+                    { category: "dry", name: "無糖椰子絲", baseValue: 90, unit: "克", displayUnit: "克", note: "拌入乾料中" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆", note: "約 150g 蛋液" },
+                    { category: "wet", name: "新鮮柳橙汁", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "flavor", name: "柳橙皮屑", baseValue: 1, unit: "大匙", displayUnit: "大匙", note: "約 1 顆柳橙皮屑" },
+                    { category: "wet", name: "植物油", baseValue: 120, unit: "毫升", displayUnit: "毫升", note: "無味植物油，如葵花油" },
+                    { category: "flavor", name: "香草精", baseValue: 1, unit: "茶匙", displayUnit: "茶匙", note: "約 5 毫升" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true, note: "表面篩粉裝飾" },
+                    { category: "decor", name: "新鮮柳橙切片", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true },
+                    { category: "decor", name: "烘烤椰子脆片", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在一個 9 吋圓形蛋糕模塗上薄薄一層奶油並撒上麵粉，或鋪上烘焙紙以防粘黏。" },
+                    { step: 2, text: "【乾料】在一個大攪拌碗中，將中筋麵粉 {中筋麵粉}、細砂糖 {細砂糖}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉}、肉桂粉 {肉桂粉}、肉豆蔻粉 {肉豆蔻粉} 和鹽 {鹽} 用打蛋器攪拌均勻。" },
+                    { step: 3, text: "【椰絲】將無糖椰子絲 {無糖椰子絲} 拌入乾料碗中，確保其均勻分布。" },
+                    { step: 4, text: "【濕料】在另一個碗中攪打雞蛋 {雞蛋 (大號)}，隨後加入新鮮柳橙汁 {新鮮柳橙汁}、柳橙皮屑 {柳橙皮屑}、植物油 {植物油} 與香草精 {香草精}，攪拌均勻。" },
+                    { step: 5, text: "【融合】將濕料倒入乾料碗中。使用刮刀輕柔地以折疊式翻拌，直到材料剛好混合均勻、無乾粉即可。切勿過度攪拌，保留些微顆粒是沒問題的。" },
+                    { step: 6, text: "【烘烤】將麵糊倒入蛋糕模，抹平表面。放入預熱好的烤箱中烤 30-35 分鐘，或直到竹籤插入中心拉出乾淨且無粉漿沾黏。" },
+                    { step: 7, text: "【冷卻】烘烤完成後，先留在模中靜置 10 分鐘，隨後脫模並移至鐵絲架上徹底放涼。" },
+                    { step: 8, text: "【糖粉】待蛋糕完全冷卻後，使用細篩網在頂部均勻篩上一層糖粉 {糖粉}。" },
+                    { step: 9, text: "【裝飾】在表面裝飾新鮮柳橙切片 {新鮮柳橙切片} 與烘烤椰子脆片 {烘烤椰子脆片}。切塊後即可擺盤享用，非常適合搭配熱茶或咖啡！" }
+                ]
+            },
+            almondLemonOliveOil: {
+                id: "almondLemonOliveOil",
+                name: "杏仁檸檬橄欖油蛋糕",
+                englishName: "Almond Lemon Olive Oil Cake",
+                description: "以優質橄欖油取代奶油，帶來濕潤綿密的質地，檸檬的清香與杏仁的濃郁完美融合。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "風味加分：在拌入麵糊前加入少許切碎的杏仁粒，口感層次更豐富。",
+                    "完美搭配：非常適合搭配打發鮮奶油或一球香草冰淇淋享用。",
+                    "保存方式：密封存放於室溫最多可維持 3 天，冷藏則可達 1 週。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "杏仁粉", baseValue: 100, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 125, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "特級初榨橄欖油", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "wet", name: "雞蛋", baseValue: 3, unit: "顆", displayUnit: "顆" },
+                    { category: "wet", name: "鮮奶", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "flavor", name: "檸檬皮屑", baseValue: 1, unit: "大匙", displayUnit: "大匙", note: "約 1 顆檸檬" },
+                    { category: "flavor", name: "新鮮檸檬汁", baseValue: 60, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/4 茶匙" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】烤箱預熱至 175°C (350°F)。模具塗抹奶油並撒上薄薄麵粉，或鋪上烘焙紙。" },
+                    { step: 2, text: "【乾料】將 {杏仁粉}、{中筋麵粉}、{泡打粉}、{小蘇打粉} 和 {鹽} 在中型碗中攪拌均勻，放置備用。" },
+                    { step: 3, text: "【濕料】在大碗中將 {雞蛋} 和 {細砂糖} 打發至顏色變淡且蓬鬆（約 3-5 分鐘）。緩緩加入 {特級初榨橄欖油}、{鮮奶}、{檸檬皮屑} 與 {新鮮檸檬汁}，拌勻至滑順。" },
+                    { step: 4, text: "【結合】將乾粉料分次倒入濕料中，使用刮刀輕柔翻拌至剛好結合。避免過度攪拌，保留些微結塊無妨。" },
+                    { step: 5, text: "【入模】將蛋糕糊倒入準備好的模具中，用刮刀抹平表面。" },
+                    { step: 6, text: "【烘烤】送入預熱好的烤箱烘烤 30-35 分鐘，直到竹籤插入中心拉出乾淨且表面呈現金黃色且有彈性。" },
+                    { step: 7, text: "【冷卻】出爐後在模具中冷卻 10 分鐘，隨後脫模置於鐵絲架上徹底放涼。" },
+                    { step: 8, text: "【享用】放涼後可依個人喜好撒上 {糖粉}。切塊擺盤，即可享受其濕潤空氣感！" }
+                ]
+            },
+            orangeBlossomAlmond: {
+                id: "orangeBlossomAlmond",
+                name: "橙花蜂蜜杏仁蛋糕",
+                englishName: "Orange Blossom Honey Almond Cake",
+                description: "滿溢著地中海橙花香氣與蜂蜜香醇，無須繁雜裝飾即可享受到頂級雅致風味。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "風味升級：在表面撒上烘烤過的杏仁片前，可以先將杏仁片浸泡在少許橙花水中，香氣會更顯著。",
+                    "絕佳伴侶：搭配一杯大吉嶺紅茶或溫熱美式咖啡，能襯托出橙花蜂蜜的清新花香。",
+                    "保存貼士：室溫密封可保存最多 3 天，品嚐前可稍微回溫使其口感重回綿密軟糯。"
+                ],
+                ingredients: [
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 225, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 4, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "wet", name: "橙花蜂蜜", baseValue: 85, unit: "克", displayUnit: "克", note: "約 60 毫升" },
+                    { category: "dry", name: "杏仁粉", baseValue: 240, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 120, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "wet", name: "鮮奶", baseValue: 60, unit: "毫升", displayUnit: "毫升" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true },
+                    { category: "decor", name: "杏仁片 (烘烤)", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。蛋糕模塗上薄薄一層奶油並撒上面粉，或鋪上烘焙紙防沾。" },
+                    { step: 2, text: "【打發】在大攪拌碗中，用電動攪拌器以中速將軟化的奶油 {無鹽奶油 (軟化)} 和砂糖 {細砂糖} 打發，直至呈現蓬鬆羽毛狀（約 3-5 分鐘）。" },
+                    { step: 3, text: "【濕料】分次加入雞蛋 {雞蛋 (大號)}（一次一顆）並攪打均勻。接著，加入香草精 {香草精} 與橙花蜂蜜 {橙花蜂蜜} 攪拌均勻。" },
+                    { step: 4, text: "【乾料】在另一個碗中，將杏仁粉 {杏仁粉}、中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉} 和鹽 {鹽} 用打蛋器徹底攪拌混勻。" },
+                    { step: 5, text: "【攪拌】將乾粉料與鮮奶 {鮮奶} 交替分次加入奶油糊中，以乾粉類開始及結束。攪拌至剛好均勻（切勿過度攪拌，避免出筋）。" },
+                    { step: 6, text: "【入模】將拌好的蛋糕麵糊倒入準備好的模具中，並用刮刀將表面輕輕抹平。" },
+                    { step: 7, text: "【烘烤】放入預熱好的烤箱中烘烤 30-35 分鐘。直到表面呈現微焦金黃，且竹籤插入蛋糕中心拔出後乾淨無沾黏。" },
+                    { step: 8, text: "【冷卻】烘烤完成後，先留在模具中冷卻 10 分鐘，隨後脫模移至鐵絲架上徹底放涼。" },
+                    { step: 9, text: "【裝飾】蛋糕完全放涼後，在蛋糕頂部均勻篩上薄糖粉 {糖粉}，並點綴杏仁片 {杏仁片 (烘烤)}。切塊享用其濃郁濕潤的杏仁風味！" }
+                ]
+            },
+            sesameChiffon: {
+                id: "sesameChiffon",
+                name: "特濃芝麻戚風",
+                englishName: "Super Rich Black Sesame Chiffon Cake",
+                description: "經典日式蓬鬆輕盈的戚風質地，搭配研磨細緻的無糖黑芝麻醬，口感濃郁卻又如雲朵般輕盈柔滑。",
+                basePan: { shape: "round", size: 6, unit: "inch" },
+                tips: [
+                    "蛋白冷凍法：分蛋後將蛋白放置冰箱冷凍庫冷凍至邊緣稍微結霜，此狀態打發的蛋白霜極其細緻穩定。",
+                    "切拌手法：混合蛋白霜與蛋黃糊時，請使用橡皮刮刀以「J」字型輕柔快速地進行切拌，避免消泡。",
+                    "完全冷卻：出爐震出熱氣後必須「立刻倒扣」至少 2 小時，否則蛋糕會因重力而塌陷缩水。"
+                ],
+                ingredients: [
+                    { category: "wet", name: "雞蛋 (大號-分蛋)", baseValue: 3, unit: "顆", displayUnit: "顆", note: "蛋殼每個約 62~64 克" },
+                    { category: "flavor", name: "無糖黑芝麻醬", baseValue: 30, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "牛奶或豆奶", baseValue: 40, unit: "毫升", displayUnit: "毫升" },
+                    { category: "wet", name: "無味植物油", baseValue: 10, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "無糖黑芝麻粉", baseValue: 10, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "低筋麵粉", baseValue: 45, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖 (蛋白用)", baseValue: 30, unit: "克", displayUnit: "克" },
+                    { category: "flavor", name: "熟黑芝麻粒", baseValue: 5, unit: "克", displayUnit: "克", note: "可省略" },
+                    { category: "wet", name: "調整用牛奶", baseValue: 7, unit: "毫升", displayUnit: "毫升", note: "若蛋黃糊過稠可調節使用" }
+                ],
+                instructions: [
+                    { step: 1, text: "【分蛋】將雞蛋 {雞蛋 (大號-分蛋)} 進行蛋白與蛋黃分離。將分離出的蛋白放置冰格冷凍，直至邊緣稍微結霜備用。" },
+                    { step: 2, text: "【蛋黃糊】將無糖黑芝麻醬 {無糖黑芝麻醬} 加入牛奶 {牛奶或豆奶} 和植物油 {無味植物油} 中，務必用手動打蛋器攪拌至完全乳化均勻。" },
+                    { step: 3, text: "【粉類】將無糖黑芝麻粉 {無糖黑芝麻粉} 倒入乳化好的芝麻液中攪勻，接著篩入低筋麵粉 {低筋麵粉} 拌勻。最後撒入熟黑芝麻粒 {熟黑芝麻粒} 拌勻。此時麵糊可能呈現較為濃稠的結塊狀態。" },
+                    { step: 4, text: "【調整】將蛋黃加入上述麵糊中輕輕拌勻，此時麵糊會變得滑順且可緩慢流動。若仍然過度濃稠，可以分次加入調整用牛奶 {調整用牛奶} 攪勻至適當稠度。" },
+                    { step: 5, text: "【預熱】將烤箱預熱至 150°C (300°F)。" },
+                    { step: 6, text: "【蛋白霜】取出微凍的蛋白，使用電動攪拌器先打發出大泡泡，分三次加入細砂糖 {細砂糖 (蛋白用)}，以高速打發至出現明顯紋路，最後改以最低速打發 20 秒調整，直至提起打蛋器呈現直挺不垂墜的尖角。" },
+                    { step: 7, text: "【混勻】取 1/3 的蛋白霜混入芝麻蛋黃糊中，用打蛋器輕撥拌勻，接著全部倒入剩餘的蛋白霜中。改用橡皮刮刀快速輕柔地切拌均勻。" },
+                    { step: 8, text: "【入模】將均勻的蛋糕糊倒入 6 吋中空戚風模中，使用筷子劃圈排除大氣泡。送入烤箱 150°C 烘烤 30-35 分鐘。" },
+                    { step: 9, text: "【倒扣】出爐後在桌面上輕震幾下，接著「立刻倒扣」至徹底放涼（約 2 小時）才可進行手工脫模享用！" }
+                ]
+            },
+            appleCustard: {
+                id: "appleCustard",
+                name: "紅糖蘋果卡士達蛋糕",
+                englishName: "Brown Sugar Apple Custard Cake",
+                description: "綿密多汁的蘋果片與溫潤濃郁的黑糖、肉桂緊密結合，口感紮實且保水度高，入口即化、香濃溫暖。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "蘋果挑選：建議使用質地較紮實、酸甜明顯的蘋果品種（如青蘋果或蜜脆蘋果），烘烤後不易軟爛成泥。",
+                    "裝飾加分：入爐前，可以在排好的蘋果片表面撒上些許碎胡桃（Pecans）或核桃粒增加酥脆感。",
+                    "品嚐溫度：這款蛋糕在微溫狀態下最美味！配上一大杯熱茶或一球香草冰淇淋簡集是冬日絕配。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 240, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "黑糖", baseValue: 200, unit: "克", displayUnit: "克", note: "壓實秤量" },
+                    { category: "dry", name: "細砂糖", baseValue: 100, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆" },
+                    { category: "wet", name: "全脂牛奶", baseValue: 240, unit: "毫升", displayUnit: "毫升" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "flavor", name: "新鮮中等蘋果", baseValue: 3, unit: "顆", displayUnit: "顆", note: "去皮去核切薄片" },
+                    { category: "dry", name: "肉桂粉", baseValue: 3, unit: "克", displayUnit: "克", note: "灑於蘋果表面" },
+                    { category: "wet", name: "新鮮檸長汁", baseValue: 15, unit: "毫升", displayUnit: "毫升", note: "約 1 大匙，防止蘋果氧化" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在圓形烤模塗上一層薄奶油或鋪上防沾烤紙備用。" },
+                    { step: 2, text: "【蘋果】將去皮切薄片的蘋果 {新鮮中等蘋果} 與檸檬汁 {新鮮檸長汁}、肉桂粉 {肉桂粉} 徹底拋拌均勻，放在一旁讓其醃漬出汁。" },
+                    { step: 3, text: "【打發】在大攪拌碗中，用電動攪拌器以中速將軟化的奶油 {無鹽奶油 (軟化)}、黑糖 {黑糖} 與細砂糖 {細砂糖} 打發，直到呈現滑順蓬鬆的乳霜狀（約 3-4 分鐘）。" },
+                    { step: 4, text: "【濕料】分次加入雞蛋 {雞蛋 (大號)}（一次一顆）並拌勻。接著，拌入香草精 {香草精}。" },
+                    { step: 5, text: "【乾料】在另一個中碗中將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽} 均勻攪拌。" },
+                    { step: 6, text: "【結合】將乾粉與牛奶 {全脂牛奶} 交替、分次混入奶油糊（以乾粉類開始與結束）。溫柔切拌至沒有明顯乾粉塊即可，千萬不要過度攪拌以免出筋。" },
+                    { step: 7, text: "【入模】將濃稠的麵糊倒入烤模中，並用橡皮刮刀將頂端稍微推平。" },
+                    { step: 8, text: "【排蘋果】將步驟 2 醃漬好的肉桂蘋果片，在麵糊上方層疊地排出漂亮的同心圓放射狀圖案，稍微輕壓使其部分嵌入麵糊中。" },
+                    { step: 9, text: "【烘烤】放入烤箱烘烤 40-50 分鐘，直到蛋糕頂部金黃焦香，且竹籤插入中心拉出時無生麵糊沾黏。" },
+                    { step: 10, text: "【冷卻】出爐後先在模具中靜置冷卻 10 分鐘，脫模後移至鐵絲架上完全冷卻，即可切塊上桌享用！" }
+                ]
+            },
+            appleYogurt: {
+                id: "appleYogurt",
+                name: "黃金蘋果優格茶蛋糕",
+                englishName: "Golden Apple Yogurt Tea Cake",
+                description: "使用濃郁優格取代部分油脂，質地極為濕潤飽滿。口口皆能吃到香甜的黃金蘋果丁，適合日常品茗享用。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "防下沉技巧：將切碎的蘋果丁拌入麵糊前，先裹上薄薄一層中筋麵粉，這樣蘋果丁就不會全沉入蛋糕底部。",
+                    "優格選擇：請使用原味全脂優格（Plain Full-fat Yogurt）或希臘優格，效果最為濕潤香濃。",
+                    "極佳風味：可於密封罐中存放 3 天，第二天由於果蜜滲透，口感會比剛烤好時更濕潤可口！"
+                ],
+                ingredients: [
+                    { category: "flavor", name: "新鮮中等蘋果 (丁狀)", baseValue: 300, unit: "克", displayUnit: "克", note: "去皮去核切丁，約 2 顆" },
+                    { category: "wet", name: "原味優格", baseValue: 240, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "細砂糖", baseValue: 100, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "植物油", baseValue: 60, unit: "毫升", displayUnit: "毫升", note: "無味植物油，如芥花油" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 190, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/4 茶匙" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。圓形蛋糕模內塗抹防沾奶油，或鋪上防沾紙製備。" },
+                    { step: 2, text: "【蘋果】將切成細碎丁狀的蘋果 {新鮮中等蘋果 (丁狀)} 放入一個小碗，撒上約 1 大匙的麵粉，輕輕拋晃裹勻防止下沉，備用。" },
+                    { step: 3, text: "【濕料】在大碗中，將原味優格 {原味優格}、砂糖 {細砂糖}、植物油 {植物油}、雞蛋 {雞蛋 (大號)} 和香草精 {香草精} 倒在一起，用手動打蛋器攪打至滑順均勻。" },
+                    { step: 4, text: "【乾料】在另一個碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽} 攪拌均勻。" },
+                    { step: 5, text: "【混合】將乾粉類徐徐倒入濕料大碗中，用橡皮刮刀輕柔撥切混合，拌到無大顆粒乾粉即可（有少量微小結塊是完全可以的，不要過度攪拌）。" },
+                    { step: 6, text: "【翻拌】將預備好的裹粉蘋果丁倒入，輕輕折疊翻拌，直到果丁均勻分布於麵糊中。" },
+                    { step: 7, text: "【入模】將蛋糕麵糊刮入蛋糕烤模中，並用抹刀將表面撫平。" },
+                    { step: 8, text: "【烘烤】放入烤箱烘烤約 30-35 分鐘，烤至表面呈迷人的金黃褐色，且插入中心的竹籤拉出無黏連狀態。" },
+                    { step: 9, text: "【放涼】出爐後先留在烤模中靜置 10 分鐘，接著移至鐵絲架上徹底放涼。放涼後可篩上適量糖粉 {糖粉} 切塊享用！" }
+                ]
+            },
+            appleSpiceLoaf: {
+                id: "appleSpiceLoaf",
+                name: "蜜脆蘋果香料磅蛋糕",
+                englishName: "Honeycrisp Apple Spice Loaf Cake",
+                description: "滿溢著肉桂、肉豆蔻與薑粉的秋日香氣，富含多汁的蜜脆蘋果碎，口感極為溫暖厚實、滋潤可口。",
+                basePan: { shape: "loaf", length: 9, width: 5, unit: "inch" },
+                tips: [
+                    "防過度焦化：磅蛋糕由於體積較厚，烘烤時間較長。如果烤到一半發現表面上色過深，可以用鋁箔紙輕輕覆蓋在烤模上方。",
+                    "切片建議：完全放涼後，使用鋸齒麵包刀進行切片，最能切出乾淨且保留完整蘋果丁的切面。",
+                    "保存方式：此款蛋糕非常適合包上保鮮膜放置隔天，香料風味與蘋果甜香會完全融合，口感會更為濕潤。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 240, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "肉桂粉", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "肉豆蔻粉", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "薑粉", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "wet", name: "白脫牛奶 (Buttermilk)", baseValue: 120, unit: "毫升", displayUnit: "毫升", note: "或用鮮奶 115ml 加醋 5ml 靜置代之" },
+                    { category: "flavor", name: "新鮮蜜脆蘋果 (丁狀)", baseValue: 300, unit: "克", displayUnit: "克", note: "去皮去核，切細碎丁" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true },
+                    { category: "decor", name: "新鮮蘋果薄片 (裝飾)", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】烤箱預熱至 175°C (350°F)。在 9x5 吋長條磅蛋糕模（Loaf Pan）上塗薄油並撒麵粉，或鋪好烘焙防沾紙。" },
+                    { step: 2, text: "【乾料】在一個中碗中，將中筋麵粉 {中筋麵粉}、小蘇打粉 {小蘇打粉}、泡打粉 {泡打粉}、肉桂粉 {肉桂粉}、肉豆蔻粉 {肉豆蔻粉}、薑粉 {薑粉} 和鹽 {鹽} 用打蛋器拌勻。" },
+                    { step: 3, text: "【打發】在大攪拌碗中，將軟化的奶油 {無鹽奶油 (軟化)} 和砂糖 {細砂糖} 以中速打發至顏色變淺且質地蓬鬆（約 3-4 分鐘）。" },
+                    { step: 4, text: "【濕料】逐顆加入雞蛋 {雞蛋 (大號)} 拌勻，接著攪拌入香草精 {香草精} 攪拌至乳化結合。" },
+                    { step: 5, text: "【結合】將乾粉料與白脫牛奶 {白脫牛奶 (Buttermilk)} 交替分次併入奶油糊（乾粉起、乾粉結），以刮刀切拌至剛好混勻，切勿攪拌過頭。" },
+                    { step: 6, text: "【蘋果】溫柔地將切細的蜜脆蘋果丁 {新鮮蜜脆蘋果 (丁狀)} 翻拌進麵糊中，使其均勻分布。" },
+                    { step: 7, text: "【入模】將黏稠的麵糊刮入長方模，並用抹刀稍微將中央抹凹、兩端稍高。若有需要，可在表面整齊鋪上切成半月型的蘋果薄片 {新鮮蘋果薄片 (裝飾)} 做裝飾。" },
+                    { step: 8, text: "【烘烤】送入烤箱烤 50-60 分鐘。若頂部上色過快，可用鋁箔紙搭成帳篷狀輕覆。竹籤插入拔出乾淨且無糊狀即是熟透。" },
+                    { step: 9, text: "【脫模】出爐冷卻 10 分鐘，接著輕提烤紙移至鐵絲架上完全冷卻。灑上糖粉 {糖粉} 切厚片，即可搭配咖啡上桌！" }
+                ]
+            },
+            mandarinOliveOil: {
+                id: "mandarinOliveOil",
+                name: "柑橘香草橄欖油磅蛋糕",
+                englishName: "Mandarin Vanilla Olive Oil Loaf",
+                description: "用優質橄欖油取代傳統奶油，烤出極致濕潤的果香蛋糕。甜美的小柑橘清香配上香草，風味典雅高貴。",
+                basePan: { shape: "loaf", length: 9, width: 5, unit: "inch" },
+                tips: [
+                    "橄欖油選擇：挑選果香味溫和、草本香不至過度辛辣的特級初榨橄欖油（Extra Virgin Olive Oil），烘烤出來效果最好。",
+                    "香氣最大化：柑橘皮屑中富含精油，用刨絲刀現磨皮屑直接混入砂糖中揉搓，可以讓其果香徹底釋放！",
+                    "保存期長：由於使用了植物性橄欖油，此蛋糕即便冷藏保存也不會變硬，能在冷藏庫維持 1 週極佳口感。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 180, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/4 茶匙" },
+                    { category: "wet", name: "優質初榨橄欖油", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "flavor", name: "新鮮小柑橘皮屑", baseValue: 2, unit: "顆量", displayUnit: "顆量" },
+                    { category: "wet", name: "新鮮小柑橘汁", baseValue: 120, unit: "毫升", displayUnit: "毫升", note: "約 2-3 顆現榨汁" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】烤箱預熱至 175°C (350°F)。在 9x5 吋磅蛋糕長條模中抹油撒粉，或鋪好烘焙防沾烤紙。" },
+                    { step: 2, text: "【乾料】在一隻碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽} 與打蛋器混勻。" },
+                    { step: 3, text: "【濕料】在另一個大攪拌盆中，將橄欖油 {優質初榨橄欖油} 與細砂糖 {細砂糖} 徹底攪打混合。逐個敲入雞蛋 {雞蛋 (大號)}，每一次都打至微泛白且乳化均勻。接著，拌入香草精 {香草精}、小柑橘皮屑 {新鮮小柑橘皮屑} 與現榨小柑橘汁 {新鮮小柑橘汁}，用打蛋器打至起泡且滑順。" },
+                    { step: 4, text: "【混合】將準備好的乾粉料倒入濕料盆中，改用橡皮刮刀溫柔翻折，直到粉粒剛好消失。切忌過度攪拌，有些微小粉球是正常的。" },
+                    { step: 5, text: "【入模】將拌好的橄欖油麵糊倒進磅蛋糕模中，用刮刀稍微撫平中央表面。" },
+                    { step: 6, text: "【烘烤】放入烤箱烘烤約 50-60 分鐘。當頂部呈現油亮光澤且金黃微裂、用竹籤插入中心測試能乾淨帶出時即可出爐。" },
+                    { step: 7, text: "【冷卻】出爐後留在烤模中降溫 10 分鐘，接著提起烤紙移至冷卻架徹底降溫放涼。" },
+                    { step: 8, text: "【享用】放涼後可以隨個人喜好篩上一層細緻的糖粉 {糖粉}。切厚片擺盤，即可享受極度潤澤、香草柑橘香交織的英式下午茶風情！" }
+                ]
+            },
+            lemonAlmond: {
+                id: "lemonAlmond",
+                name: "地中海檸檬杏仁蛋糕",
+                englishName: "Mediterranean Lemon Almond Cake",
+                description: "傳統義大利式無粉/微粉風格，富含天然堅果油脂的杏仁粉與新鮮檸檬汁、皮屑揉合。口感溫潤厚實，極富層次感。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "材料室溫：確保攪拌奶油與砂糖時，無鹽奶油已經提前至少 1 小時退冰至室溫，這樣最容易打發出細緻裝飾。",
+                    "烘培加分：如果想要多一重香氣，可在乾料中偷偷加入一茶匙的優質純香草精或一滴杏仁露，層次會更明顯。",
+                    "保存常識：因為含有高比例杏仁粉，蛋糕不易乾澀，可密封置於室溫下保存 3 天，口感風味不減。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "杏仁粉", baseValue: 120, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 125, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆" },
+                    { category: "wet", name: "全脂鮮奶", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "wet", name: "新鮮檸檬汁", baseValue: 60, unit: "毫升", displayUnit: "毫升" },
+                    { category: "flavor", name: "新鮮檸檬皮屑", baseValue: 1, unit: "顆量", displayUnit: "顆量" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/4 茶匙" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true },
+                    { category: "decor", name: "烘烤杏仁薄片 (裝飾)", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】烤箱預熱至 175°C (350°F)。準備好 9 吋圓形蛋糕烤模，內壁塗上一層奶油並灑薄粉，或底部鋪上剪好的圓形烤紙。" },
+                    { step: 2, text: "【乾料】在一個中型鋼盆中，倒入杏仁粉 {杏仁粉}、中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽}，用攪拌器攪勻備用。" },
+                    { step: 3, text: "【打發】在大攪拌碗中，將軟化的無鹽奶油 {無鹽奶油 (軟化)} 和細砂糖 {細砂糖} 以電動攪拌器中速攪打，直到奶油膨鬆、顏色發白呈乳霜狀（大約 3-5 分鐘）。" },
+                    { step: 4, text: "【雞蛋】逐顆敲入雞蛋 {雞蛋 (大號)}，每一次加入都用打蛋器攪拌至完全乳化，再加入下一顆。" },
+                    { step: 5, text: "【濕料】往奶油混合物中徐徐倒入牛奶 {全脂鮮奶}、現榨檸檬汁 {新鮮檸檬汁} 以及刨出的檸檬皮屑 {新鮮檸檬皮屑}，用中速打勻混合。" },
+                    { step: 6, text: "【折疊】將準備好的乾粉料分兩次倒入濕料大盆中。使用刮刀輕巧、溫柔地翻折切拌，至沒有看到白色麵粉即可，切記切忌過度翻動以免麵糊產生筋性。" },
+                    { step: 7, text: "【入模】將柔順的蛋糕糊倒入烤模，用刮刀或抹刀將頂端稍微平整化。" },
+                    { step: 8, text: "【烘烤】送入預熱好的烤箱中烤 30-35 分鐘。待蛋糕頂部泛出漂亮的淺金色，且用乾淨竹籤插入正中心能乾爽抽回時，即可出爐。" },
+                    { step: 9, text: "【脫模】取出蛋糕在烤架上靜置 10 分鐘，接著小心脫模。等完全冷卻後，用篩網在頂端過篩糖粉 {糖粉}，並撒上香脆的杏仁片 {烘烤杏仁薄片 (裝飾)} 做最後裝飾，便能切片美味享用！" }
+                ]
+            },
+            almondCardamom: {
+                id: "almondCardamom",
+                name: "無麩質杏仁荳蔻蛋糕",
+                englishName: "Almond Cardamom Cake (Gluten-Free)",
+                description: "傳統北歐經典下午茶蛋糕。以天然杏仁粉取代所有麵粉（完全無麩質），配上現磨荳蔻散發的細緻異國辛香，質地濕潤扎實、療癒滿分。",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                tips: [
+                    "荳蔻研磨：如果可以，請使用整顆綠荳蔻莢去殼後現磨成粉，比起一般現成包裝荳蔻粉，現磨的柑橘香與溫暖辛香味會更加鮮活百倍！",
+                    "無麩質優勢：因為配方完全沒有麵粉（不含小麥麩質），所以完全不需要擔心「過度攪拌會出筋」的問題，非常容易製作成功！",
+                    "完美搭配：非常推薦搭配一杯濃烈的濃縮咖啡、熱卡布奇諾、或是帶有柑橘香氣的伯爵紅茶一同品嚐。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "純杏仁粉", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "綠荳蔻粉", baseValue: 2, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 150, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆", note: "約 150g 蛋液" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "wet", name: "鮮奶 (或植物奶)", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true, note: "最後裝飾灑粉" },
+                    { category: "decor", name: "杏仁片 (烘烤)", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true, note: "裝飾用" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在一只 9 吋圓型蛋糕烤模中，四週刷上薄油，並在底端鋪上圓形烤紙防沾，以利後續取出。" },
+                    { step: 2, text: "【乾料】在一個中型鋼盆中，放入純杏仁粉 {純杏仁粉}、綠荳蔻粉 {綠荳蔻粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽}，用手動打蛋器攪拌拌勻，放置一旁。" },
+                    { step: 3, text: "【打發】在大攪拌盆中，以電動攪拌器中速將軟奶油 {無鹽奶油 (軟化)} 和砂糖 {細砂糖} 徹底攪打，直到呈現滑順、微發白且極其鋪鬆的乳霜結構（大約 3-4 分鐘）。" },
+                    { step: 4, text: "【乳化】分次加入大號雞蛋 {雞蛋 (大號)}（一次一顆），每次都要高速打發至蛋液被奶油完全吸收，最後加入香草精 {香草精} 打勻。" },
+                    { step: 5, text: "【結合】將拌好的乾粉料與牛奶 {鮮奶 (或植物奶)} 交替、分次倒進奶油大盆中（以粉料開始與結束）。使用刮刀溫柔地翻拌，直到所有材料剛好混合均勻、沒有見到大顆乾粉堆為止。" },
+                    { step: 6, text: "【入模】將均勻的無麩質蛋糕糊刮入準備好的烤模中，並用抹刀將頂端抹成平坦的表面。" },
+                    { step: 7, text: "【烘烤】放進烤箱預熱層烘烤 25-30 分鐘，直到頂部烤成迷人的焦糖淺金黃色，且用牙籤插入正中央拔出後呈現完全乾爽的狀態。" },
+                    { step: 8, text: "【降溫】取出烤盤，讓蛋糕先在模中冷卻 10 分鐘，接著小心脫模移至鐵絲網冷卻架上徹底完全放涼。" },
+                    { step: 9, text: "【裝飾】蛋糕完全放涼後，以細網篩在蛋糕頂部鋪滿糖粉 {糖粉}，並均勻撒上香脆的杏仁片 {杏仁片 (烘烤)}。用鋸齒刀切塊上桌，與一杯上好伯爵茶或拿鐵搭配，享受愜意完美的下午時光！" }
+                ]
+            },
+            orangeAlmondButter: {
+                id: "orangeAlmondButter",
+                name: "橙香杏仁奶油磅蛋糕",
+                englishName: "Orange Almond Butter Loaf",
+                description: "香甜的柳橙果香與濃郁奶油完美結合，加入杏仁粉增添濕潤感，表面灑滿香脆的杏仁條，口感層次極佳。",
+                basePan: { shape: "loaf", length: 9, width: 5, unit: "inch" },
+                tips: [
+                    "風味升級：在麵糊中額外加入 1/2 茶匙的杏仁萃取物，能使杏仁風味更加濃郁迷人。",
+                    "保存方式：吃不完的蛋糕可放密封容器室溫保存 3 天，或冷藏保存至 1 週。",
+                    "冷凍保存：這款蛋糕非常適合冷凍！用保鮮膜和鋁箔紙雙層包緊，可冷凍保存達 3 個月，享用前取出於室溫退冰即可。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 180, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 2.5, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 1.5, unit: "克", displayUnit: "克", note: "約 1/4 茶匙" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 200, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "flavor", name: "新鮮柳橙皮屑", baseValue: 1, unit: "大匙", displayUnit: "大匙", note: "約 1 顆柳橙皮屑" },
+                    { category: "wet", name: "新鮮柳橙汁", baseValue: 120, unit: "毫升", displayUnit: "毫升", note: "約 1 顆量" },
+                    { category: "dry", name: "杏仁粉", baseValue: 50, unit: "克", displayUnit: "克", note: "拌入麵糊中" },
+                    { category: "decor", name: "烘烤杏仁條", baseValue: 50, unit: "克", displayUnit: "克", note: "灑於表面裝飾" },
+                    { category: "decor", name: "糖粉", baseValue: 1, unit: "適量", displayUnit: "適量", isStatic: true, note: "最後篩粉裝飾" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在 9x5 吋磅蛋糕長條模（Loaf Pan）中塗上薄油撒粉，或鋪好防沾烘焙紙備用。" },
+                    { step: 2, text: "【乾料】在一隻中碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉} 與鹽 {鹽} 用打蛋器徹底混勻，放置一旁。" },
+                    { step: 3, text: "【打發】在大攪拌碗中，使用電動攪拌器以中速將軟化的奶油 {無鹽奶油 (軟化)} 和細砂糖 {細砂糖} 打發，直到質地變得蓬鬆輕盈且呈乳霜狀，約需 3-4 分鐘。" },
+                    { step: 4, text: "【乳化】將雞蛋 {雞蛋 (大號)} 逐顆加入，每次加入都要徹底打勻。隨後加入香草精 {香草精} 與新鮮柳橙皮屑 {新鮮柳橙皮屑}，攪拌均勻。" },
+                    { step: 5, text: "【結合】將調好的乾料粉類與新鮮柳橙汁 {新鮮柳橙汁} 交替分次加入奶油糊中（以乾粉類開始與結束）。溫柔攪拌至剛好結合，切勿過度攪拌。最後，輕柔將杏仁粉 {杏仁粉} 翻拌入麵糊中，直到分布均勻。" },
+                    { step: 6, text: "【入模】將拌好的麵糊刮入準備好的磅蛋糕模中，用刮刀或抹刀將頂端稍微撫平。接著，將烘烤杏仁條 {烘烤杏仁條} 均勻地撒在麵糊頂部。" },
+                    { step: 7, text: "【烘烤】送入預熱好的烤箱中烘烤 50-60 分鐘，或直到竹籤插入中心拉出後無生麵糊沾黏。如果烤到一半發現表面杏仁上色太快，可用鋁箔紙搭成篷狀輕輕覆蓋。" },
+                    { step: 8, text: "【冷卻】烘烤完成後，先留在烤模中靜置冷卻 10 分鐘，接著提起烘焙紙將蛋糕移至鐵絲架上完全放涼。" },
+                    { step: 9, text: "【享用】完全冷卻後，在表面篩上一層細緻的糖粉 {糖粉}，即可切厚片擺盤。無論是做為活力早餐還是下午茶甜點，皆是絕佳享受！" }
+                ]
+            },
+            brownButterCinnamonPraline: {
+                id: "brownButterCinnamonPraline",
+                name: "焦香奶油肉桂胡桃糖蛋糕",
+                englishName: "Brown Butter Cinnamon Praline Cake",
+                description: "散發著榛果般迷人香氣的焦香奶油與肉桂香，搭配頂層濃郁酥脆、香甜焦糖化的胡桃糖淋醬，每一口都是極致享受。",
+                basePan: { shape: "loaf", length: 13, width: 9, unit: "inch" }, // Represented as 9x13 inch rectangle
+                tips: [
+                    "焦鹽風味：在胡桃糖淋醬表面撒上少許片狀海鹽（Maldon salt），微鹹的焦糖海鹽風味能大幅提升層次感！",
+                    "完美搭配：溫熱吃是最棒的狀態！非常適合搭配一球經典香草冰淇淋或打發鮮奶油享用。",
+                    "保存方式：吃不完的蛋糕可密封裝袋置於室溫保存最長 3 天。"
+                ],
+                ingredients: [
+                    { category: "wet", name: "無鹽奶油 (焦化用)", baseValue: 226, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 300, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 3, unit: "顆", displayUnit: "顆" },
+                    { category: "flavor", name: "香草精 (麵糊用)", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 250, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "小蘇打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "鹽 (麵糊用)", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "flavor", name: "肉桂粉 (麵糊用)", baseValue: 6, unit: "克", displayUnit: "克", note: "約 1 大匙" },
+                    { category: "wet", name: "白脫牛奶", baseValue: 240, unit: "毫升", displayUnit: "毫升" },
+                    { category: "glaze", name: "無鹽奶油 (淋醬用)", baseValue: 113, unit: "克", displayUnit: "克" },
+                    { category: "glaze", name: "黑糖 (淋醬用)", baseValue: 200, unit: "克", displayUnit: "克", note: "黑糖壓實秤量" },
+                    { category: "glaze", name: "鮮奶油", baseValue: 120, unit: "毫升", displayUnit: "毫升" },
+                    { category: "decor", name: "核桃碎 (胡桃碎)", baseValue: 120, unit: "克", displayUnit: "克" },
+                    { category: "flavor", name: "香草精 (淋醬用)", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" },
+                    { category: "flavor", name: "肉桂粉 (淋醬用)", baseValue: 2, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在一個 9x13 吋（約 23x33 公分）的長方烤模塗上薄薄一層奶油並撒上麵粉，或鋪上烘焙紙防沾。" },
+                    { step: 2, text: "【焦化奶油】在一個中型單柄鍋中，以中火融化無鹽奶油 {無鹽奶油 (焦化用)}。持續加熱並頻繁攪拌，直到奶油呈現深金黃琥珀色並散發出核桃般的焦香，大約 5-7 分鐘。隨後離火並放涼至微溫。" },
+                    { step: 3, text: "【攪拌麵糊】在一個大攪拌碗中，將細砂糖 {細砂糖} 與放涼的焦香奶油拌勻。接著逐個加入雞蛋 {雞蛋 (大號)} 拌勻。最後拌入香草精 {香草精 (麵糊用)}。" },
+                    { step: 4, text: "【乾料】在另一個碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、小蘇打粉 {小蘇打粉}、鹽 {鹽 (麵糊用)} 和肉桂粉 {肉桂粉 (麵糊用)} 用打蛋器徹底攪拌混勻。" },
+                    { step: 5, text: "【融合】將拌好的乾粉料與白脫牛奶 {白脫牛奶} 交替、分次倒進奶油糖糊中（以乾粉開始與結束）。用刮刀溫柔切拌至剛好混合無乾粉顆粒即可，切忌過度翻拌。" },
+                    { step: 6, text: "【烘烤】將麵糊刮入準備好的烤模中，用抹刀均勻撫平表面。送入預熱好的烤箱中烘烤 30-35 分鐘，或直到竹籤插入中心測試呈乾爽無生麵糊沾黏。烘烤完成後，先留在模具中冷卻 10 分鐘，接著小心移出放置鐵絲架放涼。" },
+                    { step: 7, text: "【焦糖胡桃醬】在單柄鍋中，將淋醬用的無鹽奶油 {無鹽奶油 (淋醬用)}、黑糖 {黑糖 (淋醬用)} 與鮮奶油 {鮮奶油} 混合。以中火加熱並持續攪拌，直至混合液體開始沸騰。隨後「停止攪拌」並讓其保持滾煮 1 分鐘。隨即離火，立刻倒入核桃碎 {核桃碎 (胡桃碎)}、香草精 {香草精 (淋醬用)} 與肉桂粉 {肉桂粉 (淋醬用)} 攪拌均勻。" },
+                    { step: 8, text: "【組合】等蛋糕體完全放涼，將溫熱滑順的焦糖胡桃糖淋醬均勻澆淋在蛋糕表面並輕輕撫平。靜置數分鐘讓頂部焦糖層定型凝固。" },
+                    { step: 9, text: "【享用】將蛋糕切成精緻的方塊。無論是溫熱品嚐或於室溫享用，其香酥的胡桃糖層與濕潤的肉桂焦香糕體都能給您最迷人的味蕾饗宴！" }
+                ]
+            },
+            honeyOrangeCornmealLoaf: {
+                id: "honeyOrangeCornmealLoaf",
+                name: "蜂蜜香橙玉米粉磅蛋糕",
+                englishName: "Honey Orange Cornmeal Loaf",
+                description: "細緻的玉米粉帶來獨特的微沙咬感，與香橙果香、濃郁蜂蜜完美交織，質地濕潤扎實、金黃誘人。",
+                basePan: { shape: "loaf", length: 9, width: 5, unit: "inch" },
+                tips: [
+                    "玉米粉選擇：建議選用黃色或白色的細玉米粉（Fine Cornmeal/Polenta），口感會最為細緻滑順。",
+                    "風味升級：在拌入麵糊前，可以加入適量的切碎堅果，或者蔓越莓乾、杏桃乾，果香層次會更豐富飽滿。",
+                    "保存與冷凍：可在室溫密封保存 3 天，冷藏 1 週。也非常適合用保鮮膜與鋁箔紙緊密包覆後冷凍，最多可保存 3 個月，吃前退冰即可。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "細玉米粉", baseValue: 130, unit: "克", displayUnit: "克", note: "黃色或白色細玉米粉" },
+                    { category: "dry", name: "中筋麵粉", baseValue: 120, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "細砂糖", baseValue: 100, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 12, unit: "克", displayUnit: "克", note: "約 1 大匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "wet", name: "無鹽奶油 (融化)", baseValue: 115, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 2, unit: "顆", displayUnit: "顆" },
+                    { category: "wet", name: "全脂鮮奶", baseValue: 240, unit: "毫升", displayUnit: "毫升" },
+                    { category: "flavor", name: "新鮮新鮮柳橙皮屑", baseValue: 1, unit: "顆量", displayUnit: "顆量" },
+                    { category: "wet", name: "新鮮柳橙汁", baseValue: 60, unit: "毫升", displayUnit: "毫升", note: "約 1/4 杯" },
+                    { category: "wet", name: "蜂蜜 (麵糊用)", baseValue: 85, unit: "克", displayUnit: "克", note: "約 60 毫升 / 1/4 杯" },
+                    { category: "glaze", name: "蜂蜜 (淋醬用)", baseValue: 85, unit: "克", displayUnit: "克", note: "約 60 毫升" },
+                    { category: "glaze", name: "新鮮柳橙汁 (淋醬用)", baseValue: 30, unit: "毫升", displayUnit: "毫升", note: "約 2 大匙" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱】將烤箱預熱至 175°C (350°F)。在 9x5 吋長條模（Loaf Pan）上塗上薄薄一層奶油或噴上防沾烤油。" },
+                    { step: 2, text: "【乾料】在一個大攪拌碗中，將細玉米粉 {細玉米粉}、中筋麵粉 {中筋麵粉}、細砂糖 {細砂糖}、泡打粉 {泡打粉} 和鹽 {鹽} 混合均勻。" },
+                    { step: 3, text: "【濕料】在另一個碗中，將融化的無鹽奶油 {無鹽奶油 (融化)}、雞蛋 {雞蛋 (大號)}、全脂鮮奶 {全脂鮮奶}、柳橙皮屑 {新鮮新鮮柳橙皮屑}、柳橙汁 {新鮮柳橙汁} 和蜂蜜 {蜂蜜 (麵糊用)} 攪打至滑順。" },
+                    { step: 4, text: "【融合】將濕料倒入乾料碗中，輕輕攪拌至剛好結合。切勿過度攪拌，保留些微結塊是正常的。" },
+                    { step: 5, text: "【入模】將拌好的麵糊刮入準備好的長條模中，並用刮刀抹平表面。" },
+                    { step: 6, text: "【烘烤】放進預熱好的烤箱中烘烤 45-50 分鐘，直到竹籤插入中心測試，拉出時呈乾淨無沾黏。頂部應呈現漂亮的焦糖金黃色。" },
+                    { step: 7, text: "【淋醬】在蛋糕烘烤時，將蜂蜜 {蜂蜜 (淋醬用)} 與新鮮柳橙汁 {新鮮柳橙汁 (淋醬用)} 倒入小單柄鍋中以小火加熱調勻，直到混合均勻且溫熱後，隨即離火備用。" },
+                    { step: 8, text: "【上油】蛋糕烘烤完成後，先留在模具中降溫冷卻 10 分鐘，接著小心脫模並移至冷卻鐵絲架上。趁蛋糕仍溫熱時，用刷子將準備好的蜂蜜香橙淋醬均勻刷在蛋糕頂部與四周。" },
+                    { step: 9, text: "【放涼】切片前請讓蛋糕完全冷卻，這有助於鎖住水分，維持完美的濕潤質地與結構。" },
+                    { step: 10, text: "【享用】將蛋糕切片即可直接享用！也可以塗抹些許奶油增加風味。這款蜂蜜香橙玉米粉磅蛋糕非常適合做為早餐、下午茶點，或任何餐點的美味搭配。" }
+                ]
+            },
+            chocolateCreamCheesePound: {
+                id: "chocolateCreamCheesePound",
+                name: "極致高聳巧克力乳酪磅蛋糕",
+                englishName: "Mile High Chocolate Cream Cheese Pound Cake",
+                description: "萬丈高聳、極致濃醇且濕潤綿密的黑巧克力磅蛋糕。融入一整盒奶油乳酪與香濃可可粉，口感如高檔絲絨般細緻奢華。",
+                basePan: { shape: "round", size: 10, unit: "inch" }, // Default 10-inch tube or bundt pan
+                tips: [
+                    "室溫食材：雞蛋、奶油乳酪和奶油務必提前退冰至室溫，這樣最容易打發出均勻、完全無顆粒的滑順麵糊。",
+                    "低速攪拌：倒入中筋麵粉後，必須改用低速攪拌（或刮刀溫柔翻折），且只要剛好混勻無乾粉即可，切記不可過度攪拌以免出筋。",
+                    "低溫慢烤：因這款蛋糕體量與份量非常宏大（使用多達10顆雞蛋），需使用 163°C (325°F) 的低溫慢烤 90-100 分鐘。烤製中途切勿頻繁開啟烤箱門。"
+                ],
+                ingredients: [
+                    { category: "dry", name: "中筋麵粉", baseValue: 480, unit: "克", displayUnit: "克" },
+                    { category: "dry", name: "泡打粉", baseValue: 5, unit: "克", displayUnit: "克", note: "約 1 茶匙" },
+                    { category: "dry", name: "鹽", baseValue: 3, unit: "克", displayUnit: "克", note: "約 1/2 茶匙" },
+                    { category: "dry", name: "深色可可粉", baseValue: 75, unit: "克", displayUnit: "克", note: "推薦使用特黑可可粉或特選深色可可粉" },
+                    { category: "dry", name: "細砂糖", baseValue: 800, unit: "克", displayUnit: "克" },
+                    { category: "wet", name: "無鹽奶油 (軟化)", baseValue: 450, unit: "克", displayUnit: "克", note: "約 4 條 / 2 杯" },
+                    { category: "wet", name: "雞蛋 (大號)", baseValue: 10, unit: "顆", displayUnit: "顆", note: "須放置室溫退冰" },
+                    { category: "wet", name: "奶油乳酪 (軟化)", baseValue: 225, unit: "克", displayUnit: "克", note: "約 8 盎司" },
+                    { category: "wet", name: "酸奶油 (Sour cream)", baseValue: 60, unit: "克", displayUnit: "克", note: "約 1/4 杯" },
+                    { category: "flavor", name: "純香草精 (麵糊用)", baseValue: 15, unit: "毫升", displayUnit: "毫升", note: "約 1 大匙" },
+                    { category: "glaze", name: "半甜巧克力豆 (淋醬用)", baseValue: 170, unit: "克", displayUnit: "克", note: "約 1 杯" },
+                    { category: "glaze", name: "動物性鮮奶油 (淋醬用)", baseValue: 120, unit: "毫升", displayUnit: "毫升", note: "約 1/2 杯" },
+                    { category: "glaze", name: "無鹽奶油 (淋醬用)", baseValue: 30, unit: "克", displayUnit: "克", note: "約 2 大匙" },
+                    { category: "flavor", name: "純香草精 (淋醬用)", baseValue: 5, unit: "毫升", displayUnit: "毫升", note: "約 1 茶匙" }
+                ],
+                instructions: [
+                    { step: 1, text: "【預熱烤模】將烤箱預熱至 163°C (325°F)。在一個 10 吋的中空煙囪模或圓環烤模（Bundt Pan）內部徹底塗抹一層薄奶油並撒上麵粉防沾，或鋪好防沾烤紙備用。" },
+                    { step: 2, text: "【混勻乾料】在一個中型碗中，將中筋麵粉 {中筋麵粉}、泡打粉 {泡打粉}、鹽 {鹽} 與深色可可粉 {深色可可粉} 用手動打蛋器攪拌均勻，放置一旁備用。" },
+                    { step: 3, text: "【乳霜打發】在大攪拌碗中，將軟化的奶油 {無鹽奶油 (軟化)} 和奶油乳酪 {奶油乳酪 (軟化)} 攪打至完全滑順。接著分次緩緩加入砂糖 {細砂糖}，持續以中速打發 4-5 分鐘，直到整體呈現蓬鬆輕盈的羽毛狀。" },
+                    { step: 4, text: "【逐顆加蛋】將雞蛋 {雞蛋 (大號)} 逐顆敲入打發奶油乳酪中（一次一顆），每次加入都要充分打勻，確保蛋液被完全乳化吸收後，再加入下一顆。" },
+                    { step: 5, text: "【其餘濕料】往打發好的蛋奶糊中倒入酸奶油 {酸奶油 (Sour cream)} 與純香草精 {純香草精 (麵糊用)}，溫柔攪拌均勻。" },
+                    { step: 6, text: "【低速混勻】將步驟 2 預備好的乾粉類分次徐徐倒入濕料大盆中，改用電動攪拌器以最低速（或手動用刮刀）輕柔攪拌至剛好混勻、看不到乾粉顆粒即可。切記千萬不要過度攪拌，避免麵糊出筋影響蛋糕的蓬鬆度。" },
+                    { step: 7, text: "【慢烤出爐】將濃稠的巧克力麵糊倒進準備好的烤模中，並用橡皮刮刀將頂端表面輕輕抹平。送入預熱好的烤箱中烘烤 90-100 分鐘，直到用竹籤插入蛋糕正中心測試，拉出時僅帶有幾顆微濕的蛋糕屑即熟透。" },
+                    { step: 8, text: "【脫模放涼】出爐後先留在模具中靜置冷卻 15 分鐘，接著小心倒扣脫模移至鐵絲冷卻架上徹底放涼。" },
+                    { step: 9, text: "【巧克力淋醬】將巧克力豆 {半甜巧克力豆 (淋醬用)} 放入一個中型耐熱碗中。在小單柄鍋中，將動物性鮮奶油 {動物性鮮奶油 (淋醬用)} 與淋醬用奶油 {無鹽奶油 (淋醬用)} 混合，中火加熱至微沸（邊緣開始冒小細泡），隨即離火倒入放有巧克力豆的碗中，靜置不攪動約 2 分鐘。" },
+                    { step: 10, text: "【淋醬調味】用橡皮刮刀輕柔將巧克力液攪拌至完全滑順，接著拌入淋醬用純香草精 {純香草精 (淋醬用)} 混合均勻。靜置片刻使其稍微降溫至微溫且稍具稠度的狀態。" },
+                    { step: 11, text: "【點綴上桌】將巧克力淋醬均勻淋在完全冷卻的蛋糕頂部，靜置 20-30 分鐘讓淋醬定型凝固。切塊後即可擺盤享用！" }
+                ]
+            }
+        };
+
+        // [SAVED_RECIPES_PLACEHOLDER]
+        const savedRecipes = {
+    "custom_1783780600556": {
+        "id": "custom_1783780600556",
+        "isCustom": true,
+        "name": "濃郁巧克力杏仁粉蛋糕",
+        "englishName": "Decadent Almond Flour Chocolate Cake",
+        "description": "這款蛋糕選用高品質可可粉，其深邃的風味在濕潤的杏仁粉基底中更顯華麗。",
+        "basePan": {
+            "shape": "round",
+            "size": 8,
+            "unit": "inch"
+        },
+        "tips": [
+            "保存方式： 密封冷藏可存放 1 週，食用前建議稍作回溫以恢復柔潤質地。",
+            "純素版本方案： 可使用「亞麻仁籽蛋」或「蘋果泥」替代雞蛋，並使用高品質無糖可可粉以確保風味深度。"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "杏仁粉",
+                "baseValue": 200,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "無糖可可粉",
+                "baseValue": 50,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "砂糖或椰子糖",
+                "baseValue": 150,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "烘焙粉",
+                "baseValue": 5,
+                "unit": "g"
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            "食材替換方案：玫瑰水可與橙花水以 1:1 比例互換；若不習慣花香風味，亦可單純使用香草精。"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "杏仁粉",
+                "baseValue": 200,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "細砂糖",
+                "baseValue": 100,
+                "unit": "克"
+            },
+            {
+                "category": "wet",
+                "name": "全脂希臘優格",
+                "baseValue": 120,
+                "unit": "毫升"
+            },
+            {
+                "category": "wet",
+                "name": "葵花油或融化奶油",
+                "baseValue": 60,
+                "unit": "毫升"
+            },
+            {
+                "category": "wet",
+                "name": "大雞蛋",
+                "baseValue": 4,
+                "unit": "顆"
+            },
+            {
+                "category": "dry",
+                "name": "烘焙粉",
+                "baseValue": 5,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "鹽",
+                "baseValue": 1.5,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "豆蔻粉",
+                "baseValue": 2.5,
+                "unit": "克"
+            },
+            {
+                "category": "flavor",
+                "name": "香草精",
+                "baseValue": 5,
+                "unit": "毫升"
+            },
+            {
+                "category": "flavor",
+                "name": "玫瑰水",
+                "baseValue": 15,
+                "unit": "毫升"
+            },
+            {
+                "category": "glaze",
+                "name": "糖粉 (淋醬)",
+                "baseValue": 60,
+                "unit": "克"
+            },
+            {
+                "category": "glaze",
+                "name": "水 (淋醬)",
+                "baseValue": 15,
+                "unit": "毫升"
+            },
+            {
+                "category": "glaze",
+                "name": "香草精 (淋醬)",
+                "baseValue": 2.5,
+                "unit": "毫升"
+            }
+        ],
+        "instructions": [
+            {
+                "step": 1,
+                "text": "環境預熱：烤箱預熱至 175°C，準備 9 吋圓模並鋪上烤模紙。"
+            },
+            {
+                "step": 2,
+                "text": "乾粉混合：將 {杏仁粉}、{烘焙粉}、{鹽} 與 {豆蔻粉} 均勻混合。"
+            },
+            {
+                "step": 3,
+                "text": "關鍵打發：將 {大雞蛋} 與 {細砂糖} 高速打發，直到麵糊顏色明顯泛白且質地輕盈如緞帶。"
+            },
+            {
+                "step": 4,
+                "text": "濕料匯集：輕輕拌入 {葵花油或融化奶油}、{香草精}、{全脂希臘優格} 與 {玫瑰水}。"
+            },
+            {
+                "step": 5,
+                "text": "輕柔折疊：分次將混合好的乾粉拌入，使用刮刀避免過度攪拌導致消泡。"
+            },
+            {
+                "step": 6,
+                "text": "入爐：倒入烤模，烘烤 25-30 分鐘，直至表面呈現琥珀金黃。"
+            },
+            {
+                "step": 7,
+                "text": "出爐：蛋糕在模中冷卻 10 分鐘後脫模。"
+            },
+            {
+                "step": 8,
+                "text": "淋醬點綴：混勻 {糖粉 (淋醬)}、{水 (淋醬)} 與 {香草精 (淋醬)}，在蛋糕冷卻後淋灑其上。"
+            },
+            {
+                "step": 9,
+                "text": "熟成風味：放置數小時後，{玫瑰水} 與 {豆蔻粉} 的風味會更加融合且優雅。"
+            }
+        ]
+    },
+    "custom_1784861569970": {
+        "id": "custom_1784861569970",
+        "isCustom": true,
+        "name": "檸香瑪斯卡波乳酪蛋糕",
+        "englishName": "Mascarpone Cheese Cake with Pastry Crust",
+        "description": "結合了酥脆的手作塔皮底與香濃滑順的檸檬瑪斯卡波乳酪內餡，口感輕盈不膩，冷藏隔夜後享用風味更佳。",
+        "basePan": {
+            "shape": "round",
+            "size": 9,
+            "unit": "inch"
+        },
+        "tips": [
+            "塔皮可以用手直接操作，只要將所有食材快速拌捏至不黏手即可，避免過度揉捏以免出筋。",
+            "刨檸檬皮屑時，小心不要刨到白色苦澀的部份。",
+            "這款蛋糕沒有做鏡面淋醬，以簡約的糖粉裝飾即可展現質樸的美感。"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "低筋麵粉",
+                "baseValue": 200,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "無鹽奶油",
+                "baseValue": 80,
+                "unit": "g",
+                "note": "可最多到100"
+            },
+            {
+                "category": "wet",
+                "name": "牛奶",
+                "baseValue": 60,
+                "unit": "ml"
+            },
+            {
+                "category": "wet",
+                "name": "瑪斯卡波乳酪",
+                "baseValue": 500,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "蛋黃",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "檸檬汁",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "檸檬皮屑",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "dry",
+                "name": "細砂糖",
+                "baseValue": 100,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "蛋白",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "decor",
+                "name": "糖粉",
+                "baseValue": 0,
+                "unit": "適量",
+                "isStatic": true
+            }
+        ],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                "text": "製作蛋白霜：將 {蛋白} 用手動或電動打蛋器打發至濕性發泡狀態。"
+            },
+            {
+                "step": 6,
+                "text": "將打好的乳酪蛋黃糊與打發的 {蛋白} 霜混合，用蛋糕橡皮刮刀輕柔翻拌均勻。"
+            },
+            {
+                "step": 7,
+                "text": "將拌勻的蛋糕內餡倒入已鋪好塔皮與烤紙的烤模中。"
+            },
+            {
+                "step": 8,
+                "text": "放入預熱至 170°C 的烤箱中，烘烤 35-45 分鐘，取出後放涼即可食用。"
+            },
+            {
+                "step": 9,
+                "text": "放入冰箱冷藏至隔日口感會更佳。食用前可在表面均勻灑上 {糖粉} 作為裝飾。"
+            }
+        ]
+    },
+    "custom_1784862334940": {
+        "id": "custom_1784862334940",
+        "isCustom": true,
+        "name": "經典半熟起士塔",
+        "englishName": "Half-Baked Cheese Tart",
+        "description": "這款半熟起士塔使用清爽的馬斯卡彭起士（Mascarpone），搭配鮮奶油與牛奶，相較於傳統僅使用奶油乳酪與酸奶油的配方，質地更加濕潤。烤過後經過適度冷藏，呈現中心半熟流心、入口即化的細緻口感。",
+        "basePan": {
+            "shape": "round",
+            "size": 6,
+            "unit": "inch"
+        },
+        "tips": [
+            "請務必等塔皮完全放涼後再倒入起士餡，否則塔皮會吸收內餡濕氣而變得濕軟。",
+            "如果起士糊顆粒感很明顯，通常是因為起士溫度太低，可透過隔水加熱（溫水）並同時攪拌來解決。",
+            "刷蛋黃液時，薄刷多層並連同塔皮上緣一起刷，烤出來的上色層次會非常均勻漂亮。",
+            "切起士塔時，推薦使用長度 20 公分以上的主廚刀，一刀到底直直切下，即可切出完美乾淨的剖面。"
+        ],
+        "ingredients": [
+            {
+                "category": "wet",
+                "name": "無鹽奶油",
+                "baseValue": 60,
+                "unit": "g",
+                "note": "冷藏，要用時再拿出來"
+            },
+            {
+                "category": "dry",
+                "name": "糖粉",
+                "baseValue": 50,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "鹽",
+                "baseValue": 1,
+                "unit": "適量",
+                "note": "少許",
+                "isStatic": true
+            },
+            {
+                "category": "wet",
+                "name": "蛋黃",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "香草精",
+                "baseValue": 2.5,
+                "unit": "ml"
+            },
+            {
+                "category": "dry",
+                "name": "杏仁粉",
+                "baseValue": 30,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "低筋麵粉",
+                "baseValue": 80,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    </button>
+                                </div>
+
+                                <div className="p-6 space-y-6 overflow-y-auto">
+                                    {/* Tab Switcher */}
+                                    <div className="flex border-b border-stone-200">
+                                        <button
+                                            type="button"
+                                            onClick={() => { setImportMode("manual"); setFormError(""); }}
+                                            className={`flex-1 py-3 text-sm font-semibold transition-all border-b-2 text-center ${
+                                                importMode === "manual"
+                                                    ? 'border-amber-500 text-amber-600'
+                                                    : 'border-transparent text-stone-500 hover:text-stone-700'
+                                            }`}
+                                        >
+                                            ✍️ 手動輸入 / 校對食譜
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => { setImportMode("ai"); setFormError(""); }}
+                                            className={`flex-1 py-3 text-sm font-semibold transition-all border-b-2 text-center flex items-center justify-center gap-1.5 ${
+                                                importMode === "ai"
+                                                    ? 'border-amber-500 text-amber-600'
+                                                    : 'border-transparent text-stone-500 hover:text-stone-700'
+                                            }`}
+                                        >
+                                            ✨ AI 智慧貼上匯入
+                                            <span className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded-full font-bold">PRO</span>
+                                        </button>
+                                    </div>
+
+                                    {formError && (
+                                        <div className="bg-red-50 border-l-4 border-red-500 text-red-800 p-3 rounded-r-lg text-sm font-medium">
+                                            ⚠️ {formError}
+                                        </div>
+                                    )}
+
+                                    {importMode === "ai" ? (
+                                        <div className="space-y-4">
+                                            <div className="bg-stone-50 p-4 rounded-2xl border border-stone-200/60 space-y-3">
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-700 block mb-1.5 flex items-center justify-between">
+                                                        <span>🔑 Gemini API 金鑰 (API Key)</span>
+                                                        <a 
+                                                            href="https://aistudio.google.com/" 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer" 
+                                                            className="text-amber-600 hover:text-amber-700 font-semibold underline text-[11px]"
+                                                        >
+                                                            免費申請金鑰 (Google AI Studio) ↗
+                                                        </a>
+                                                    </label>
+                                                    <input 
+                                                        type="password" 
+                                                        placeholder="貼上您的 AI Studio API Key (AIzaSy...)" 
+                                                        value={apiKey}
+                                                        onChange={e => setApiKey(e.target.value)}
+                                                        className="w-full bg-white border border-stone-200 rounded-xl p-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-700 block mb-1">
+                                                        🤖 選擇 AI 模型 (Model)
+                                                    </label>
+                                                    <select 
+                                                        value={apiModel}
+                                                        onChange={e => {
+                                                            setApiModel(e.target.value);
+                                                            try { localStorage.setItem("magic_baking_gemini_model", e.target.value); } catch(err){}
+                                                        }}
+                                                        className="w-full bg-white border border-stone-200 rounded-xl p-2 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    >
+                                                        <option value="gemini-2.0-flash">gemini-2.0-flash (推薦 / 免費且速度最快)</option>
+                                                        <option value="gemini-1.5-flash">gemini-1.5-flash (穩定舊版備用)</option>
+                                                        <option value="gemini-2.5-flash">gemini-2.5-flash (最新預覽版)</option>
+                                                    </select>
+                                                </div>
+
+                                                <p className="text-[10px] text-stone-400 leading-relaxed">
+                                                    🔒 您的金鑰只會安全儲存在本機 LocalStorage 中，直接發送至 Google 官方 API。<br/>
+                                                    💡 若遇到額度用盡 (Quota Exceeded)，可在 Google AI Studio 中「建立新 Project」獲取新 Key，或切換模型。
+                                                </p>
+                                            </div>
+
+                                            <div className="space-y-1.5">
+                                                <label className="text-xs font-bold text-stone-700 block">
+                                                    📋 貼上原始食譜文字 (支援中/英/日等任何語言，包含任何單位)
+                                                </label>
+                                                <textarea 
+                                                    placeholder={`範例：
+Lemon Sugar Cake
+Ingredients:
+- 1 cup white sugar
+- 1/2 cup unsalted butter, softened
+- 2 large eggs
+- 1.5 cups all-purpose flour
+- 1/2 cup whole milk
+- 350F for 30 minutes in a 9-inch round pan.
+
+Instructions:
+1. Preheat...`} 
+                                                    value={rawRecipeText}
+                                                    onChange={e => setRawRecipeText(e.target.value)}
+                                                    rows="10"
+                                                    className="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                ></textarea>
+                                            </div>
+
+                                            <div className="pt-2">
+                                                <button
+                                                    type="button"
+                                                    disabled={isImporting}
+                                                    onClick={handleAIImport}
+                                                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-sm flex items-center justify-center gap-2 disabled:bg-amber-300 disabled:cursor-not-allowed"
+                                                >
+                                                    {isImporting ? (
+                                                        <>
+                                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                            </svg>
+                                                            正在智慧解析中，請稍候...
+                                                        </>
+                                                    ) : (
+                                                        <>🚀 開始 AI 智慧轉換</>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {/* Basic Info */}
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">中文食譜名稱 <span className="text-red-500">*</span></label>
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="例：經典老奶奶檸檬蛋糕" 
+                                                        value={formName}
+                                                        onChange={e => setFormName(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">英文食譜名稱</label>
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="例：Classic Lemon Cake" 
+                                                        value={formEngName}
+                                                        onChange={e => setFormEngName(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    />
+                                                </div>
+                                                <div className="md:col-span-2">
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">食譜簡介</label>
+                                                    <textarea 
+                                                        placeholder="簡短描述這款蛋糕的特色與風味..." 
+                                                        value={formDesc}
+                                                        onChange={e => setFormDesc(e.target.value)}
+                                                        rows="2"
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    ></textarea>
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-bold text-stone-600 block mb-1">配方原設計烤模形狀 <span className="text-red-500">*</span></label>
+                                                    <select 
+                                                        value={formPanShape}
+                                                        onChange={e => setFormPanShape(e.target.value)}
+                                                        className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                    >
+                                                        <option value="round">⭕ 圓形烤模</option>
+                                                        <option value="square">⬜ 方形烤模</option>
+                                                        <option value="loaf">🍞 長條烤模</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    {formPanShape === "round" && (
+                                                        <>
+                                                            <label className="text-xs font-bold text-stone-600 block mb-1">圓模直徑 (英吋) <span className="text-red-500">*</span></label>
+                                                            <select 
+                                                                value={formBaseSize}
+                                                                onChange={e => setFormBaseSize(Number(e.target.value))}
+                                                                className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                            >
+                                                                {[5, 6, 7, 8, 9, 10, 12].map(n => (
+                                                                    <option key={n} value={n}>{n} 吋</option>
+                                                                ))}
+                                                            </select>
+                                                        </>
+                                                    )}
+                                                    {formPanShape === "square" && (
+                                                        <>
+                                                            <label className="text-xs font-bold text-stone-600 block mb-1">方模邊長 (英吋) <span className="text-red-500">*</span></label>
+                                                            <input 
+                                                                type="number" 
+                                                                value={formBaseSize}
+                                                                onChange={e => setFormBaseSize(Number(e.target.value))}
+                                                                className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                            />
+                                                        </>
+                                                    )}
+                                                    {formPanShape === "loaf" && (
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <div>
+                                                                <label className="text-xs font-bold text-stone-600 block mb-1">長 (英吋) <span className="text-red-500">*</span></label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    value={formPanLength}
+                                                                    onChange={e => setFormPanLength(Number(e.target.value))}
+                                                                    className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <label className="text-xs font-bold text-stone-600 block mb-1">寬 (英吋) <span className="text-red-500">*</span></label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    value={formPanWidth}
+                                                                    onChange={e => setFormPanWidth(Number(e.target.value))}
+                                                                    className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Dynamic Ingredients */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-3">
+                                                    <h4 className="text-sm font-bold text-stone-800">📋 材料明細設定</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddIngredientRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增材料行
+                                                    </button>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {formIngredients.map((ing, idx) => (
+                                                        <div key={idx} className="grid grid-cols-12 gap-1.5 items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <select 
+                                                                value={ing.category}
+                                                                onChange={e => handleIngredientChange(idx, 'category', e.target.value)}
+                                                                className="col-span-3 bg-white border border-stone-200 rounded-lg p-1.5 text-xs"
+                                                            >
+                                                                <option value="dry">🌾 乾料</option>
+                                                                <option value="wet">🥛 濕料</option>
+                                                                <option value="flavor">🍋 調味</option>
+                                                                <option value="glaze">🍯 淋醬</option>
+                                                                <option value="decor">🍓 裝飾/其他</option>
+                                                            </select>
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="材料名稱" 
+                                                                value={ing.name}
+                                                                onChange={e => handleIngredientChange(idx, 'name', e.target.value)}
+                                                                className="col-span-3 bg-white border border-stone-200 rounded-lg p-1.5 text-xs"
+                                                            />
+                                                            <input 
+                                                                type="number" 
+                                                                step="any"
+                                                                placeholder="基準量" 
+                                                                value={ing.baseValue}
+                                                                onChange={e => handleIngredientChange(idx, 'baseValue', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-xs text-center"
+                                                            />
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="單位 (克/毫升)" 
+                                                                value={ing.unit}
+                                                                onChange={e => handleIngredientChange(idx, 'unit', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-xs text-center"
+                                                            />
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="備註" 
+                                                                value={ing.note || ""}
+                                                                onChange={e => handleIngredientChange(idx, 'note', e.target.value)}
+                                                                className="col-span-2 bg-white border border-stone-200 rounded-lg p-1.5 text-[10px]"
+                                                            />
+                                                            <div className="col-span-12 md:col-span-1 flex justify-end">
+                                                                <button 
+                                                                    type="button"
+                                                                    onClick={() => handleRemoveIngredientRow(idx)}
+                                                                    className="text-red-500 hover:text-red-700 font-bold text-sm p-1"
+                                                                    title="移除此行"
+                                                                >
+                                                                    ✕
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Dynamic Steps */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <h4 className="text-sm font-bold text-stone-800">👩‍🍳 製作步驟</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddStepRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增步驟
+                                                    </button>
+                                                </div>
+                                                <p className="text-[10px] text-stone-500 mb-3 bg-amber-50 p-2 rounded-lg border border-amber-100">
+                                                    💡 <strong>魔法提示：</strong>在步驟文字中填入大括號材料 <code>&#123;材料名稱&#125;</code> (如：<code>將乾粉類 &#123;中筋麵粉&#125; 混勻</code>)，網頁會自動依照當前縮放倍率顯示克數！
+                                                </p>
+                                                <div className="space-y-2">
+                                                    {formInstructions.map((step, idx) => (
+                                                        <div key={idx} className="flex gap-2 items-start bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <span className="text-xs font-black text-amber-600 bg-amber-100 w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-1">
+                                                                {step.step}
+                                                            </span>
+                                                            <textarea 
+                                                                placeholder={`步驟 ${step.step} 敘述...`} 
+                                                                value={step.text}
+                                                                onChange={e => handleStepChange(idx, e.target.value)}
+                                                                rows="2"
+                                                                className="flex-1 bg-white border border-stone-200 rounded-lg p-2 text-xs focus:outline-none focus:ring-1 focus:ring-amber-500"
+                                                            ></textarea>
+                                                            <button 
+                                                                type="button"
+                                                                onClick={() => handleRemoveStepRow(idx)}
+                                                                className="text-red-500 hover:text-red-700 font-bold text-sm p-1 mt-1"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Cooking Tips */}
+                                            <div className="border-t border-stone-100 pt-6">
+                                                <div className="flex justify-between items-center mb-3">
+                                                    <h4 className="text-sm font-bold text-stone-800">✨ 烘焙小貼士 / 溫馨提示</h4>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleAddTipRow}
+                                                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold py-1 px-2.5 rounded-lg transition"
+                                                    >
+                                                        ➕ 新增貼士
+                                                    </button>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {formTips.map((tip, idx) => (
+                                                        <div key={idx} className="flex gap-2 items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                                            <input 
+                                                                type="text" 
+                                                                placeholder="例如：奶油切丁軟化得比較快" 
+                                                                value={tip}
+                                                                onChange={e => handleTipChange(idx, e.target.value)}
+                                                                className="flex-1 bg-white border border-stone-200 rounded-lg p-1.5 text-xs focus:outline-none"
+                                                            />
+                                                            <button 
+                                                                type="button"
+                                                                onClick={() => handleRemoveTipRow(idx)}
+                                                                className="text-red-500 hover:text-red-700 font-bold text-sm p-1"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+
+                                <div className="p-6 border-t border-stone-100 bg-stone-50 flex justify-end gap-3 rounded-b-3xl">
+                                    <button 
+                                        type="button"
+                                        onClick={() => { setIsModalOpen(false); resetForm(); }}
+                                        className="bg-stone-200 hover:bg-stone-300 text-stone-700 text-sm font-bold py-2 px-4 rounded-xl transition"
+                                    >
+                                        取消
+                                    </button>
+                                    {importMode === "manual" && (
+                                        <button 
+                                            type="button"
+                                            onClick={handleSaveRecipe}
+                                            className="bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold py-2 px-6 rounded-xl transition shadow-xs"
+                                        >
+                                            儲存食譜
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    
+    
+    
+    </script>
+</body>
+</html>

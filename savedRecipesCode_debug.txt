@@ -1,0 +1,423 @@
+const savedRecipes = {
+1483:         function App() {
+1988:                     return rawHtml.substring(0, startIndex) + "\
+        const savedRecipes = " + js
+1996:                         updatedScript = updatedScript.substring(0, startIndex) + "\
+        const sa
+
+
+Log: file:///C:/Users/lengo/.gemini/antigravity/brain/fdd3f2f7-e6f4-401c-b01f-365b5b21d070/.system_generated/tasks/task-109.log
+</SYSTEM_MESSAGE>"}
+},
+671:             {
+672:                 "category": "dry",
+673:                 "name": "小山園若竹抹茶粉",
+674:                 "baseValue": 40,
+675:                 "unit": "克"
+676:             },
+677:             {
+678:                 "category": "wet",
+679:                 "name": "鮮奶油",
+680:                 "baseValue": 200,
+681:                 "unit": "克",
+682:                 "note": "推薦使用伊思尼"
+683:             },
+684:             {
+685:                 "category": "wet",
+686:                 "name": "牛奶",
+687:                 "baseValue": 30,
+688:                 "unit": "克"
+689:             },
+690:             {
+691:                 "category": "decor",
+692:                 "name": "鮮奶油（裝飾用）",
+693:                 "baseValue": 0,
+694:                 "unit": "適量",
+695:                 "isStatic": true
+696:             },
+697:             {
+698:                 "category": "decor",
+699:                 "name": "喜愛的水果",
+700:                 "baseValue": 0,
+701:                 "unit": "適量",
+702:                 "isStatic": true
+703:             }
+704:         ],
+705:         "instructions": [
+706:             {
+707:                 "step": 1,
+708:                 "text": "將 {奶油乳酪} 與 {馬斯卡彭起司} 置於室溫退冰或使用微波爐微波至軟化狀態。"
+709:             },
+710:             {
+711:                 "step": 2,
+712:                 "text": "烤箱預熱至 240°C。在 6 吋圓形模具內鋪上兩層烘焙紙備用。"
+713:             },
+714:             {
+715:                 "step": 3,
+716:                 "text": "剖開 {香草豆莢} 取出其中的香草籽，與 {上白糖} 混合均勻。將 {玉米粉} 與 {小山園若竹抹茶粉} 一起過篩，加入糖中拌勻。"
+717:             },
+718:             {
+719:                 "step": 4,
+720:                 "text": "使用攪拌機將軟化的 {奶油乳酪} 與 {馬斯卡彭起司} 打至滑順，分三次加入步驟 3 混勻的粉類（{上白糖}、{玉米粉}、{小山園若竹抹茶粉} 與 {香草豆莢} 籽）打至均勻。"
+721:             },
+722:             {
+723:                 "step": 5,
+724:                 "text": "將 {蛋} 一顆一顆分次加入攪拌均勻，接著依序加入 {牛奶}、{蘭姆酒} 及 {鮮奶油} 徹底打勻。"
+725:             },
+726:             {
+727:                 "step": 6,
+728:                 "text": "將整鍋乳酪麵糊過篩以去除顆粒，隨後倒入鋪好烘焙紙的模具中。送入預熱好 240°C 的烤箱中烘烤 25 至 30 分鐘。（最後 10 分鐘時若表面已呈現漂亮的深焦黃色，可覆蓋一張鋁箔紙防止表面烤焦）。"
+729:             },
+730:             {
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+"}
+"食材替換方案：玫瑰水可與橙花水以 1:1 比例互換；若不習慣花香風味，亦可單純使用香草精。"
+801:         ],
+802:         "ingredients": [
+803:             {
+804:                 "category": "dry",
+805:                 "name": "杏仁粉",
+806:                 "baseValue": 200,
+807:                 "unit": "克"
+808:             },
+809:             {
+810:                 "category": "dry",
+811:                 "name": "細砂糖",
+812:                 "baseValue": 100,
+813:                 "unit": "克"
+814:             },
+815:             {
+816:                 "category": "wet",
+817:                 "name": "全脂希臘優格",
+818:                 "baseValue": 120,
+819:                 "unit": "毫升"
+820:             },
+821:             {
+822:                 "category": "wet",
+823:                 "name": "葵花油或融化奶油",
+824:                 "baseValue": 60,
+825:                 "unit": "毫升"
+826:             },
+827:             {
+828:                 "category": "wet",
+829:                 "name": "大雞蛋",
+830:                 "baseValue": 4,
+831:                 "unit": "顆"
+832:             },
+833:             {
+834:                 "category": "dry",
+835:                 "name": "烘焙粉",
+836:                 "baseValue": 5,
+837:                 "unit": "克"
+838:             },
+839:             {
+840:                 "category": "dry",
+841:                 "name": "鹽",
+842:                 "baseValue": 1.5,
+843:                 "unit": "克"
+844:             },
+845:             {
+846:                 "category": "dry",
+847:                 "name": "豆蔻粉",
+848:                 "baseValue": 2.5,
+849:                 "unit": "克"
+850:             },
+851:             {
+852:                 "category": "flavor",
+853:                 "name": "香草精",
+854:                 "baseValue": 5,
+855:                 "unit": "毫升"
+856:             },
+857:             {
+858:                 "category": "flavor",
+859:                 "name": "玫瑰水",
+860:                 "baseValue": 15,
+861:                 "unit": "毫升"
+862:             },
+863:             {
+864:                 "category": "glaze",
+865:                 "name": "糖粉 (淋醬)",
+866:                 "baseValue": 60,
+867:                 "unit": "克"
+868:             },
+869:             {
+870:                 "category": "glaze",
+871:                 "name": "水 (淋醬)",
+872:                 "baseValue": 15,
+873:                 "unit": "毫升"
+874:             },
+875:             {
+876:                 "category": "glaze",
+877:                 "name": "香草精 (淋醬)",
+878:                 "baseValue": 2.5,
+879:                 "unit": "毫升"
+880:             }
+881:         ],
+882:         "instructions": [
+883:             {
+884:                 "step": 1,
+885:                 "text": "環境預熱：烤箱預熱至 175°C，準備 9 吋圓模並鋪上烤模紙。"
+886:             },
+887:             {
+888:                 "step": 2,
+889:                 "text": "乾粉混合：將 {杏仁粉}、{烘焙粉}、{鹽} 與 {豆蔻粉} 均勻混合。"
+890:             },
+891:             {
+892:                 "step": 3,
+893:                 "text": "關鍵打發：將 {大雞蛋} 與 {細砂糖} 高速打發，直到麵糊顏色明顯泛白且質地輕盈如緞帶。"
+894:             },
+895:             {
+896:                 "step": 4,
+897:                 "text": "濕料匯集：輕輕拌入 {葵花油或融化奶油}、{香草精}、{全脂希臘優格} 與 {玫瑰水}。"
+898:             },
+899:             {
+900:                 "step": 5,
+901:                 "text": "輕柔折疊：分次將混合好的乾粉拌入，使用刮刀避免過度攪拌導致消泡。"
+902:             },
+903:             {
+904:                 "step": 6,
+905:                 "text": "入爐：倒入烤模，烘烤 25-30 分鐘，直至表面呈現琥珀金黃。"
+906:             },
+907:             {
+908:                 "step": 7,
+909:                 "text": "出爐：蛋糕在模中冷卻 10 分鐘後脫模。"
+910:             },
+911:             {
+912:                 "step": 8,
+913:                 "text": "淋醬點綴：混勻 {糖粉 (淋醬)}、{水 (淋醬)} 與 {香草精 (淋醬)}，在蛋糕冷卻後淋灑其上。"
+914:             },
+915:             {
+916:                 "step": 9,
+917:                 "text": "熟成風味：放置數小時後，{玫瑰水} 與 {豆蔻粉} 的風味會更加融合且優雅。"
+918:             }
+919:         ]
+920:     },
+921:     "custom_1784861569970": {
+922:         "id": "custom_1784861569970",
+923:         "isCustom": true,
+924:         "name": "檸香瑪斯卡波乳酪蛋糕",
+925:         "englishName": "Mascarpone Cheese Cake with Pastry Crust",
+926:         "description": "結合了酥脆的手作塔皮底與香濃滑順的檸檬瑪斯卡波乳酪內餡，口感輕盈不膩，冷藏隔夜後享用風味更佳。",
+927:         "basePan": {
+928:             "shape": "round",
+929:             "size": 9,
+930:             "unit": "inch"
+931:         },
+932:         "tips": [
+933:             "塔皮可以用手直接操作，只要將所有食材快速拌捏至不黏手即可，避免過度揉捏以免出筋。",
+934:             "刨檸檬皮屑時，小心不要刨到白色苦澀的部份。",
+935:             "這款蛋糕沒有做鏡面淋醬，以簡約的糖粉裝飾即可展現質樸的美感。"
+936:         ],
+937:         "ingredients": [
+938:             {
+939:                 "category": "dry",
+940:                 "name": "低筋麵粉",
+941:                 "baseValue": 200,
+942:                 "unit": "g"
+943:             },
+944:             {
+945:                 "category": "wet",
+946:                 "name": "無鹽奶油",
+947:                 "baseValue": 80,
+948:                 "unit": "g",
+949:                 "note": "可最多到100"
+950:             },
+951:             {
+952:                 "category": "wet",
+953:                 "name": "牛奶",
+954:                 "baseValue": 60,
+955:                 "unit": "ml"
+956:             },
+957:             {
+958:                 "category": "wet",
+959:                 "name": "瑪斯卡波乳酪",
+960:                 "baseValue": 500,
+961:                 "unit": "g"
+962:             },
+963:             {
+964:                 "category": "wet",
+965:                 "name": "蛋黃",
+966:                 "baseValue": 3,
+967:                 "unit": "個"
+968:             },
+969:             {
+970:                 "category": "flavor",
+971:                 "name": "檸檬汁",
+972:                 "baseValue": 1,
+973:                 "unit": "個"
+974:             },
+975:             {
+976:                 "category": "flavor",
+977:                 "name": "檸檬皮屑",
+978:                 "baseValue": 1,
+979:                 "unit": "個"
+980:             },
+981:             {
+982:                 "category": "dry",
+983:                 "name": "細砂糖",
+984:                 "baseValue": 100,
+985:                 "unit": "g"
+986:             },
+987:             {
+988:                 "category": "wet",
+989:                 "name": "蛋白",
+990:                 "baseValue": 3,
+991:                 "unit": "個"
+992:             },
+993:             {
+994:                 "category": "decor",
+995:                 "name": "糖粉",
+996:                 "baseValue": 0,
+997:                 "unit": "適量",
+998:                 "isStatic": true
+999:             }
+1000:         ],
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+"}
+},
+851:             {
+852:                 "step": 13,
+853:                 "text": "出爐後，將模具放在烤盤上放涼。務必等到完全去熱（粗熱消除）後，再放入冰箱冷藏一晚。若未冷藏，蛋糕內部會呈液態糊狀。若冷藏一晚後內部仍呈糊狀，代表烘烤不足，下次烘烤可增加 2〜6 分鐘。"
+854:             },
+855:             {
+856:                 "step": 14,
+857:                 "text": "冷藏一晚後的起司蛋糕，可以用熱過的刀子切片以獲得乾淨的切面。將刀子浸入約 50°C 的溫水中，擦乾水分後再切。每切一刀前需重覆此步驟，並將刀面上的殘留物擦乾淨。"
+858:             }
+859:         ]
+860:     }
+861: };
+862:         // [/SAVED_RECIPES_PLACEHOLDER]
+863: 
+864:         const emptyIngredient = () => ({ category: "dry", name: "", baseValue: "", unit: "克", note: "" });
+865:         const emptyStep = (num) => ({ step: num, text: "" });
+866: 
+867:         function App() {
+868:             // 從 LocalStorage 載入自訂食譜，並合併檔案內的 savedRecipes（扣除已刪除的）
+869:             const [customRecipes, setCustomRecipes] = useState(() => {
+870:                 try {
+871:                     const saved = localStorage.getItem("magic_baking_custom_recipes");
+872:                     const localSaved = saved ? JSON.parse(saved) : {};
+873:                     
+874:                     const deleted = localStorage.getItem("magic_baking_deleted_recipes");
+875:                     const deletedIds = deleted ? JSON.parse(deleted) : [];
+876: 
+877:                     const merged = { ...savedRecipes };
+878:                     deletedIds.forEach(id => {
+879:                         delete merged[id];
+880:                     });
+881: 
+882:                     return { ...merged, ...localSaved };
+883:                 } catch (e) {
+884:                     console.error("無法載入自訂食譜:", e);
+885:                     return savedRecipes;
+886:                 }
+887:             });
+888: 
+889:             const allRecipes = { ...recipes, ...customRecipes };
+890:             const [activeRecipeId, setActiveRecipeId] = useState("almondCitrus");
+891:             const [scaleMode, setScaleMode] = useState("factor"); // 'factor' or 'pan'
+892:             const [scaleFactor, setScaleFactor] = useState(1.0);
+893:             
+894:             // Pan size calculations
+895:             const [panType, setPanType] = useState("round");
+896:             const [roundSize, setRoundSize] = useState(9); // Default target is 9-inch round
+897:             const [squareLength, setSquareLength] = useState(8);
+898:             const [squareWidth, setSquareWidth] = useState(8);
+899: 
+900:             // Timer state
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+"}
+// 新增食譜 Modal 相關狀態
+912:             const [isModalOpen, setIsModalOpen] = useState(false);
+1275:             const handleSaveRecipe = (e) => {
+1331:             const handleDeleteRecipe = (id, e) => {
+1502:                                         <span className="mr-2">📖</span> 選擇或新增食譜
+1518:                                             ➕ 新增食譜
+1535:                                                     onClick={(e) => handleDeleteRecipe(recipe.id, e)
+1874:                     {isModalOpen && (
+2272:                                             onClick={handleSaveRecipe}
+
+"}
+"text": "製作蛋白霜：將 {蛋白} 用手動或電動打蛋器打發至濕性發泡狀態。"
+1021:             },
+1022:             {
+1023:                 "step": 6,
+1024:                 "text": "將打好的乳酪蛋黃糊與打發的 {蛋白} 霜混合，用蛋糕橡皮刮刀輕柔翻拌均勻。"
+1025:             },
+1026:             {
+1027:                 "step": 7,
+1028:                 "text": "將拌勻的蛋糕內餡倒入已鋪好塔皮與烤紙的烤模中。"
+1029:             },
+1030:             {
+1031:                 "step": 8,
+1032:                 "text": "放入預熱至 170°C 的烤箱中，烘烤 35-45 分鐘，取出後放涼即可食用。"
+1033:             },
+1034:             {
+1035:                 "step": 9,
+1036:                 "text": "放入冰箱冷藏至隔日口感會更佳。食用前可在表面均勻灑上 {糖粉} 作為裝飾。"
+1037:             }
+1038:         ]
+1039:     },
+1040:     "custom_1784862334940": {
+1041:         "id": "custom_1784862334940",
+1042:         "isCustom": true,
+1043:         "name": "經典半熟起士塔",
+1044:         "englishName": "Half-Baked Cheese Tart",
+1045:         "description": "這款半熟起士塔使用清爽的馬斯卡彭起士（Mascarpone），搭配鮮奶油與牛奶，相較於傳統僅使用奶油乳酪與酸奶油的配方，質地更加濕潤。烤過後經過適度冷藏，呈現中心半熟流心、入口即化的細緻口感。",
+1046:         "basePan": {
+1047:             "shape": "round",
+1048:             "size": 6,
+1049:             "unit": "inch"
+1050:         },
+1051:         "tips": [
+1052:             "請務必等塔皮完全放涼後再倒入起士餡，否則塔皮會吸收內餡濕氣而變得濕軟。",
+1053:             "如果起士糊顆粒感很明顯，通常是因為起士溫度太低，可透過隔水加熱（溫水）並同時攪拌來解決。",
+1054:             "刷蛋黃液時，薄刷多層並連同塔皮上緣一起刷，烤出來的上色層次會非常均勻漂亮。",
+1055:             "切起士塔時，推薦使用長度 20 公分以上的主廚刀，一刀到底直直切下，即可切出完美乾淨的剖面。"
+1056:         ],
+1057:         "ingredients": [
+1058:             {
+1059:                 "category": "wet",
+1060:                 "name": "無鹽奶油",
+1061:                 "baseValue": 60,
+1062:                 "unit": "g",
+1063:                 "note": "冷藏，要用時再拿出來"
+1064:             },
+1065:             {
+1066:                 "category": "dry",
+1067:                 "name": "糖粉",
+1068:                 "baseValue": 50,
+1069:                 "unit": "g"
+1070:             },
+1071:             {
+1072:                 "category": "dry",
+1073:                 "name": "鹽",
+1074:                 "baseValue": 1,
+1075:                 "unit": "適量",
+1076:                 "note": "少許",
+1077:                 "isStatic": true
+1078:             },
+1079:             {
+1080:                 "category": "wet",
+1081:                 "name": "蛋黃",
+1082:                 "baseValue": 1,
+1083:                 "unit": "個"
+1084:             },
+1085:             {
+1086:                 "category": "flavor",
+1087:                 "name": "香草精",
+1088:                 "baseValue": 2.5,
+1089:                 "unit": "ml"
+1090:             },
+1091:             {
+1092:                 "category": "dry",
+1093:                 "name": "杏仁粉",
+1094:                 "baseValue": 30,
+1095:                 "unit": "g"
+1096:             },
+1097:             {
+1098:                 "category": "dry",
+1099:                 "name": "低筋麵粉",
+1100:                 "baseValue": 80,
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+"}

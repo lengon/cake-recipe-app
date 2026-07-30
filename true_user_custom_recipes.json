@@ -1,0 +1,128 @@
+{
+  "custom_1783780600556": {
+    "id": "custom_1783780600556",
+    "isCustom": true,
+    "name": "濃郁巧克力杏仁粉蛋糕",
+    "englishName": "Decadent Almond Flour Chocolate Cake",
+    "description": "這款蛋糕選用高品質可可粉，其深邃的風味在濕潤的杏仁粉基底中更顯華麗。",
+    "basePan": {
+      "shape": "round",
+      "size": 8,
+      "unit": "inch"
+    },
+    "tips": [
+      "保存方式： 密封冷藏可存放 1 週，食用前建議稍作回溫以恢復柔潤質地。",
+      "純素版本方案： 可使用「亞麻仁籽蛋」或「蘋果泥」替代雞蛋，並使用高品質無糖可可粉以確保風味深度。"
+    ],
+    "ingredients": [
+      {
+        "category": "dry",
+        "name": "杏仁粉",
+        "baseValue": 200,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "無糖可可粉",
+        "baseValue": 50,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "砂糖或椰子糖",
+        "baseValue": 150,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "烘焙粉",
+        "baseValue": 5,
+        "unit": "g"
+      },
+      {
+        "category": "dry",
+        "name": "鹽",
+        "baseValue": 2,
+        "unit": "g"
+      },
+      {
+        "category": "wet",
+        "name": "大雞蛋",
+        "baseValue": 3,
+        "unit": "顆"
+      },
+      {
+        "category": "wet",
+        "name": "融化椰子油或無鹽奶油",
+        "baseValue": 120,
+        "unit": "ml"
+      },
+      {
+        "category": "wet",
+        "name": "全脂牛奶或杏仁奶",
+        "baseValue": 120,
+        "unit": "ml"
+      },
+      {
+        "category": "flavor",
+        "name": "香草精",
+        "baseValue": 5,
+        "unit": "ml"
+      },
+      {
+        "category": "flavor",
+        "name": "碎黑巧克力豆",
+        "baseValue": 60,
+        "unit": "g"
+      },
+      {
+        "category": "glaze",
+        "name": "重奶油",
+        "baseValue": 120,
+        "unit": "g"
+      },
+      {
+        "category": "glaze",
+        "name": "碎黑巧克力",
+        "baseValue": 100,
+        "unit": "g"
+      },
+      {
+        "category": "glaze",
+        "name": "蜂蜜（或楓糖漿）",
+        "baseValue": 5,
+        "unit": "ml"
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "text": "預熱烤箱至 175°C，8 吋圓模鋪紙並抹油。"
+      },
+      {
+        "step": 2,
+        "text": "混勻杏仁粉 {杏仁粉}、無糖可可粉{無糖可可粉}、砂糖或椰子糖{砂糖或椰子糖}、烘焙粉{烘焙粉}與鹽 {鹽}，並用打蛋器攪散粉類結塊。"
+      },
+      {
+        "step": 3,
+        "text": "在另一碗中打散大雞蛋 {大雞蛋}，加入 融化椰子油或無鹽奶油{融化椰子油或無鹽奶油}、全脂牛奶或杏仁奶{全脂牛奶或杏仁奶}與香草精 {香草精}拌勻。"
+      },
+      {
+        "step": 4,
+        "text": "將濕料倒入乾料中，輕輕翻折至剛好均勻。可視喜好拌入 {碎黑巧克力豆}。"
+      },
+      {
+        "step": 5,
+        "text": "烘烤 25-30 分鐘，熟成測試時牙籤應帶有些許濕潤碎屑，不可過乾。"
+      },
+      {
+        "step": 6,
+        "text": "將重奶油 {重奶油}加熱至邊緣微滾，離火倒入碎黑巧克力 {碎黑巧克力}與蜂蜜（或楓糖漿） {蜂蜜（或楓糖漿）}，靜置 2 分鐘後攪拌至亮澤。"
+      },
+      {
+        "step": 7,
+        "text": "待蛋糕完全冷卻後，將微溫的甘納許淋灑在表面。"
+      }
+    ]
+  }
+}

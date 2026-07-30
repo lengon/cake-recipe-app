@@ -1,0 +1,303 @@
+{
+        "englishName": "Persian Almond Cardamom Cake",
+        "description": "豆蔻的溫暖辛香與玫瑰水的優雅花香，在杏仁粉潤澤的質地中達到完美平衡。",
+        "basePan": {
+            "shape": "round",
+            "size": 9,
+            "unit": "inch"
+        },
+        "tips": [
+            "保存方式：室溫密封可保存 3 天，冷藏可維持 1 週。",
+            "食材替換方案：玫瑰水可與橙花水以 1:1 比例互換；若不習慣花香風味，亦可單純使用香草精。"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "杏仁粉",
+                "baseValue": 200,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "細砂糖",
+                "baseValue": 100,
+                "unit": "克"
+            },
+            {
+                "category": "wet",
+                "name": "全脂希臘優格",
+                "baseValue": 120,
+                "unit": "毫升"
+            },
+            {
+                "category": "wet",
+                "name": "葵花油或融化奶油",
+                "baseValue": 60,
+                "unit": "毫升"
+            },
+            {
+                "category": "wet",
+                "name": "大雞蛋",
+                "baseValue": 4,
+                "unit": "顆"
+            },
+            {
+                "category": "dry",
+                "name": "烘焙粉",
+                "baseValue": 5,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "鹽",
+                "baseValue": 1.5,
+                "unit": "克"
+            },
+            {
+                "category": "dry",
+                "name": "豆蔻粉",
+                "baseValue": 2.5,
+                "unit": "克"
+            },
+            {
+                "category": "flavor",
+                "name": "香草精",
+                "baseValue": 5,
+                "unit": "毫升"
+            },
+            {
+                "category": "flavor",
+                "name": "玫瑰水",
+                "baseValue": 15,
+                "unit": "毫升"
+            },
+            {
+                "category": "glaze",
+                "name": "糖粉 (淋醬)",
+                "baseValue": 60,
+                "unit": "克"
+            },
+            {
+                "category": "glaze",
+                "name": "水 (淋醬)",
+                "baseValue": 15,
+                "unit": "毫升"
+            },
+            {
+                "category": "glaze",
+                "name": "香草精 (淋醬)",
+                "baseValue": 2.5,
+                "unit": "毫升"
+            }
+        ],
+        "instructions": [
+            {
+                "step": 1,
+                "text": "環境預熱：烤箱預熱至 175°C，準備 9 吋圓模並鋪上烤模紙。"
+            },
+            {
+                "step": 2,
+                "text": "乾粉混合：將 {杏仁粉}、{烘焙粉}、{鹽} 與 {豆蔻粉} 均勻混合。"
+            },
+            {
+                "step": 3,
+                "text": "關鍵打發：將 {大雞蛋} 與 {細砂糖} 高速打發，直到麵糊顏色明顯泛白且質地輕盈如緞帶。"
+            },
+            {
+                "step": 4,
+                "text": "濕料匯集：輕輕拌入 {葵花油或融化奶油}、{香草精}、{全脂希臘優格} 與 {玫瑰水}。"
+            },
+            {
+                "step": 5,
+                "text": "輕柔折疊：分次將混合好的乾粉拌入，使用刮刀避免過度攪拌導致消泡。"
+            },
+            {
+                "step": 6,
+                "text": "入爐：倒入烤模，烘烤 25-30 分鐘，直至表面呈現琥珀金黃。"
+            },
+            {
+                "step": 7,
+                "text": "出爐：蛋糕在模中冷卻 10 分鐘後脫模。"
+            },
+            {
+                "step": 8,
+                "text": "淋醬點綴：混勻 {糖粉 (淋醬)}、{水 (淋醬)} 與 {香草精 (淋醬)}，在蛋糕冷卻後淋灑其上。"
+            },
+            {
+                "step": 9,
+                "text": "熟成風味：放置數小時後，{玫瑰水} 與 {豆蔻粉} 的風味會更加融合且優雅。"
+            }
+        ]
+    },
+    "custom_1784861569970": {
+        "id": "custom_1784861569970",
+        "isCustom": true,
+        "name": "檸香瑪斯卡波乳酪蛋糕",
+        "englishName": "Mascarpone Cheese Cake with Pastry Crust",
+        "description": "結合了酥脆的手作塔皮底與香濃滑順的檸檬瑪斯卡波乳酪內餡，口感輕盈不膩，冷藏隔夜後享用風味更佳。",
+        "basePan": {
+            "shape": "round",
+            "size": 9,
+            "unit": "inch"
+        },
+        "tips": [
+            "塔皮可以用手直接操作，只要將所有食材快速拌捏至不黏手即可，避免過度揉捏以免出筋。",
+            "刨檸檬皮屑時，小心不要刨到白色苦澀的部份。",
+            "這款蛋糕沒有做鏡面淋醬，以簡約的糖粉裝飾即可展現質樸的美感。"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "低筋麵粉",
+                "baseValue": 200,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "無鹽奶油",
+                "baseValue": 80,
+                "unit": "g",
+                "note": "可最多到100"
+            },
+            {
+                "category": "wet",
+                "name": "牛奶",
+                "baseValue": 60,
+                "unit": "ml"
+            },
+            {
+                "category": "wet",
+                "name": "瑪斯卡波乳酪",
+                "baseValue": 500,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "蛋黃",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "檸檬汁",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "檸檬皮屑",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "dry",
+                "name": "細砂糖",
+                "baseValue": 100,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "蛋白",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "decor",
+                "name": "糖粉",
+                "baseValue": 0,
+                "unit": "適量",
+                "isStatic": true
+            }
+        ],
+        "instructions": [
+            {
+                "step": 1,
+                "text": "將 {低筋麵粉}、切小塊的 {無鹽奶油} 及 {牛奶} 放入攪拌機打成碎屑（或用手操作拌至不黏手），再以手捏合成團。"
+            },
+            {
+                "step": 2,
+                "text": "將麵團置於灑了少許麵粉的工作台上，捍成 1-2cm 的厚度，放入抹油或鋪了烤紙的烤模底部，並用叉子在塔底略微戳洞。"
+            },
+            {
+                "step": 3,
+                "text": "（可選步驟）如喜歡香脆口感的塔皮，可先將鋪好塔皮的烤模放入預熱至 180°C 的烤箱中，烘烤 10-15 分鐘。"
+            },
+            {
+                "step": 4,
+                "text": "製作檸香乳酪蛋黃糊：將 {瑪斯卡波乳酪}、{蛋黃}、{檸檬汁}、{檸檬皮屑} 及 {細砂糖} 放入電動攪拌機中，拌打約 2 分鐘，至呈現均勻的乳霜狀。"
+            },
+            {
+                "step": 5,
+                "text": "製作蛋白霜：將 {蛋白} 用手動或電動打蛋器打發至濕性發泡狀態。"
+            },
+            {
+                "step": 6,
+                "text": "將打好的乳酪蛋黃糊與打發的 {蛋白} 霜混合，用蛋糕橡皮刮刀輕柔翻拌均勻。"
+            },
+            {
+                "step": 7,
+                "text": "將拌勻的蛋糕內餡倒入已鋪好塔皮與烤紙的烤模中。"
+            },
+            {
+                "step": 8,
+                "text": "放入預熱至 170°C 的烤箱中，烘烤 35-45 分鐘，取出後放涼即可食用。"
+            },
+            {
+                "step": 9,
+                "text": "放入冰箱冷藏至隔日口感會更佳。食用前可在表面均勻灑上 {糖粉} 作為裝飾。"
+            }
+        ]
+    },
+    "custom_1784862334940": {
+        "id": "custom_1784862334940",
+        "isCustom": true,
+        "name": "經典半熟起士塔",
+        "englishName": "Half-Baked Cheese Tart",
+        "description": "這款半熟起士塔使用清爽的馬斯卡彭起士（Mascarpone），搭配鮮奶油與牛奶，相較於傳統僅使用奶油乳酪與酸奶油的配方，質地更加濕潤。烤過後經過適度冷藏，呈現中心半熟流心、入口即化的細緻口感。",
+        "basePan": {
+            "shape": "round",
+            "size": 6,
+            "unit": "inch"
+        },
+        "tips": [
+            "請務必等塔皮完全放涼後再倒入起士餡，否則塔皮會吸收內餡濕氣而變得濕軟。",
+            "如果起士糊顆粒感很明顯，通常是因為起士溫度太低，可透過隔水加熱（溫水）並同時攪拌來解決。",
+            "刷蛋黃液時，薄刷多層並連同塔皮上緣一起刷，烤出來的上色層次會非常均勻漂亮。",
+            "切起士塔時，推薦使用長度 20 公分以上的主廚刀，一刀到底直直切下，即可切出完美乾淨的剖面。"
+        ],
+        "ingredients": [
+            {
+                "category": "wet",
+                "name": "無鹽奶油",
+                "baseValue": 60,
+                "unit": "g",
+                "note": "冷藏，要用時再拿出來"
+            },
+            {
+                "category": "dry",
+                "name": "糖粉",
+                "baseValue": 50,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "鹽",
+                "baseValue": 1,
+                "unit": "適量",
+                "note": "少許",
+                "isStatic": true
+            },
+            {
+                "category": "wet",
+                "name": "蛋黃",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "flavor",
+                "name": "香草精",
+                "baseValue": 2.5,
+                "unit": "ml"
+            },
+            {
+}
