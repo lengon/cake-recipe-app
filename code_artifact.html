@@ -1283,11 +1283,42 @@ ${text}`;
             
 
             const handleResetToServerVersion = () => {
-                if (window.confirm("確定要清除瀏覽器舊快取，並載入最新發布的食譜與刪除紀錄嗎？")) {
+                if (window.confirm("確定要清除瀏覽器舊快取，並強制重刷載入 GitHub 最新發布版本嗎？")) {
                     localStorage.removeItem("magic_baking_custom_recipes");
                     localStorage.removeItem("magic_baking_deleted_recipes");
                     window.location.reload(true);
                 }
+            };
+
+            const handleExportJsonBackup = () => {
+                const jsonStr = JSON.stringify(customRecipes, null, 2);
+                const blob = new Blob([jsonStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "my_recipes_backup.json";
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+
+            const handleImportJsonBackup = (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    try {
+                        const imported = JSON.parse(evt.target.result);
+                        if (typeof imported === "object") {
+                            const merged = { ...customRecipes, ...imported };
+                            setCustomRecipes(merged);
+                            localStorage.setItem("magic_baking_custom_recipes", JSON.stringify(merged));
+                            alert("🎉 成功匯入食譜備份！");
+                        }
+                    } catch(err) {
+                        alert("匯入失敗，請確認 JSON 檔案格式。");
+                    }
+                };
+                reader.readAsText(file);
             };
 
             const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes);
@@ -1398,6 +1429,22 @@ ${text}`;
                         <p className="mt-2 text-amber-100 max-w-xl mx-auto text-sm md:text-base">
                             自由變更烘焙份量，不論是 6 吋、8 吋、長條模還是特殊尺寸烤模，完美維持原食譜黃金比例！
                         </p>
+                        <div className="mt-4 flex flex-wrap justify-center gap-2">
+                            <button
+                                onClick={handleResetToServerVersion}
+                                className="bg-white/20 hover:bg-white/30 text-white border border-white/40 text-xs font-bold py-1.5 px-3 rounded-xl transition backdrop-blur-xs flex items-center gap-1 shadow-xs"
+                                title="若畫面上沒看到最新改動，點此可清空快取並載入 GitHub 最新版"
+                            >
+                                🔄 強制同步 GitHub 最新版
+                            </button>
+                            <button
+                                onClick={handleExportJsonBackup}
+                                className="bg-white/20 hover:bg-white/30 text-white border border-white/40 text-xs font-bold py-1.5 px-3 rounded-xl transition backdrop-blur-xs flex items-center gap-1 shadow-xs"
+                                title="將所有自訂食譜導出為 JSON 備份檔案"
+                            >
+                                📥 匯出食譜備份 (JSON)
+                            </button>
+                        </div>
                     </header>
 
                     {/* Main Layout Container */}
