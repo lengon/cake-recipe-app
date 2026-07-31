@@ -36,37 +36,205 @@
         const recipes = window.recipes || {};
         // [SAVED_RECIPES_PLACEHOLDER]
         const savedRecipes = {
-            "custom_1785462488277": {
-                "id": "custom_1785462488277",
-                "isCustom": true,
-                "name": "塔皮瑪斯卡波乳酪蛋糕",
-                "englishName": "Mascarpone Cheese Tart",
-                "description": "一款結合塔皮和瑪斯卡波乳酪的獨特蛋糕",
-                "basePan": { "shape": "round", "size": 23, "unit": "inch" },
-                "tips": ["請小心不要刨到柳橙皮的白色部份，因為它有苦味"],
-                "ingredients": [
-                    { "category": "dry", "name": "低筋麵粉", "baseValue": 160, "unit": "g" },
-                    { "category": "dairy", "name": "奶油", "baseValue": 80, "unit": "g" },
-                    { "category": "liquid", "name": "牛奶", "baseValue": 30, "unit": "ml" },
-                    { "category": "dairy", "name": "瑪斯卡波乳酪", "baseValue": 500, "unit": "g", "note": "低脂版" },
-                    { "category": "eggs", "name": "蛋黃", "baseValue": 3, "unit": "個" },
-                    { "category": "liquid", "name": "柳橙汁", "baseValue": 50, "unit": "ml" },
-                    { "category": "dry", "name": "糖", "baseValue": 100, "unit": "g" },
-                    { "category": "eggs", "name": "蛋白", "baseValue": 3, "unit": "個" },
-                    { "category": "fruit", "name": "柳橙皮", "baseValue": 0, "unit": "適量", "isStatic": true }
-                ],
-                "instructions": [
-                    { "step": 1, "text": "將{低筋麵粉}、{奶油}和{牛奶}入攪拌機打成碎屑後，以手捏成團後，置於灑了{低筋麵粉}的工作台上。" },
-                    { "step": 2, "text": "捍成各人喜歡的厚度(約1-2cm)，入抹油或置於烤紙的烤模底部，以叉子於塔底略搓洞。" },
-                    { "step": 3, "text": "將{瑪斯卡波乳酪}、{蛋黃}、{柳橙汁}和{糖}入電動攪拌機，拌打約2分，至呈乳霜狀即可。" },
-                    { "step": 4, "text": "將{蛋白}以攪拌器打發(溼性發泡)。" },
-                    { "step": 5, "text": "將{瑪斯卡波乳酪}、{蛋白}和{柳橙皮}混合在一起，倒入烤模裡。" },
-                    { "step": 6, "text": "入預熱170度C的烤箱，烤35-45分。" },
-                    { "step": 7, "text": "取出後放涼即可食用。" }
-                ]
+    "custom_1785462488277": {
+        "id": "custom_1785462488277",
+        "isCustom": true,
+        "name": "塔皮瑪斯卡波乳酪蛋糕",
+        "englishName": "Mascarpone Cheese Tart",
+        "description": "一款結合塔皮和瑪斯卡波乳酪的獨特蛋糕",
+        "basePan": {
+            "shape": "round",
+            "size": 9,
+            "unit": "inch"
+        },
+        "tips": [
+            "請小心不要刨到柳橙皮的白色部份，因為它有苦味"
+        ],
+        "ingredients": [
+            {
+                "category": "dry",
+                "name": "低筋麵粉",
+                "baseValue": 160,
+                "unit": "g"
+            },
+            {
+                "category": "dairy",
+                "name": "奶油",
+                "baseValue": 80,
+                "unit": "g"
+            },
+            {
+                "category": "liquid",
+                "name": "牛奶",
+                "baseValue": 30,
+                "unit": "ml"
+            },
+            {
+                "category": "dairy",
+                "name": "瑪斯卡波乳酪",
+                "baseValue": 500,
+                "unit": "g",
+                "note": "低脂版"
+            },
+            {
+                "category": "eggs",
+                "name": "蛋黃",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "liquid",
+                "name": "柳橙汁",
+                "baseValue": 50,
+                "unit": "ml"
+            },
+            {
+                "category": "dry",
+                "name": "糖",
+                "baseValue": 100,
+                "unit": "g"
+            },
+            {
+                "category": "eggs",
+                "name": "蛋白",
+                "baseValue": 3,
+                "unit": "個"
+            },
+            {
+                "category": "fruit",
+                "name": "柳橙皮",
+                "baseValue": 0,
+                "unit": "適量",
+                "isStatic": true
             }
-        };
+        ],
+        "instructions": [
+            {
+                "step": 1,
+                "text": "將{低筋麵粉}、{奶油}和{牛奶}入攪拌機打成碎屑後，以手捏成團後，置於灑了{低筋麵粉}的工作台上。"
+            },
+            {
+                "step": 2,
+                "text": "捍成各人喜歡的厚度(約1-2cm)，入抹油或置於烤紙的烤模底部，以叉子於塔底略搓洞。"
+            },
+            {
+                "step": 3,
+                "text": "將{瑪斯卡波乳酪}、{蛋黃}、{柳橙汁}和{糖}入電動攪拌機，拌打約2分，至呈乳霜狀即可。"
+            },
+            {
+                "step": 4,
+                "text": "將{蛋白}以攪拌器打發(溼性發泡)。"
+            },
+            {
+                "step": 5,
+                "text": "將{瑪斯卡波乳酪}、{蛋白}和{柳橙皮}混合在一起，倒入烤模裡。"
+            },
+            {
+                "step": 6,
+                "text": "入預熱170度C的烤箱，烤35-45分。"
+            },
+            {
+                "step": 7,
+                "text": "取出後放涼即可食用。"
+            }
+        ]
+    },
+    "custom_1784861569970": {
+        "id": "custom_1784861569970",
+        "isCustom": true,
+        "name": "檸香瑪斯卡波乳酪蛋糕",
+        "englishName": "Mascarpone Cheese Cake with Pastry Crust",
+        "description": "這款乳酪蛋糕使用清爽的馬斯卡彭起士（Mascarpone），搭配鮮奶油與牛奶，質地極度細緻柔滑，伴隨淡淡新鮮檸檬清香。",
+        "basePan": {
+            "shape": "round",
+            "size": 9,
+            "unit": "inch"
+        },
+        "tips": [
+            "請務必等塔皮完全放涼後再倒入起士餡，否則塔皮會吸收內餡濕氣而變得濕軟。",
+            "切起士塔時，推薦使用刀刃受熱過的主廚刀，一刀到底直直切下，即可切出完美乾淨剖面。"
+        ],
+        "ingredients": [
+            {
+                "category": "wet",
+                "name": "無鹽奶油",
+                "baseValue": 80,
+                "unit": "g"
+            },
+            {
+                "category": "dry",
+                "name": "糖粉",
+                "baseValue": 60,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "蛋黃",
+                "baseValue": 1,
+                "unit": "個"
+            },
+            {
+                "category": "dry",
+                "name": "低筋麵粉",
+                "baseValue": 120,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "馬斯卡彭起士 (Mascarpone)",
+                "baseValue": 250,
+                "unit": "g"
+            },
+            {
+                "category": "wet",
+                "name": "動物性鮮奶油",
+                "baseValue": 100,
+                "unit": "ml"
+            },
+            {
+                "category": "wet",
+                "name": "全脂牛奶",
+                "baseValue": 40,
+                "unit": "ml"
+            },
+            {
+                "category": "flavor",
+                "name": "新鮮檸檬汁",
+                "baseValue": 15,
+                "unit": "ml"
+            },
+            {
+                "category": "flavor",
+                "name": "檸檬皮屑",
+                "baseValue": 1,
+                "unit": "顆份"
+            }
+        ],
+        "instructions": [
+            {
+                "step": 1,
+                "text": "【塔皮製作】奶油切塊與麵粉、糖粉揉成沙粒狀，加入蛋黃凝聚成團，冷藏鬆弛 30 分鐘。"
+            },
+            {
+                "step": 2,
+                "text": "【塔皮烘烤】將塔皮擀平鋪入 8 吋模具，盲烤 180°C 15 分鐘至微金黃並放涼。"
+            },
+            {
+                "step": 3,
+                "text": "【起士內餡】將馬斯卡彭起士與鮮奶油、牛奶、檸檬汁、檸檬皮屑攪拌至無顆粒滑順質地。"
+            },
+            {
+                "step": 4,
+                "text": "【填餡烘烤】將起士餡倒入放涼的塔皮，以 190°C 烘烤 15-20 分鐘後出爐冷藏保存。"
+            }
+        ]
+    }
+};
         // [/SAVED_RECIPES_PLACEHOLDER]
+
+        // [DELETED_IDS_PLACEHOLDER]
+        const savedDeletedIds = [];
+        // [/DELETED_IDS_PLACEHOLDER]
 
         const emptyIngredient = () => ({ category: "dry", name: "", baseValue: "", unit: "克", note: "" });
         const emptyStep = (num) => ({ step: num, text: "" });
@@ -86,9 +254,11 @@
             const [deletedIds, setDeletedIds] = useState(() => {
                 try {
                     const saved = localStorage.getItem("magic_baking_deleted_recipes");
-                    return saved ? JSON.parse(saved) : [];
+                    const parsedLocal = saved ? JSON.parse(saved) : [];
+                    const baseDeleted = (typeof savedDeletedIds !== 'undefined' && Array.isArray(savedDeletedIds)) ? savedDeletedIds : [];
+                    return Array.from(new Set([...baseDeleted, ...parsedLocal]));
                 } catch (e) {
-                    return [];
+                    return (typeof savedDeletedIds !== 'undefined' && Array.isArray(savedDeletedIds)) ? [...savedDeletedIds] : [];
                 }
             });
 
@@ -671,7 +841,7 @@ ${text}`;
 
             const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes);
 
-            const generateUpdatedHtml = async (updatedCustomRecipes) => {
+            const generateUpdatedHtml = async (updatedCustomRecipes, updatedDeletedIds) => {
                 let rawHtml = "";
                 try {
                     const response = await fetch(window.location.href);
@@ -681,54 +851,29 @@ ${text}`;
                 }
 
                 const jsonStr = JSON.stringify(updatedCustomRecipes, null, 4);
+                const deletedJsonStr = JSON.stringify(updatedDeletedIds || [], null, 4);
+
                 const placeholderStart = "// [SAVED_RECIPES_PLACEHOLDER]";
                 const placeholderEnd = "// [/SAVED_RECIPES_PLACEHOLDER]";
+                const deletedStart = "// [DELETED_IDS_PLACEHOLDER]";
+                const deletedEnd = "// [/DELETED_IDS_PLACEHOLDER]";
 
-                if (rawHtml && rawHtml.includes(placeholderStart) && rawHtml.includes(placeholderEnd)) {
-                    const startIndex = rawHtml.indexOf(placeholderStart) + placeholderStart.length;
-                    const endIndex = rawHtml.indexOf(placeholderEnd);
-                    return rawHtml.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + rawHtml.substring(endIndex);
-                } else {
-                    // 備用方案：使用 DOM 重建 HTML
-                    const babelScript = document.querySelector('script[type="text/babel"]').textContent;
-                    let updatedScript = babelScript;
-                    if (updatedScript.includes(placeholderStart) && updatedScript.includes(placeholderEnd)) {
-                        const startIndex = updatedScript.indexOf(placeholderStart) + placeholderStart.length;
-                        const endIndex = updatedScript.indexOf(placeholderEnd);
-                        updatedScript = updatedScript.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + updatedScript.substring(endIndex);
-                    }
-                    const styleContent = document.querySelector('style')?.textContent || "";
-
-                    return `<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${document.title}</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com">\x3C/script>
-    <!-- React & ReactDOM -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin>\x3C/script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin>\x3C/script>
-    <!-- Babel for JSX compilation in browser -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js">\x3C/script>
-    <style>
-        ${styleContent}
-    </style>
-</head>
-<body>
-    <div id="root"></div>
-
-    \x3Cscript type="text/babel">
-${updatedScript}
-    \x3C/script>
-</body>
-</html>`;
+                let htmlResult = rawHtml;
+                if (htmlResult && htmlResult.includes(placeholderStart) && htmlResult.includes(placeholderEnd)) {
+                    const startIndex = htmlResult.indexOf(placeholderStart) + placeholderStart.length;
+                    const endIndex = htmlResult.indexOf(placeholderEnd);
+                    htmlResult = htmlResult.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + htmlResult.substring(endIndex);
                 }
+                if (htmlResult && htmlResult.includes(deletedStart) && htmlResult.includes(deletedEnd)) {
+                    const startIndex = htmlResult.indexOf(deletedStart) + deletedStart.length;
+                    const endIndex = htmlResult.indexOf(deletedEnd);
+                    htmlResult = htmlResult.substring(0, startIndex) + "\n        const savedDeletedIds = " + deletedJsonStr + ";\n        " + htmlResult.substring(endIndex);
+                }
+                return htmlResult;
             };
 
             const handleSaveToFile = async () => {
-                const updatedHtml = await generateUpdatedHtml(customRecipes);
+                const updatedHtml = await generateUpdatedHtml(customRecipes, deletedIds);
                 try {
                     if (window.showSaveFilePicker) {
                         const handle = await window.showSaveFilePicker({
