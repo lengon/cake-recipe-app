@@ -34,7 +34,39 @@
 
         // Recipes Data (全庫不萊嗯食譜 + 預設食譜)
         const recipes = window.recipes || {};
-        const savedRecipes = {};
+        // [SAVED_RECIPES_PLACEHOLDER]
+        const savedRecipes = {
+            "custom_1785462488277": {
+                "id": "custom_1785462488277",
+                "isCustom": true,
+                "name": "塔皮瑪斯卡波乳酪蛋糕",
+                "englishName": "Mascarpone Cheese Tart",
+                "description": "一款結合塔皮和瑪斯卡波乳酪的獨特蛋糕",
+                "basePan": { "shape": "round", "size": 23, "unit": "inch" },
+                "tips": ["請小心不要刨到柳橙皮的白色部份，因為它有苦味"],
+                "ingredients": [
+                    { "category": "dry", "name": "低筋麵粉", "baseValue": 160, "unit": "g" },
+                    { "category": "dairy", "name": "奶油", "baseValue": 80, "unit": "g" },
+                    { "category": "liquid", "name": "牛奶", "baseValue": 30, "unit": "ml" },
+                    { "category": "dairy", "name": "瑪斯卡波乳酪", "baseValue": 500, "unit": "g", "note": "低脂版" },
+                    { "category": "eggs", "name": "蛋黃", "baseValue": 3, "unit": "個" },
+                    { "category": "liquid", "name": "柳橙汁", "baseValue": 50, "unit": "ml" },
+                    { "category": "dry", "name": "糖", "baseValue": 100, "unit": "g" },
+                    { "category": "eggs", "name": "蛋白", "baseValue": 3, "unit": "個" },
+                    { "category": "fruit", "name": "柳橙皮", "baseValue": 0, "unit": "適量", "isStatic": true }
+                ],
+                "instructions": [
+                    { "step": 1, "text": "將{低筋麵粉}、{奶油}和{牛奶}入攪拌機打成碎屑後，以手捏成團後，置於灑了{低筋麵粉}的工作台上。" },
+                    { "step": 2, "text": "捍成各人喜歡的厚度(約1-2cm)，入抹油或置於烤紙的烤模底部，以叉子於塔底略搓洞。" },
+                    { "step": 3, "text": "將{瑪斯卡波乳酪}、{蛋黃}、{柳橙汁}和{糖}入電動攪拌機，拌打約2分，至呈乳霜狀即可。" },
+                    { "step": 4, "text": "將{蛋白}以攪拌器打發(溼性發泡)。" },
+                    { "step": 5, "text": "將{瑪斯卡波乳酪}、{蛋白}和{柳橙皮}混合在一起，倒入烤模裡。" },
+                    { "step": 6, "text": "入預熱170度C的烤箱，烤35-45分。" },
+                    { "step": 7, "text": "取出後放涼即可食用。" }
+                ]
+            }
+        };
+        // [/SAVED_RECIPES_PLACEHOLDER]
 
         const emptyIngredient = () => ({ category: "dry", name: "", baseValue: "", unit: "克", note: "" });
         const emptyStep = (num) => ({ step: num, text: "" });
@@ -44,9 +76,10 @@
             const [customRecipes, setCustomRecipes] = useState(() => {
                 try {
                     const saved = localStorage.getItem("magic_baking_custom_recipes");
-                    return saved ? JSON.parse(saved) : {};
+                    const parsedLocal = saved ? JSON.parse(saved) : {};
+                    return { ...savedRecipes, ...parsedLocal };
                 } catch (e) {
-                    return {};
+                    return { ...savedRecipes };
                 }
             });
 
