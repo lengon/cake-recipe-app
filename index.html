@@ -1493,7 +1493,7 @@ ${text}`;
                 try {
                     if (window.showSaveFilePicker) {
                         const handle = await window.showSaveFilePicker({
-                            suggestedName: "code_artifact.html",
+                            suggestedName: "index.html",
                             types: [{
                                 description: "HTML Files",
                                 accept: { "text/html": [".html"] }
@@ -1506,7 +1506,7 @@ ${text}`;
                         // 儲存成功，清除 LocalStorage 中的暫存與已刪除清單
                         localStorage.removeItem("magic_baking_custom_recipes");
                         localStorage.removeItem("magic_baking_deleted_recipes");
-                        alert("🎉 成功儲存至檔案本身！此網頁重新整理後自訂食譜依然存在。");
+                        alert("🎉 成功儲存至 index.html 檔案！此網頁重新整理後自訂食譜與刪除紀錄依然存在。");
                         window.location.reload();
                         return;
                     }
@@ -1523,11 +1523,11 @@ ${text}`;
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = "code_artifact.html";
+                a.download = "index.html";
                 a.click();
                 URL.revokeObjectURL(url);
                 
-                alert("📢 瀏覽器不支援直接寫入檔案，已為您下載最新的 code_artifact.html。\n請將其覆蓋/替換掉您原本的檔案以完成儲存！");
+                alert("📢 瀏覽器不支援直接寫入檔案，已為您下載最新的 index.html。\n請將其覆蓋/替換掉您原本的檔案以完成儲存！");
             };
 
             const resetForm = () => {
