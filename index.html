@@ -556,12 +556,12 @@
         const emptyStep = (num) => ({ step: num, text: "" });
 
         function App() {
-            // 從 LocalStorage 載入自訂食譜，並合併檔案內的 savedRecipes（扣除已刪除的）
+            // 從 LocalStorage 載入自訂食譜，並合併檔案內的 savedRecipes（檔案發布內容優先於舊快取）
             const [customRecipes, setCustomRecipes] = useState(() => {
                 try {
                     const saved = localStorage.getItem("magic_baking_custom_recipes");
                     const parsedLocal = saved ? JSON.parse(saved) : {};
-                    return { ...savedRecipes, ...parsedLocal };
+                    return { ...parsedLocal, ...savedRecipes };
                 } catch (e) {
                     return { ...savedRecipes };
                 }
@@ -1154,6 +1154,14 @@ ${text}`;
             };
 
             
+
+            const handleResetToServerVersion = () => {
+                if (window.confirm("確定要清除瀏覽器舊快取，並載入最新發布的食譜與刪除紀錄嗎？")) {
+                    localStorage.removeItem("magic_baking_custom_recipes");
+                    localStorage.removeItem("magic_baking_deleted_recipes");
+                    window.location.reload(true);
+                }
+            };
 
             const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes);
 
