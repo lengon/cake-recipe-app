@@ -23,21 +23,40 @@ const cheeseRecipes = {
   "cheese_p34_hazelnut_cookie_base": {
     "id": "cheese_p34_hazelnut_cookie_base",
     "isCustom": true,
-    "name": "榛果餅乾底與酥菠蘿",
-    "englishName": "Hazelnut Cookie Base & Streusel",
-    "description": "[頁碼] 第 34-35 頁 | 基礎底材與裝飾",
+    "name": "榛果餅乾底",
+    "englishName": "Hazelnut Cookie Base",
+    "description": "[頁碼] 第 34 頁 | 基礎底材 (1個底)",
     "basePan": { "shape": "custom", "size": "1", "unit": "base" },
-    "tips": ["全部材料自冷藏庫取出，用食物調理機打成砂狀即可。"],
+    "tips": ["出爐後放涼，再冷凍半小時即可。"],
     "ingredients": [
       { "category": "dry", "name": "榛果粉", "baseValue": 100, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 100, "unit": "g" },
       { "category": "wet", "name": "無鹽奶油", "baseValue": 100, "unit": "g" },
-      { "category": "dry", "name": "二砂砂糖", "baseValue": 100, "unit": "g" }
+      { "category": "dry", "name": "二砂糖", "baseValue": 100, "unit": "g" }
     ],
     "instructions": [
       { "step": 1, "text": "將全部材料自冷藏庫取出，用食物調理機打成砂狀。" },
-      { "step": 2, "text": "做餅乾底時：壓入模具，以175℃烘烤20分鐘，放涼後冷凍半小時。" },
-      { "step": 3, "text": "做酥菠蘿時：鋪於洞洞烤墊上，以175℃烘烤20分鐘放涼即可。" }
+      { "step": 2, "text": "壓入模具中，以175℃／175℃烘烤20分鐘。" },
+      { "step": 3, "text": "出爐後放涼，再冷凍半小時即可。" }
+    ]
+  },
+  "cheese_p34_hazelnut_streusel": {
+    "id": "cheese_p34_hazelnut_streusel",
+    "isCustom": true,
+    "name": "榛果酥菠蘿",
+    "englishName": "Hazelnut Streusel",
+    "description": "[頁碼] 第 34-35 頁 | 頂端裝飾 (適量)",
+    "basePan": { "shape": "custom", "size": "1", "unit": "batch" },
+    "tips": ["放在洞洞烤墊上烘烤，放涼備用。"],
+    "ingredients": [
+      { "category": "dry", "name": "榛果粉", "baseValue": 100, "unit": "g" },
+      { "category": "dry", "name": "低筋麵粉", "baseValue": 100, "unit": "g" },
+      { "category": "wet", "name": "無鹽奶油", "baseValue": 100, "unit": "g" },
+      { "category": "dry", "name": "二砂糖", "baseValue": 100, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "將全部材料自冷藏庫取出，用食物調理機打成砂狀。" },
+      { "step": 2, "text": "鋪於洞洞烤墊上，以175℃／175℃烘烤20分鐘，出爐放涼即可。" }
     ]
   },
   "cheese_p35_puffed_rice_sesame_crust": {
@@ -47,7 +66,7 @@ const cheeseRecipes = {
     "englishName": "Puffed Rice Sesame Crust",
     "description": "[頁碼] 第 35 頁 | 基礎底材 (1個底)",
     "basePan": { "shape": "custom", "size": "1", "unit": "base" },
-    "tips": ["芝麻粒與米果需先以100℃烘烤15分鐘至熟。"],
+    "tips": ["白芝麻粒與米果需先以100℃烘烤15分鐘至熟。"],
     "ingredients": [
       { "category": "flavor", "name": "白芝麻粒", "baseValue": 20, "unit": "g" },
       { "category": "base", "name": "米果", "baseValue": 100, "unit": "g" },
@@ -66,7 +85,7 @@ const cheeseRecipes = {
     "englishName": "Plain Sponge Cake",
     "description": "[頁碼] 第 36-37 頁 | 6吋圓形模具1個",
     "basePan": { "shape": "round", "size": "6", "unit": "inch" },
-    "tips": ["模具鋪烘焙紙，全蛋加糖隔水加熱至50℃再打發。"],
+    "tips": ["全蛋加糖隔水加熱至50℃再以高速打發。"],
     "ingredients": [
       { "category": "wet", "name": "全蛋", "baseValue": 150, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 82, "unit": "g" },
@@ -74,11 +93,11 @@ const cheeseRecipes = {
       { "category": "wet", "name": "無鹽奶油", "baseValue": 25, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "將全蛋與細砂糖隔水加熱到50℃，再以高速打發。" },
+      { "step": 1, "text": "全蛋與細砂糖隔水加熱到50℃，再以高速打發。" },
       { "step": 2, "text": "出現堆疊感時轉低速，打發至提起能寫8字維持5秒不沉降。" },
-      { "step": 3, "text": "篩入低筋麵粉輕柔快速拌勻。" },
+      { "step": 3, "text": "過篩加入低筋麵粉，輕柔快速拌勻。" },
       { "step": 4, "text": "取1/4麵糊與融化奶油拌勻，再倒回主麵糊快速混合。" },
-      { "step": 5, "text": "倒入6吋模具，以180℃烤約25分鐘，出爐直接脫模。" }
+      { "step": 5, "text": "倒入6吋模具，以180℃烤約25分鐘，出爐直接脫模撕紙。" }
     ]
   },
   "cheese_p40_french_tart_crust": {
@@ -98,10 +117,12 @@ const cheeseRecipes = {
       { "category": "dry", "name": "低筋麵粉", "baseValue": 140, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油加糖粉打勻，加入杏仁粉與鹽拌勻。" },
-      { "step": 2, "text": "加入全蛋拌勻，再加入低筋麵粉拌成糰。" },
-      { "step": 3, "text": "冷藏30分鐘，桿成0.3cm厚片，用直徑9cm模具壓圓。" },
-      { "step": 4, "text": "入塔圈捏直角並切除溢皮，以180℃/175℃烤18分鐘出爐。" }
+      { "step": 1, "text": "無鹽奶油加糖粉攪拌均勻。" },
+      { "step": 2, "text": "加入杏仁粉與鹽攪拌均勻。" },
+      { "step": 3, "text": "加入全蛋液攪拌均勻。" },
+      { "step": 4, "text": "加入低筋麵粉，攪拌成團即可。" },
+      { "step": 5, "text": "冷藏30分鐘，桿成0.3cm厚片，用直徑9cm模具壓圓。" },
+      { "step": 6, "text": "入塔圈捏出直角，小刀切去多餘麵團，洞洞烤墊上以180℃/175℃烤18分鐘。" }
     ]
   },
   "cheese_p42_easy_tart_crust": {
@@ -111,7 +132,7 @@ const cheeseRecipes = {
     "englishName": "Easy Tart Crust",
     "description": "[頁碼] 第 42-43 頁 | 直徑6cm空塔皮大約7個",
     "basePan": { "shape": "round", "size": "6", "unit": "cm" },
-    "tips": ["材料皆冰硬，使用食物調理機快速打成不黏手麵糰。"],
+    "tips": ["所有粉類與奶油皆冰硬，食物調理機快速打成麵糰。"],
     "ingredients": [
       { "category": "wet", "name": "無鹽奶油", "baseValue": 135, "unit": "g" },
       { "category": "dry", "name": "糖粉", "baseValue": 105, "unit": "g" },
@@ -122,9 +143,88 @@ const cheeseRecipes = {
       { "category": "wet", "name": "全蛋", "baseValue": 24, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "粉類與奶油放入食物調理機混勻。" },
-      { "step": 2, "text": "加入全蛋打成不黏手麵糰。" },
-      { "step": 3, "text": "桿成0.4cm厚片，用7cm模壓圓，放置洞洞烤墊上，以140℃烤15-20分鐘。" }
+      { "step": 1, "text": "奶油、糖粉、杏仁粉、鹽、低筋麵粉與檸檬粉放入食物調理機混勻。" },
+      { "step": 2, "text": "加入全蛋，持續攪拌直到成為不黏手麵糰。" },
+      { "step": 3, "text": "桿成0.4cm厚片，用7cm模具壓圓，置於洞洞烤墊上，以140℃/140℃烤15-20分鐘。" }
+    ]
+  },
+  "cheese_p44_rum_soaked_raisins": {
+    "id": "cheese_p44_rum_soaked_raisins",
+    "isCustom": true,
+    "name": "酒漬葡萄乾",
+    "englishName": "Rum-Soaked Raisins",
+    "description": "[頁碼] 第 44 頁 | 夾心與裝飾 (約100g)",
+    "basePan": { "shape": "custom", "size": "100", "unit": "g" },
+    "tips": ["葡萄乾瀝乾後，加入蘭姆酒醃製15分鐘。"],
+    "ingredients": [
+      { "category": "base", "name": "葡萄乾", "baseValue": 100, "unit": "g" },
+      { "category": "wet", "name": "水", "baseValue": 100, "unit": "g" },
+      { "category": "dry", "name": "細砂糖", "baseValue": 100, "unit": "g" },
+      { "category": "flavor", "name": "蘭姆酒", "baseValue": 20, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "葡萄乾、水與細砂糖一起加熱到沸騰。" },
+      { "step": 2, "text": "將葡萄乾取出瀝乾，倒入蘭姆酒醃製15分鐘即可。" }
+    ]
+  },
+  "cheese_p45_homemade_taro_paste": {
+    "id": "cheese_p45_homemade_taro_paste",
+    "isCustom": true,
+    "name": "自製芋泥",
+    "englishName": "Homemade Taro Paste",
+    "description": "[頁碼] 第 45 頁 | 夾心與裝飾 (約300g)",
+    "basePan": { "shape": "custom", "size": "300", "unit": "g" },
+    "tips": ["蒸熟後趁熱與砂糖、奶粉、鮮奶油、奶油及液態油拌勻。"],
+    "ingredients": [
+      { "category": "base", "name": "芋頭 (蒸熟)", "baseValue": 170, "unit": "g" },
+      { "category": "dry", "name": "細砂糖", "baseValue": 35, "unit": "g" },
+      { "category": "dry", "name": "奶粉", "baseValue": 15, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 50, "unit": "g" },
+      { "category": "wet", "name": "無鹽奶油", "baseValue": 10, "unit": "g" },
+      { "category": "wet", "name": "液態油", "baseValue": 25, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "芋頭洗淨削皮切塊，以電鍋蒸至熟透。" },
+      { "step": 2, "text": "趁熱將蒸熟芋頭與細砂糖、奶粉、鮮奶油、無鹽奶油、液態油攪拌均勻。" }
+    ]
+  },
+  "cheese_p45_chocolate_ganache": {
+    "id": "cheese_p45_chocolate_ganache",
+    "isCustom": true,
+    "name": "巧克力甘納許",
+    "englishName": "Chocolate Ganache",
+    "description": "[頁碼] 第 45-46 頁 | 擠花裝飾 (適量)",
+    "basePan": { "shape": "custom", "size": "1", "unit": "batch" },
+    "tips": ["冷藏過夜後打發至硬挺無流動性。"],
+    "ingredients": [
+      { "category": "base", "name": "72%黑巧克力", "baseValue": 120, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 200, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "動物性鮮奶油以小火煮滾後沖入黑巧克力中。" },
+      { "step": 2, "text": "靜置1分鐘後攪拌均勻，冷藏過夜。" },
+      { "step": 3, "text": "隔日取出用打蛋器打發至硬挺無流動性即可擠花。" }
+    ]
+  },
+  "cheese_p47_italian_meringue": {
+    "id": "cheese_p47_italian_meringue",
+    "isCustom": true,
+    "name": "義式蛋白霜",
+    "englishName": "Italian Meringue",
+    "description": "[頁碼] 第 47 頁 | 基礎材料 (適量)",
+    "basePan": { "shape": "custom", "size": "1", "unit": "batch" },
+    "tips": ["糖漿煮至118℃沖入打發蛋白中，打至鋼盆微溫。"],
+    "ingredients": [
+      { "category": "dry", "name": "細砂糖 (糖漿)", "baseValue": 64, "unit": "g" },
+      { "category": "flavor", "name": "鹽", "baseValue": 1, "unit": "g" },
+      { "category": "wet", "name": "水", "baseValue": 15, "unit": "g" },
+      { "category": "wet", "name": "蛋白", "baseValue": 100, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (蛋白)", "baseValue": 70, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "糖、鹽與水以小火加熱，升溫至110℃時開始打發蛋白加糖。" },
+      { "step": 2, "text": "糖漿升至118℃時，細流沖入蛋白中一邊高速打發。" },
+      { "step": 3, "text": "持續打發至鋼盆微溫不燙手即可。" }
     ]
   },
   "cheese_p52_kyoto_matcha_heavy_cheesecake": {
@@ -136,20 +236,24 @@ const cheeseRecipes = {
     "basePan": { "shape": "square", "size": "SN3305", "unit": "cm" },
     "tips": ["蛋黃隔水加熱至50℃拌勻，蛋白打七分發，水浴法160℃烤60分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "孔雀餅乾底", "baseValue": 100, "unit": "g", "note": "參考P.33" },
+      { "category": "base", "name": "市售孔雀餅乾", "baseValue": 70, "unit": "g", "note": "孔雀餅乾底" },
+      { "category": "wet", "name": "無鹽奶油", "baseValue": 30, "unit": "g", "note": "孔雀餅乾底" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 330, "unit": "g" },
-      { "category": "dry", "name": "細砂糖", "baseValue": 110, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (A料)", "baseValue": 55, "unit": "g" },
       { "category": "wet", "name": "蛋黃", "baseValue": 36, "unit": "g" },
       { "category": "flavor", "name": "抹茶粉", "baseValue": 13, "unit": "g" },
       { "category": "wet", "name": "水", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "蛋白", "baseValue": 64, "unit": "g" },
-      { "category": "decoration", "name": "抹茶粉與防潮糖粉 (裝飾)", "baseValue": 0, "unit": "g", "note": "適量" }
+      { "category": "dry", "name": "細砂糖 (E料蛋白)", "baseValue": 55, "unit": "g" },
+      { "category": "decoration", "name": "抹茶粉 (表面飾粉)", "baseValue": 20, "unit": "g" },
+      { "category": "decoration", "name": "防潮糖粉 (表面飾粉)", "baseValue": 100, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油乳酪加糖隔水加熱至50℃拌勻。" },
-      { "step": 2, "text": "蛋黃加熱至50℃加入乳酪中，再加入抹茶粉與水拌勻過篩。" },
-      { "step": 3, "text": "蛋白加糖打七分發，與乳酪糊拌勻倒入餅乾底上抹平。" },
-      { "step": 4, "text": "水浴法160℃烤60分鐘，放涼脫模撒抹茶糖粉。" }
+      { "step": 1, "text": "孔雀餅乾壓碎加融化奶油壓實為底，冷凍半小時。" },
+      { "step": 2, "text": "奶油乳酪加糖55g隔水加熱至50℃拌勻。" },
+      { "step": 3, "text": "蛋黃加熱至50℃加入乳酪中，再加入抹茶粉13g與水30g拌勻過篩。" },
+      { "step": 4, "text": "蛋白64g加糖55g打七分發，與抹茶乳酪糊拌勻倒餅乾底上。" },
+      { "step": 5, "text": "水浴法160℃烤60分鐘，放涼脫模撒混勻之飾粉。" }
     ]
   },
   "cheese_p59_landscape_cheesecake": {
@@ -161,22 +265,31 @@ const cheeseRecipes = {
     "basePan": { "shape": "round", "size": "15", "unit": "cm" },
     "tips": ["冷藏5天 / 冷凍10天。吹風機吹出山水墨紋後快速冷凍。"],
     "ingredients": [
-      { "category": "base", "name": "檸檬孔雀餅乾底", "baseValue": 125, "unit": "g" },
+      { "category": "base", "name": "天然檸檬粉", "baseValue": 10, "unit": "g", "note": "檸檬餅乾底" },
+      { "category": "base", "name": "檸檬皮屑", "baseValue": 5, "unit": "g", "note": "檸檬餅乾底" },
+      { "category": "base", "name": "市售孔雀餅乾", "baseValue": 75, "unit": "g", "note": "檸檬餅乾底" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 35, "unit": "g", "note": "檸檬餅乾底" },
       { "category": "wet", "name": "牛奶", "baseValue": 70, "unit": "g" },
-      { "category": "dry", "name": "細砂糖", "baseValue": 65, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (A料)", "baseValue": 40, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (B料)", "baseValue": 25, "unit": "g" },
       { "category": "wet", "name": "蛋黃", "baseValue": 40, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 220, "unit": "g" },
       { "category": "dry", "name": "吉利丁片", "baseValue": 12, "unit": "g" },
       { "category": "flavor", "name": "檸檬汁", "baseValue": 20, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油 (七分發)", "baseValue": 268, "unit": "g" },
-      { "category": "flavor", "name": "竹炭粉", "baseValue": 5, "unit": "g" }
+      { "category": "flavor", "name": "竹炭粉", "baseValue": 5, "unit": "g" },
+      { "category": "decoration", "name": "鏡面細砂糖", "baseValue": 75, "unit": "g", "note": "香草鏡面" },
+      { "category": "decoration", "name": "葡萄糖漿", "baseValue": 50, "unit": "g", "note": "香草鏡面" },
+      { "category": "decoration", "name": "水", "baseValue": 30, "unit": "g", "note": "香草鏡面" },
+      { "category": "decoration", "name": "香草莢", "baseValue": 0.5, "unit": "根", "note": "香草鏡面" },
+      { "category": "decoration", "name": "鏡面吉利丁片", "baseValue": 4, "unit": "g", "note": "香草鏡面" }
     ],
     "instructions": [
-      { "step": 1, "text": "牛奶加糖加熱至72℃，沖入蛋黃糖糊再回煮至80℃。" },
-      { "step": 2, "text": "加入泡軟吉利丁與軟化奶油乳酪攪打滑順，加入檸檬汁過篩降溫至30℃。" },
-      { "step": 3, "text": "拌入七分發鮮奶油，分1/4加入竹炭粉調成黑色麵糊。" },
-      { "step": 4, "text": "原色乳酪糊倒餅乾底上，倒入竹炭糊用吹風機吹出墨紋，冷凍2小時。" },
-      { "step": 5, "text": "脫模後淋上香草透明鏡面。" }
+      { "step": 1, "text": "牛奶加糖40g加熱到72℃，沖入蛋黃加糖25g之蛋糊，回煮至80℃。" },
+      { "step": 2, "text": "倒入吉利丁12g與軟化奶油乳酪攪拌滑順，加入檸檬汁過篩降溫至28-32℃。" },
+      { "step": 3, "text": "分次加入七分發鮮奶油，取出1/4原色乳酪糊加入竹炭粉拌勻。" },
+      { "step": 4, "text": "原色乳酪糊倒餅乾底上，倒入竹炭糊用吹風機吹出潑墨紋，冷凍2小時。" },
+      { "step": 5, "text": "脫模後淋上降溫至30℃之香草透明鏡面。" }
     ]
   },
   "cheese_p65_new_york_cheesecake": {
@@ -184,11 +297,12 @@ const cheeseRecipes = {
     "isCustom": true,
     "name": "基礎紐約乳酪蛋糕",
     "englishName": "Basic New York Cheesecake",
-    "description": "[頁碼] 第 65-67 頁 | 15cm圓形模1個",
+    "description": "[頁碼] 第 65-67 頁 | 15cm圓形1個",
     "basePan": { "shape": "round", "size": "15", "unit": "cm" },
     "tips": ["水浴法170℃烘烤40-45分鐘。冷凍2小時後微加熱模具脫模。"],
     "ingredients": [
-      { "category": "base", "name": "消化餅乾底", "baseValue": 100, "unit": "g" },
+      { "category": "base", "name": "市售消化餅乾", "baseValue": 70, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 73, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油", "baseValue": 80, "unit": "g" },
@@ -196,13 +310,15 @@ const cheeseRecipes = {
       { "category": "wet", "name": "原味無糖優格", "baseValue": 100, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 110, "unit": "g" },
       { "category": "flavor", "name": "檸檬汁", "baseValue": 15, "unit": "g" },
-      { "category": "dry", "name": "低筋麵粉", "baseValue": 15, "unit": "g" }
+      { "category": "dry", "name": "低筋麵粉", "baseValue": 15, "unit": "g" },
+      { "category": "decoration", "name": "裝飾鮮奶油 (打發)", "baseValue": 50, "unit": "g", "note": "些許" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油乳酪加糖用食物調理機打發至質地柔軟。" },
-      { "step": 2, "text": "依序加入鮮奶油、牛奶、優格、全蛋、檸檬汁攪打均勻。" },
-      { "step": 3, "text": "過篩加入低粉輕柔拌勻，倒入餅乾底上。" },
-      { "step": 4, "text": "170℃水浴烘烤40-45分鐘，冷藏或冷凍後脫模，表面抹八分發鮮奶油。" }
+      { "step": 1, "text": "餅乾壓碎加融化奶油壓實為底，冷凍半小時。" },
+      { "step": 2, "text": "奶油乳酪加糖用食物調理機打發至質地柔軟。" },
+      { "step": 3, "text": "依序加入鮮奶油、牛奶、優格、全蛋、檸檬汁攪打均勻。" },
+      { "step": 4, "text": "過篩分次加入低粉輕柔拌勻，倒入餅乾底上。" },
+      { "step": 5, "text": "170℃水浴烘烤40-45分鐘，冷凍2小時脫模，表面抹八分發鮮奶油。" }
     ]
   },
   "cheese_p69_double_cheese_cake": {
@@ -210,11 +326,12 @@ const cheeseRecipes = {
     "isCustom": true,
     "name": "Double Cheese 蛋糕",
     "englishName": "Double Cheese Cake",
-    "description": "[頁碼] 第 69-71 頁 | 15cm圓形模1個",
+    "description": "[頁碼] 第 69-71 頁 | 15cm圓形1個",
     "basePan": { "shape": "round", "size": "15", "unit": "cm" },
     "tips": ["包含酸奶油與奶油乳酪的雙重起司濃郁口感。水浴160℃烤50分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "消化餅乾底 (鋪側邊)", "baseValue": 135, "unit": "g" },
+      { "category": "base", "name": "市售消化餅乾", "baseValue": 105, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 260, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 93, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油", "baseValue": 26, "unit": "g" },
@@ -224,9 +341,9 @@ const cheeseRecipes = {
       { "category": "dry", "name": "低筋麵粉", "baseValue": 20, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "消化餅乾底鋪滿模具底部與側面並壓實冷凍。" },
-      { "step": 2, "text": "奶油乳酪加糖打軟，加入鮮奶油、酸奶油、全蛋、檸檬汁打勻。" },
-      { "step": 3, "text": "拌入低粉倒入模中，160℃水浴烤50分鐘，冷凍2小時脫模。" }
+      { "step": 1, "text": "消化餅乾加奶油壓實於模具底部與側面，冷凍半小時。" },
+      { "step": 2, "text": "奶油乳酪加糖用調理機打軟，依序加入鮮奶油、酸奶油、全蛋、檸檬汁打勻。" },
+      { "step": 3, "text": "分次拌入低粉，倒入餅乾底上，160℃水浴烤50分鐘，冷凍2小時脫模。" }
     ]
   },
   "cheese_p73_vanilla_sour_cream_snow": {
@@ -238,7 +355,8 @@ const cheeseRecipes = {
     "basePan": { "shape": "custom", "size": "6.8x4.6x2.5", "unit": "cm" },
     "tips": ["香草莢與牛奶鮮奶油煮滾降溫至25-35℃再拌入乳酪中。"],
     "ingredients": [
-      { "category": "base", "name": "消化餅乾底", "baseValue": 130, "unit": "g" },
+      { "category": "base", "name": "市售消化餅乾", "baseValue": 100, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 100, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油", "baseValue": 200, "unit": "g" },
@@ -247,13 +365,14 @@ const cheeseRecipes = {
       { "category": "wet", "name": "原味優格", "baseValue": 100, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 80, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 20, "unit": "g" },
-      { "category": "decoration", "name": "酸奶油加糖粉 (白雪層)", "baseValue": 125, "unit": "g" }
+      { "category": "decoration", "name": "酸奶油", "baseValue": 100, "unit": "g", "note": "白雪層" },
+      { "category": "decoration", "name": "糖粉", "baseValue": 25, "unit": "g", "note": "白雪層" }
     ],
     "instructions": [
-      { "step": 1, "text": "鮮奶油、牛奶與香草籽煮滾悶香，放涼至室溫。" },
-      { "step": 2, "text": "奶油乳酪加糖打軟，拌入香草牛奶、優格、全蛋與低粉。" },
-      { "step": 3, "text": "倒入模中，160℃水浴烤50分鐘出爐，冷凍2小時脫模。" },
-      { "step": 4, "text": "表面抹上一匙糖粉酸奶油，點綴果醬即可。" }
+      { "step": 1, "text": "鮮奶油、牛奶與香草莢煮滾，悶香30分鐘放涼至室溫。" },
+      { "step": 2, "text": "奶油乳酪加糖打軟，分次拌入香草牛奶，再加入優格、全蛋與低粉拌勻。" },
+      { "step": 3, "text": "倒入餅乾底模中，160℃水浴烤50分鐘，冷凍2小時脫模。" },
+      { "step": 4, "text": "糖粉過篩與酸奶油拌勻，挖1湯匙於蛋糕上，點綴果醬裝飾。" }
     ]
   },
   "cheese_p77_hazelnut_streusel_cheesecake": {
@@ -265,20 +384,21 @@ const cheeseRecipes = {
     "basePan": { "shape": "square", "size": "15", "unit": "cm" },
     "tips": ["包含榛果餅乾底、榛果醬乳酪糊、酒漬葡萄乾與榛果酥菠蘿。"],
     "ingredients": [
-      { "category": "base", "name": "榛果餅乾底", "baseValue": 400, "unit": "g", "note": "參考P.34" },
+      { "category": "decoration", "name": "榛果酥菠蘿 (榛果粉/奶油/麵粉/二砂)", "baseValue": 400, "unit": "g", "note": "參考P.34" },
+      { "category": "base", "name": "榛果餅乾底 (榛果粉/奶油/麵粉/二砂)", "baseValue": 400, "unit": "g", "note": "參考P.34" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 280, "unit": "g" },
       { "category": "dry", "name": "二砂糖", "baseValue": 75, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油", "baseValue": 25, "unit": "g" },
       { "category": "flavor", "name": "無糖榛果醬", "baseValue": 140, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 100, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 5, "unit": "g" },
-      { "category": "flavor", "name": "酒漬葡萄乾", "baseValue": 35, "unit": "g" },
-      { "category": "decoration", "name": "榛果酥菠蘿", "baseValue": 400, "unit": "g", "note": "參考P.34" }
+      { "category": "flavor", "name": "酒漬葡萄乾", "baseValue": 35, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油乳酪加二砂糖打軟，鮮奶油與榛果醬、全蛋加熱至50℃拌入。" },
-      { "step": 2, "text": "拌入低粉與酒漬葡萄乾，倒入烤好的榛果餅乾底上。" },
-      { "step": 3, "text": "表面撒滿榛果酥菠蘿，以170℃烤40-45分鐘，放涼冷凍後脫模。" }
+      { "step": 1, "text": "榛果餅乾底烤好放涼冷凍；製作榛果酥菠蘿備用。" },
+      { "step": 2, "text": "奶油乳酪加二砂糖打軟，鮮奶油與榛果醬、全蛋混勻加熱至50℃分次拌入。" },
+      { "step": 3, "text": "拌入低粉與酒漬葡萄乾，倒入烤好的榛果餅乾底上抹平。" },
+      { "step": 4, "text": "表面撒滿榛果酥菠蘿粒，以170℃烤40-45分鐘，冷凍2小時脫模。" }
     ]
   },
   "cheese_p81_taro_heavy_cheesecake": {
@@ -290,22 +410,24 @@ const cheeseRecipes = {
     "basePan": { "shape": "round", "size": "10", "unit": "cm" },
     "tips": ["自製低糖烤芋泥，雙層漸層夾心設計。160℃水浴烤20分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "奇福餅乾底", "baseValue": 130, "unit": "g" },
+      { "category": "base", "name": "市售奇福餅乾", "baseValue": 100, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 100, "unit": "g" },
-      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 150, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油 (乳酪糊)", "baseValue": 150, "unit": "g" },
       { "category": "wet", "name": "牛奶", "baseValue": 60, "unit": "g" },
       { "category": "wet", "name": "優格", "baseValue": 40, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 120, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 30, "unit": "g" },
-      { "category": "flavor", "name": "自製烤芋泥", "baseValue": 500, "unit": "g" },
-      { "category": "decoration", "name": "玫瑰花瓣與堅果碎", "baseValue": 0, "unit": "g", "note": "裝飾" }
+      { "category": "flavor", "name": "自製芋泥 (夾層與內餡)", "baseValue": 300, "unit": "g", "note": "參考P.45" },
+      { "category": "decoration", "name": "自製芋泥 (裝飾)", "baseValue": 200, "unit": "g", "note": "參考P.45" },
+      { "category": "decoration", "name": "動物性鮮奶油 (裝飾)", "baseValue": 200, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油乳酪加糖打軟，加入鮮奶油、牛奶、優格、全蛋與低粉打成原味乳酪糊。" },
-      { "step": 2, "text": "餅乾底上先鋪100g自製芋泥，再鋪芋泥與乳酪糊混合層(各80g)。" },
-      { "step": 3, "text": "最上層倒入原味乳酪糊抹平，160℃水浴烤20分鐘。" },
-      { "step": 4, "text": "冷凍2小時脫模，頂端擠芋泥鮮奶油裝飾。" }
+      { "step": 1, "text": "奶油乳酪加糖打軟，加入鮮奶油150g、牛奶60g、優格40g、全蛋120g與低粉30g打成原味乳酪麵糊。" },
+      { "step": 2, "text": "餅乾底上先鋪100g純芋泥抹平，再鋪芋泥80g與原味乳酪麵糊80g之混合層抹平。" },
+      { "step": 3, "text": "最上層倒入原味乳酪麵糊抹平，160℃水浴烤20分鐘。" },
+      { "step": 4, "text": "冷凍2小時脫模，頂端擠裝飾芋泥鮮奶油，點綴玫瑰花瓣與堅果碎。" }
     ]
   },
   "cheese_p85_puffed_rice_sesame_cheesecake": {
@@ -317,20 +439,24 @@ const cheeseRecipes = {
     "basePan": { "shape": "rectangle", "size": "7.9x2.9x3", "unit": "cm" },
     "tips": ["米香白芝麻底，雙色芝麻與香草乳酪雙拼。170℃烤20-30分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "米香芝麻底", "baseValue": 150, "unit": "g", "note": "參考P.35" },
+      { "category": "base", "name": "米果", "baseValue": 100, "unit": "g", "note": "米香芝麻底" },
+      { "category": "base", "name": "白芝麻粒", "baseValue": 20, "unit": "g", "note": "米香芝麻底" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g", "note": "米香芝麻底" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 60, "unit": "g" },
       { "category": "wet", "name": "牛奶", "baseValue": 50, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油 (乳酪糊)", "baseValue": 50, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 100, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 15, "unit": "g" },
-      { "category": "flavor", "name": "炒熟芝麻粒與芝麻醬", "baseValue": 120, "unit": "g" },
-      { "category": "wet", "name": "動物性鮮奶油加香草莢醬", "baseValue": 92, "unit": "g" }
+      { "category": "flavor", "name": "炒熟芝麻粒 (磨粉)", "baseValue": 20, "unit": "g" },
+      { "category": "flavor", "name": "芝麻醬", "baseValue": 100, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油 (香草層)", "baseValue": 90, "unit": "g" },
+      { "category": "flavor", "name": "香草莢醬", "baseValue": 2, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "乳酪打軟加糖、牛奶、鮮奶油、全蛋與低粉，分成兩份。" },
-      { "step": 2, "text": "一份拌入熟芝麻粉與芝麻醬；一份拌入鮮奶油與香草醬。" },
-      { "step": 3, "text": "兩色乳酪糊混合倒入米香底上，170℃烤20-30分鐘後冷凍脫模。" }
+      { "step": 1, "text": "乳酪打軟加糖、牛奶、鮮奶油50g、全蛋與低粉，分成兩份。" },
+      { "step": 2, "text": "一份拌入熟芝麻粉20g與芝麻醬100g；一份拌入鮮奶油90g與香草醬2g。" },
+      { "step": 3, "text": "兩色乳酪糊隨意混合倒於米香底上，170℃烤20-30分鐘，冷凍2小時脫模。" }
     ]
   },
   "cheese_p89_peanut_cheesecake": {
@@ -342,22 +468,26 @@ const cheeseRecipes = {
     "basePan": { "shape": "round", "size": "3x5.8", "unit": "cm" },
     "tips": ["消化餅乾花生粉底，花生醬濃郁內餡與頂端花生鮮奶油。170℃烤20-30分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "花生消化餅乾底", "baseValue": 150, "unit": "g" },
+      { "category": "base", "name": "市售消化餅乾", "baseValue": 80, "unit": "g" },
+      { "category": "base", "name": "花生粉 (餅乾底)", "baseValue": 30, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 40, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 60, "unit": "g" },
       { "category": "wet", "name": "牛奶", "baseValue": 50, "unit": "g" },
-      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 100, "unit": "g" },
-      { "category": "flavor", "name": "花生醬", "baseValue": 120, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油 (乳酪糊)", "baseValue": 100, "unit": "g" },
+      { "category": "flavor", "name": "花生醬 (乳酪糊)", "baseValue": 120, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 100, "unit": "g" },
-      { "category": "flavor", "name": "花生粉", "baseValue": 18, "unit": "g" },
+      { "category": "flavor", "name": "花生粉 (乳酪糊)", "baseValue": 18, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 15, "unit": "g" },
-      { "category": "decoration", "name": "花生鮮奶油與花生粉", "baseValue": 260, "unit": "g" }
+      { "category": "decoration", "name": "花生醬 (裝飾)", "baseValue": 30, "unit": "g" },
+      { "category": "decoration", "name": "動物性鮮奶油 (裝飾)", "baseValue": 200, "unit": "g" },
+      { "category": "decoration", "name": "花生粉 (裝飾)", "baseValue": 30, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "消化餅乾加花生粉與融化奶油壓緊為底。" },
-      { "step": 2, "text": "奶油乳酪加糖、牛奶、鮮奶油、花生醬、全蛋、花生粉與低粉打勻。" },
+      { "step": 1, "text": "消化餅乾加花生粉30g與融化奶油40g壓緊為底，冷凍半小時。" },
+      { "step": 2, "text": "奶油乳酪加糖、牛奶、鮮奶油100g、花生醬120g、全蛋、花生粉18g與低粉打勻。" },
       { "step": 3, "text": "倒入模中，170℃烤20-30分鐘出爐，冷凍2小時脫模。" },
-      { "step": 4, "text": "打發鮮奶油加花生醬擠花，灑上花生粉。" }
+      { "step": 4, "text": "打發鮮奶油200g加花生醬30g打八分發擠花，點綴花生粉30g。" }
     ]
   },
   "cheese_p93_chocolate_banana_cheesecake": {
@@ -369,21 +499,26 @@ const cheeseRecipes = {
     "basePan": { "shape": "round", "size": "10", "unit": "cm" },
     "tips": ["OREO餅乾底，熟成香蕉泥拌入，水浴170℃烤20-30分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "OREO 餅乾底", "baseValue": 85, "unit": "g" },
+      { "category": "base", "name": "市售 OREO 餅乾", "baseValue": 70, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 15, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 225, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 65, "unit": "g" },
-      { "category": "wet", "name": "鮮奶油與酸奶油", "baseValue": 90, "unit": "g" },
-      { "category": "flavor", "name": "蘭姆酒與無糖榛果醬", "baseValue": 15, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 25, "unit": "g" },
+      { "category": "wet", "name": "酸奶油", "baseValue": 65, "unit": "g" },
+      { "category": "flavor", "name": "蘭姆酒", "baseValue": 5, "unit": "g" },
+      { "category": "flavor", "name": "無糖榛果醬", "baseValue": 10, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 80, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 9, "unit": "g" },
       { "category": "flavor", "name": "香蕉丁", "baseValue": 100, "unit": "g" },
-      { "category": "flavor", "name": "72%黑巧克力加巴瑞脆片", "baseValue": 70, "unit": "g" },
-      { "category": "decoration", "name": "巧克力甘納許", "baseValue": 320, "unit": "g", "note": "參考P.45" }
+      { "category": "flavor", "name": "72%黑巧克力", "baseValue": 50, "unit": "g" },
+      { "category": "flavor", "name": "巴瑞脆片", "baseValue": 20, "unit": "g" },
+      { "category": "decoration", "name": "72%黑巧克力 (甘納許)", "baseValue": 120, "unit": "g", "note": "參考P.45" },
+      { "category": "decoration", "name": "動物性鮮奶油 (甘納許)", "baseValue": 200, "unit": "g", "note": "參考P.45" }
     ],
     "instructions": [
-      { "step": 1, "text": "OREO餅乾壓碎加融化奶油壓實冷凍。" },
-      { "step": 2, "text": "奶油乳酪加糖、鮮奶油、酸奶油、蘭姆酒、榛果醬、全蛋與低粉打軟。" },
-      { "step": 3, "text": "拌入香蕉丁、黑巧克力與巴瑞脆片，倒餅乾底上。" },
+      { "step": 1, "text": "OREO餅乾壓碎加融化奶油15g壓實冷凍。" },
+      { "step": 2, "text": "奶油乳酪加糖、鮮奶油25g、酸奶油65g、蘭姆酒5g、榛果醬10g、全蛋與低粉打軟。" },
+      { "step": 3, "text": "加入香蕉丁100g打勻，倒入鋼盆拌入黑巧克力50g與巴瑞脆片20g倒餅乾底上。" },
       { "step": 4, "text": "170℃水浴烤20-30分鐘，冷凍脫模後擠上巧克力甘納許。" }
     ]
   },
@@ -396,21 +531,22 @@ const cheeseRecipes = {
     "basePan": { "shape": "square", "size": "4x4x4", "unit": "cm" },
     "tips": ["地瓜以烘烤方式製成低濕地瓜泥，水浴150℃烤20-30分鐘，表面炙燒細砂糖。"],
     "ingredients": [
-      { "category": "base", "name": "消化餅乾底", "baseValue": 135, "unit": "g" },
+      { "category": "base", "name": "市售消化餅乾", "baseValue": 105, "unit": "g" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 160, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 50, "unit": "g" },
-      { "category": "wet", "name": "鮮奶油與酸奶油", "baseValue": 45, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 10, "unit": "g" },
+      { "category": "wet", "name": "酸奶油", "baseValue": 35, "unit": "g" },
       { "category": "flavor", "name": "烤熟地瓜泥", "baseValue": 55, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 55, "unit": "g" },
       { "category": "flavor", "name": "蜂蜜", "baseValue": 15, "unit": "g" },
-      { "category": "dry", "name": "低筋麵粉", "baseValue": 6, "unit": "g" },
-      { "category": "decoration", "name": "細砂糖 (表面炙燒)", "baseValue": 0, "unit": "g", "note": "適量" }
+      { "category": "dry", "name": "低筋麵粉", "baseValue": 6, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "消化餅乾底壓實冷凍。" },
-      { "step": 2, "text": "乳酪加糖打軟，加入鮮奶油、酸奶油、地瓜泥、全蛋、蜂蜜與低粉打勻。" },
-      { "step": 3, "text": "倒入模中，150℃水浴烤20-30分鐘，冷凍2小時脫模。" },
-      { "step": 4, "text": "表面撒上細砂糖，以噴槍炙燒焦糖。" }
+      { "step": 1, "text": "消化餅乾壓碎加融化奶油30g壓實冷凍。" },
+      { "step": 2, "text": "乳酪加糖打軟，加入鮮奶油10g、酸奶油35g、地瓜泥55g、全蛋55g、蜂蜜15g與低粉6g打勻。" },
+      { "step": 3, "text": "倒入模中，150℃/155℃水浴烤20-30分鐘，冷凍2小時脫模。" },
+      { "step": 4, "text": "表面撒上細砂糖，以火槍炙燒焦糖。" }
     ]
   },
   "cheese_p115_tieguanyin_cheesecake": {
@@ -422,18 +558,27 @@ const cheeseRecipes = {
     "basePan": { "shape": "custom", "size": "6.8x4.6x2.5", "unit": "cm" },
     "tips": ["台灣坪林滴滴香鐵觀音茶粉，鐵觀音茶酥菠蘿頂飾。160℃烤20分鐘。"],
     "ingredients": [
-      { "category": "base", "name": "孔雀餅乾底", "baseValue": 95, "unit": "g" },
-      { "category": "decoration", "name": "鐵觀音酥菠蘿", "baseValue": 395, "unit": "g", "note": "茶粉5g" },
+      { "category": "base", "name": "市售孔雀餅乾", "baseValue": 70, "unit": "g", "note": "孔雀餅乾底" },
+      { "category": "base", "name": "無鹽奶油", "baseValue": 25, "unit": "g", "note": "孔雀餅乾底" },
+      { "category": "decoration", "name": "杏仁粉", "baseValue": 100, "unit": "g", "note": "鐵觀音酥菠蘿" },
+      { "category": "decoration", "name": "無鹽奶油", "baseValue": 100, "unit": "g", "note": "鐵觀音酥菠蘿" },
+      { "category": "decoration", "name": "低筋麵粉", "baseValue": 90, "unit": "g", "note": "鐵觀音酥菠蘿" },
+      { "category": "decoration", "name": "鐵觀音茶粉 (酥菠蘿)", "baseValue": 5, "unit": "g", "note": "鐵觀音酥菠蘿" },
+      { "category": "decoration", "name": "細砂糖 (酥菠蘿)", "baseValue": 100, "unit": "g", "note": "鐵觀音酥菠蘿" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 400, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 80, "unit": "g" },
-      { "category": "flavor", "name": "鐵觀音茶粉加熱水", "baseValue": 48, "unit": "g", "note": "茶粉8g" },
-      { "category": "wet", "name": "鮮奶油、全蛋與蛋黃", "baseValue": 120, "unit": "g" },
+      { "category": "wet", "name": "熱水", "baseValue": 40, "unit": "g" },
+      { "category": "flavor", "name": "鐵觀音茶粉 (乳酪糊)", "baseValue": 8, "unit": "g" },
+      { "category": "wet", "name": "動物性鮮奶油", "baseValue": 20, "unit": "g" },
+      { "category": "wet", "name": "全蛋", "baseValue": 80, "unit": "g" },
+      { "category": "wet", "name": "蛋黃", "baseValue": 20, "unit": "g" },
       { "category": "dry", "name": "低筋麵粉", "baseValue": 5, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "乳酪加糖打軟，加入濃縮鐵觀音茶糊、鮮奶油與蛋液打勻。" },
-      { "step": 2, "text": "拌入低粉倒入模中，撒上鐵觀音酥菠蘿。" },
-      { "step": 3, "text": "以160℃烤20分鐘，放涼後冷凍2小時脫模。" }
+      { "step": 1, "text": "孔雀餅乾壓碎加融化奶油25g壓實冷凍；製作鐵觀音酥菠蘿備用。" },
+      { "step": 2, "text": "乳酪加糖打軟，加入茶粉8g與熱水40g先拌勻之濃縮茶液，再加入鮮奶油20g、全蛋80g、蛋黃20g打勻。" },
+      { "step": 3, "text": "分次拌入低粉5g，倒入模中，撒上鐵觀音酥菠蘿。" },
+      { "step": 4, "text": "以160℃/165℃烤20分鐘，放涼後冷凍2小時脫模。" }
     ]
   },
   "cheese_p123_basque_cheesecake": {
@@ -478,9 +623,9 @@ const cheeseRecipes = {
       { "category": "dry", "name": "細砂糖 (蛋白霜)", "baseValue": 30, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "茶粉、牛奶、奶油、香草莢加熱至72℃，沖入蛋黃糖糊再回煮至80℃。" },
-      { "step": 2, "text": "沖入奶油乳酪打勻，加入低粉成蛋黃乳酪糊。" },
-      { "step": 3, "text": "冰蛋白加糖打七分發蛋白霜，分兩次拌入蛋黃乳酪糊。" },
+      { "step": 1, "text": "茶粉8g、牛奶140g、奶油30g、香草莢加熱至72℃，沖入蛋黃60g與糖21g中回煮至80℃。" },
+      { "step": 2, "text": "沖入奶油乳酪200g以均質機打勻，倒入鋼盆拌入低粉12g。" },
+      { "step": 3, "text": "冰蛋白55g加糖30g打七分發蛋白霜，分兩次拌入蛋黃乳酪糊。" },
       { "step": 4, "text": "倒入模中，160℃水浴烤60分鐘，放涼冷凍2小時脫模。" }
     ]
   },
@@ -493,7 +638,7 @@ const cheeseRecipes = {
     "basePan": { "shape": "rectangle", "size": "7.9x2.9x3", "unit": "cm" },
     "tips": ["融合牛軋糖與米果香脆堅果，義式蛋白霜與打發鮮奶油乳酪。冷凍一晚。"],
     "ingredients": [
-      { "category": "wet", "name": "奶油乳酪 (打發)", "baseValue": 200, "unit": "g" },
+      { "category": "wet", "name": "奶油乳酪 (冷藏打發)", "baseValue": 200, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油 (打發)", "baseValue": 200, "unit": "g" },
       { "category": "dry", "name": "烤香米果", "baseValue": 50, "unit": "g" },
       { "category": "dry", "name": "蜜汁腰果", "baseValue": 30, "unit": "g" },
@@ -502,8 +647,9 @@ const cheeseRecipes = {
     ],
     "instructions": [
       { "step": 1, "text": "乳酪與鮮奶油自冷藏取出打發至硬挺無流動性。" },
-      { "step": 2, "text": "拌入常溫義式蛋白霜，再加入烤香的米果、腰果與草莓乾。" },
-      { "step": 3, "text": "倒入模具抹平，冷凍一晚即可脫模。" }
+      { "step": 2, "text": "拌入常溫義式蛋白霜200g。" },
+      { "step": 3, "text": "加入烤好的米果50g、腰果30g與草莓乾40g拌勻。" },
+      { "step": 4, "text": "倒入模具抹平，冷凍一晚即可脫模。" }
     ]
   },
   "cheese_p182_matcha_mascarpone_pudding": {
@@ -524,28 +670,48 @@ const cheeseRecipes = {
       { "category": "wet", "name": "馬斯卡彭奶油乳酪", "baseValue": 250, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "牛奶、鮮奶油、砂糖A與抹茶粉加熱拌勻。" },
-      { "step": 2, "text": "倒入全蛋、砂糖B與馬斯卡彭乳酪中用調理機打至滑順，過篩2次。" },
+      { "step": 1, "text": "牛奶、鮮奶油、砂糖A 60g與抹茶粉7.5g加熱拌勻。" },
+      { "step": 2, "text": "倒入全蛋125g、砂糖B 60g與馬斯卡彭乳酪250g中用調理機打至滑順，過篩2次。" },
       { "step": 3, "text": "每杯倒80g，蓋濕布以150℃烤65分鐘，冷藏4小時後熱水溫模脫模。" }
     ]
   },
   "cheese_p193_kiri_nama_chocolate": {
     "id": "cheese_p193_kiri_nama_chocolate",
     "isCustom": true,
-    "name": "KIRI 乳酪生巧克力",
-    "englishName": "Kiri Nama Chocolate",
+    "name": "KIRI 黑乳酪生巧克力",
+    "englishName": "Kiri Dark Chocolate Nama Cheese",
     "description": "[頁碼] 第 193-195 頁 | 12連半圓形矽膠模2組",
     "basePan": { "shape": "round", "size": "12", "unit": "pc" },
-    "tips": ["冷藏5天 / 冷凍14天。包含黑乳酪生巧克力與黃金乳酪生巧克力。"],
+    "tips": ["冷藏5天 / 冷凍14天。溫度控制在40℃左右混合防油水分離。"],
     "ingredients": [
       { "category": "wet", "name": "牛奶", "baseValue": 80, "unit": "g" },
       { "category": "flavor", "name": "葡萄糖漿", "baseValue": 15, "unit": "g" },
-      { "category": "flavor", "name": "72%黑巧克力 (或黃金巧克力)", "baseValue": 175, "unit": "g" },
+      { "category": "flavor", "name": "72%黑巧克力", "baseValue": 175, "unit": "g" },
       { "category": "wet", "name": "KIRI奶油乳酪", "baseValue": 104, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "牛奶加葡萄糖漿加熱至85℃。" },
-      { "step": 2, "text": "沖入室溫軟化奶油乳酪與融化黑巧克力中，在40℃下拌勻。" },
+      { "step": 1, "text": "牛奶80g加葡萄糖漿15g加熱至85℃。" },
+      { "step": 2, "text": "沖入室溫軟化奶油乳酪104g與融化黑巧克力175g中，在40℃下拌勻。" },
+      { "step": 3, "text": "過篩擠入半圓形模具，抹平冷凍2小時即可脫模。" }
+    ]
+  },
+  "cheese_p193_kiri_gold_nama_chocolate": {
+    "id": "cheese_p193_kiri_gold_nama_chocolate",
+    "isCustom": true,
+    "name": "KIRI 黃金乳酪生巧克力",
+    "englishName": "Kiri Gold Chocolate Nama Cheese",
+    "description": "[頁碼] 第 193-195 頁 | 12連半圓形矽膠模2組",
+    "basePan": { "shape": "round", "size": "12", "unit": "pc" },
+    "tips": ["冷藏5天 / 冷凍14天。推薦使用嘉麗寶黃金巧克力。"],
+    "ingredients": [
+      { "category": "wet", "name": "牛奶", "baseValue": 50, "unit": "g" },
+      { "category": "flavor", "name": "葡萄糖漿", "baseValue": 16, "unit": "g" },
+      { "category": "flavor", "name": "黃金巧克力", "baseValue": 180, "unit": "g" },
+      { "category": "wet", "name": "KIRI奶油乳酪", "baseValue": 120, "unit": "g" }
+    ],
+    "instructions": [
+      { "step": 1, "text": "牛奶50g加葡萄糖漿16g加熱至85℃。" },
+      { "step": 2, "text": "沖入室溫軟化奶油乳酪120g與融化黃金巧克力180g中，在40℃下拌勻。" },
       { "step": 3, "text": "過篩擠入半圓形模具，抹平冷凍2小時即可脫模。" }
     ]
   },
@@ -554,7 +720,7 @@ const cheeseRecipes = {
     "isCustom": true,
     "name": "乳酪小檸檬",
     "englishName": "Cheese Little Lemon Cakes",
-    "description": "[頁碼] 第 197-199 頁 | 6連檸檬不沾模",
+    "description": "[頁碼] 第 197-199 頁 | 6連檸檬不沾模 (UN11015)",
     "basePan": { "shape": "custom", "size": "6", "unit": "pc" },
     "tips": ["奶油乳酪替代部分油脂增濕降甜。180℃烤20分鐘，淋上檸檬巧克力。"],
     "ingredients": [
@@ -565,13 +731,15 @@ const cheeseRecipes = {
       { "category": "dry", "name": "杏仁粉", "baseValue": 30, "unit": "g" },
       { "category": "wet", "name": "全蛋", "baseValue": 80, "unit": "g" },
       { "category": "flavor", "name": "檸檬汁", "baseValue": 5, "unit": "g" },
-      { "category": "dry", "name": "低筋麵粉加泡打粉", "baseValue": 115, "unit": "g" },
-      { "category": "decoration", "name": "檸檬巧克力加少許油", "baseValue": 210, "unit": "g" }
+      { "category": "dry", "name": "低筋麵粉", "baseValue": 112, "unit": "g" },
+      { "category": "dry", "name": "泡打粉", "baseValue": 3, "unit": "g" },
+      { "category": "decoration", "name": "檸檬巧克力", "baseValue": 200, "unit": "g" },
+      { "category": "decoration", "name": "沙拉油", "baseValue": 10, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "軟化奶油與奶油乳酪打勻，加入揉過檸檬皮的糖粉與杏仁粉。" },
-      { "step": 2, "text": "分次加入全蛋液、檸檬汁，再拌入低粉與泡打粉。" },
-      { "step": 3, "text": "擠入模具(每顆50g)，以180℃烤20分鐘脫模，表面淋上融化檸檬巧克力。" }
+      { "step": 1, "text": "軟化奶油60g與奶油乳酪60g打勻，加入手抓過檸檬皮屑的糖粉115g與杏仁粉30g。" },
+      { "step": 2, "text": "分次加入全蛋液80g、檸檬汁5g，再過篩拌入低粉112g與泡打粉3g。" },
+      { "step": 3, "text": "擠入模具(每顆50g)，以180℃烤20分鐘脫模，表面淋上融化檸檬巧克力200g加油10g。" }
     ]
   },
   "cheese_p201_financier": {
@@ -579,22 +747,27 @@ const cheeseRecipes = {
     "isCustom": true,
     "name": "乳酪費南雪",
     "englishName": "Cheese Financier",
-    "description": "[頁碼] 第 201-203 頁 | 9連費南雪不沾模",
+    "description": "[頁碼] 第 201-203 頁 | 9連費南雪不沾模 (UN11016)",
     "basePan": { "shape": "rectangle", "size": "9", "unit": "pc" },
-    "tips": ["奶油乳酪替代部分奶油，花生粉堅果香。200℃烤13-14分鐘。"],
+    "tips": ["奶油乳酪替代部分奶油，花生粉與榛果粉堅果香。200℃烤13-14分鐘。"],
     "ingredients": [
       { "category": "wet", "name": "蛋白", "baseValue": 80, "unit": "g" },
       { "category": "dry", "name": "糖粉", "baseValue": 80, "unit": "g" },
-      { "category": "dry", "name": "榛果粉加花生粉", "baseValue": 45, "unit": "g" },
+      { "category": "dry", "name": "榛果粉", "baseValue": 20, "unit": "g" },
+      { "category": "dry", "name": "花生粉", "baseValue": 25, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪", "baseValue": 75, "unit": "g" },
       { "category": "wet", "name": "融化無鹽奶油", "baseValue": 100, "unit": "g" },
-      { "category": "dry", "name": "低筋麵粉加泡打粉", "baseValue": 37, "unit": "g" },
-      { "category": "decoration", "name": "72%黑巧克力與烤杏仁角", "baseValue": 180, "unit": "g" }
+      { "category": "dry", "name": "低筋麵粉", "baseValue": 35, "unit": "g" },
+      { "category": "dry", "name": "泡打粉", "baseValue": 2, "unit": "g" },
+      { "category": "decoration", "name": "72%黑巧克力 (淋面)", "baseValue": 120, "unit": "g" },
+      { "category": "decoration", "name": "可可脂 (淋面)", "baseValue": 60, "unit": "g" },
+      { "category": "decoration", "name": "烤熟杏仁角", "baseValue": 30, "unit": "g", "note": "些許" }
     ],
     "instructions": [
-      { "step": 1, "text": "蛋白加糖粉、堅果粉拌勻，加入軟化奶油乳酪與融化奶油。" },
-      { "step": 2, "text": "拌入低粉泡打粉，灌入模中(每顆20g)，200℃烤13-14分鐘。" },
-      { "step": 3, "text": "冷凍1小時脫模，沾附黑巧克力，撒烤熟杏仁角。" }
+      { "step": 1, "text": "蛋白80g加糖粉80g、榛果粉20g、花生粉25g打勻。" },
+      { "step": 2, "text": "加入軟化奶油乳酪75g與融化奶油100g打勻。" },
+      { "step": 3, "text": "拌入低粉35g與泡打粉2g，灌入模中(每顆20g)，200℃烤13-14分鐘。" },
+      { "step": 4, "text": "冷凍1小時脫模，沾附融化黑巧克力加可可脂，撒烤熟杏仁角。" }
     ]
   },
   "cheese_p209_soft_lemon_tart": {
@@ -608,16 +781,18 @@ const cheeseRecipes = {
     "ingredients": [
       { "category": "wet", "name": "奶油乳酪", "baseValue": 90, "unit": "g" },
       { "category": "dry", "name": "細砂糖", "baseValue": 25, "unit": "g" },
-      { "category": "wet", "name": "蛋黃與蛋白", "baseValue": 60, "unit": "g" },
+      { "category": "wet", "name": "蛋黃", "baseValue": 25, "unit": "g" },
+      { "category": "wet", "name": "蛋白", "baseValue": 35, "unit": "g" },
       { "category": "wet", "name": "動物性鮮奶油", "baseValue": 110, "unit": "g" },
       { "category": "flavor", "name": "檸檬汁", "baseValue": 10, "unit": "g" },
       { "category": "dry", "name": "玉米粉", "baseValue": 7, "unit": "g" },
       { "category": "base", "name": "烤好的簡易塔皮", "baseValue": 6, "unit": "個", "note": "參考P.42" },
-      { "category": "decoration", "name": "鏡面果膠與綠檸檬絲", "baseValue": 0, "unit": "g", "note": "裝飾" }
+      { "category": "decoration", "name": "鏡面果膠", "baseValue": 20, "unit": "g", "note": "些許" },
+      { "category": "decoration", "name": "綠檸檬絲", "baseValue": 5, "unit": "g", "note": "些許" }
     ],
     "instructions": [
-      { "step": 1, "text": "奶油乳酪加糖打軟，加入蛋液、鮮奶油、檸檬汁與玉米粉打勻。" },
-      { "step": 2, "text": "降溫至20℃灌入半圓形模具，蓋上烤好塔皮，150℃烤13-15分鐘。" },
+      { "step": 1, "text": "奶油乳酪90g加糖25g打軟，加入蛋黃25g、蛋白35g、鮮奶油110g、檸檬汁10g與玉米粉7g打勻。" },
+      { "step": 2, "text": "降溫至20℃灌入半圓形模具，蓋上烤好的簡易塔皮，150℃烤13-15分鐘。" },
       { "step": 3, "text": "冷凍2小時脫模，刷鏡面果膠，點綴綠檸檬絲。" }
     ]
   },
@@ -630,20 +805,24 @@ const cheeseRecipes = {
     "basePan": { "shape": "custom", "size": "10.5x8.1x2.9", "unit": "cm" },
     "tips": ["法式塔皮，重乳酪卡士達烤15分鐘，鋪上手工香草糖煮蘋果丁。"],
     "ingredients": [
-      { "category": "base", "name": "法式塔皮麵糰", "baseValue": 160, "unit": "g", "note": "參考P.40" },
+      { "category": "base", "name": "法式塔皮麵糰", "baseValue": 160, "unit": "g", "note": "每個80g參考P.40" },
       { "category": "base", "name": "乳酪卡士達醬", "baseValue": 160, "unit": "g" },
       { "category": "wet", "name": "蛋黃", "baseValue": 36, "unit": "g" },
-      { "category": "dry", "name": "玉米粉與杏仁粉", "baseValue": 30, "unit": "g" },
-      { "category": "wet", "name": "蛋白與糖 (打發蛋白霜)", "baseValue": 115, "unit": "g" },
-      { "category": "flavor", "name": "切塊蘋果", "baseValue": 1000, "unit": "g" },
-      { "category": "dry", "name": "細砂糖加香草莢", "baseValue": 170, "unit": "g" },
-      { "category": "flavor", "name": "玉米粉與蘭姆酒", "baseValue": 92, "unit": "g" }
+      { "category": "dry", "name": "玉米粉 (卡士達)", "baseValue": 20, "unit": "g" },
+      { "category": "dry", "name": "杏仁粉 (卡士達)", "baseValue": 10, "unit": "g" },
+      { "category": "wet", "name": "蛋白 (打發)", "baseValue": 75, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (打發)", "baseValue": 40, "unit": "g" },
+      { "category": "flavor", "name": "蘋果 (切丁)", "baseValue": 1000, "unit": "g" },
+      { "category": "dry", "name": "細砂糖 (糖煮蘋果)", "baseValue": 170, "unit": "g" },
+      { "category": "flavor", "name": "香草莢", "baseValue": 1, "unit": "根" },
+      { "category": "dry", "name": "玉米粉 (糖煮蘋果)", "baseValue": 20, "unit": "g" },
+      { "category": "flavor", "name": "蘭姆酒", "baseValue": 72, "unit": "g" }
     ],
     "instructions": [
-      { "step": 1, "text": "法式塔皮入菊花塔模盲烤18分鐘。" },
-      { "step": 2, "text": "乳酪卡士達加蛋黃、玉米粉、杏仁粉與七分發蛋白霜拌勻。" },
+      { "step": 1, "text": "法式塔皮80g入菊花塔模壓平盲烤18分鐘出爐。" },
+      { "step": 2, "text": "乳酪卡士達160g加蛋黃36g、玉米粉20g、杏仁粉10g拌勻，再與七分發蛋白霜(蛋白75g+糖40g)拌勻。" },
       { "step": 3, "text": "擠入塔中以180℃烤15分鐘放涼。" },
-      { "step": 4, "text": "蘋果加糖、香草莢煮至殺青出水，瀝出加入玉米粉蘭姆酒煮收乾，鋪於塔頂。" }
+      { "step": 4, "text": "蘋果1000g加糖170g、香草莢煮沸殺青出水，過濾取果丁加玉米粉20g與蘭姆酒72g小火收乾，鋪於塔頂。" }
     ]
   },
   "cheese_p226_rum_raisin_shortbread": {
@@ -657,16 +836,17 @@ const cheeseRecipes = {
     "ingredients": [
       { "category": "wet", "name": "無鹽奶油 (酥餅)", "baseValue": 35, "unit": "g" },
       { "category": "wet", "name": "奶油乳酪 (酥餅)", "baseValue": 25, "unit": "g" },
-      { "category": "dry", "name": "糖粉與低筋麵粉", "baseValue": 150, "unit": "g" },
+      { "category": "dry", "name": "糖粉 (酥餅)", "baseValue": 60, "unit": "g" },
+      { "category": "dry", "name": "低筋麵粉 (酥餅)", "baseValue": 90, "unit": "g" },
       { "category": "wet", "name": "蛋黃", "baseValue": 15, "unit": "g" },
-      { "category": "flavor", "name": "義式蛋白霜", "baseValue": 100, "unit": "g", "note": "參考P.47" },
-      { "category": "wet", "name": "無鹽奶油 (奶油霜)", "baseValue": 135, "unit": "g" },
-      { "category": "flavor", "name": "酒漬葡萄乾", "baseValue": 0, "unit": "g", "note": "參考P.44/適量" }
+      { "category": "flavor", "name": "義大利蛋白霜", "baseValue": 100, "unit": "g", "note": "參考P.47" },
+      { "category": "wet", "name": "無鹽奶油 (夾心霜)", "baseValue": 135, "unit": "g" },
+      { "category": "flavor", "name": "酒漬葡萄乾", "baseValue": 40, "unit": "g", "note": "參考P.44/適量" }
     ],
     "instructions": [
-      { "step": 1, "text": "酥餅材料用調理機打成糰，桿0.4cm厚，切4cm方塊，170℃烤20分鐘。" },
-      { "step": 2, "text": "義式蛋白霜打發，分次拌入軟化奶油成奶油夾心霜。" },
-      { "step": 3, "text": "餅乾擠上奶油霜，放入酒漬葡萄乾，再蓋上餅乾冷藏。" }
+      { "step": 1, "text": "酥餅材料用調理機打成無粉粒糰，桿0.4cm厚，壓4cm正方形，170℃烤20分鐘。" },
+      { "step": 2, "text": "義大利蛋白霜100g打發，分次拌入軟化奶油135g成奶油夾心霜。" },
+      { "step": 3, "text": "餅乾擠上奶油霜，放入酒漬葡萄乾，再擠奶油霜並蓋上另一片餅乾。" }
     ]
   }
 };
