@@ -1653,7 +1653,30 @@ ${text}`;
                         if (!groqKey.trim()) throw new Error("請填寫 Groq API Key！（可至 console.groq.com 免費申請，秒過免綁卡）");
                         localStorage.setItem("magic_baking_groq_api_key", groqKey.trim());
 
-                        const candidateModels = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it"];
+                        // 動態向 Groq 查詢該帳號當前真正可用的模型清單
+                        let activeGroqModels = [];
+                        try {
+                            const modelsRes = await fetch("https://api.groq.com/openai/v1/models", {
+                                headers: { "Authorization": `Bearer ${groqKey.trim()}` }
+                            });
+                            if (modelsRes.ok) {
+                                const modelsData = await modelsRes.json();
+                                activeGroqModels = (modelsData.data || [])
+                                    .map(m => m.id)
+                                    .filter(id => id && !id.includes("whisper") && !id.includes("guard") && !id.includes("tts") && !id.includes("embed") && !id.includes("tool"));
+                            } else if (modelsRes.status === 401) {
+                                throw new Error("🔑 Groq API Key 無效或未授權。請檢查是否多複製了空格，或至 console.groq.com 重新產生 API Key。");
+                            }
+                        } catch (fetchErr) {
+                            if (fetchErr.message.includes("Groq API Key")) throw fetchErr;
+                            console.warn("無法動態載入 Groq 模型清單:", fetchErr);
+                        }
+
+                        // 如果動態清單存在則優先使用，否則使用預設清單
+                        const candidateModels = activeGroqModels.length > 0 
+                            ? activeGroqModels 
+                            : ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "llama3-8b-8192"];
+
                         let response = null;
                         let primaryErr = null;
                         let lastErr = null;
@@ -1681,9 +1704,8 @@ ${text}`;
                                 if (i === 0) primaryErr = errJson;
                                 lastErr = errJson;
                                 
-                                // 若為 401 密鑰無效，無需再嘗試其他模型，直接退出回報
                                 if (response.status === 401 || errJson.error?.code === "invalid_api_key") {
-                                    throw new Error("🔑 Groq API Key 無效或未授權。請檢查是否多複製了空格，或至 console.groq.com 產生新的 API Key。");
+                                    throw new Error("🔑 Groq API Key 無效或未授權。請檢查是否多複製了空格，或至 console.groq.com 重新產生 API Key。");
                                 }
                                 console.warn(`Groq model ${m} failed:`, errJson);
                             } catch (err) {
