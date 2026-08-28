@@ -1142,7 +1142,16 @@
             const [copyPromptStatus, setCopyPromptStatus] = useState("");
             const [isImporting, setIsImporting] = useState(false);
 
-            const activeRecipe = allRecipes[activeRecipeId] || Object.values(allRecipes)[0] || {};
+            const activeRecipe = allRecipes[activeRecipeId] || Object.values(allRecipes)[0] || {
+                id: "placeholder",
+                name: "尚無食譜",
+                englishName: "No Recipe",
+                description: "請點擊左側「新增食譜」開始建立！",
+                basePan: { shape: "round", size: 9, unit: "inch" },
+                ingredients: [],
+                instructions: [],
+                tips: []
+            };
 
             // 切換食譜時更新預設計時器時間
             useEffect(() => {
@@ -1234,19 +1243,21 @@
                     .replace(/'/g, '&#039;');
 
                 let formattedText = escapeHtml(text);
-                activeRecipe.ingredients.forEach(ing => {
-                    if (!ing.name) return;
-                    const safeName = escapeHtml(ing.name);
-                    const placeholder = `{${safeName}}`;
-                    if (formattedText.includes(placeholder)) {
-                        const scaledVal = getScaledValue(ing);
-                        const safeUnit = escapeHtml(ing.unit || '');
-                        formattedText = formattedText.replace(
-                            new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
-                            `<span class="text-amber-700 font-semibold border-b-2 border-amber-200">${safeName} ${scaledVal}${ing.isStatic ? '' : safeUnit}</span>`
-                        );
-                    }
-                });
+                if (activeRecipe && Array.isArray(activeRecipe.ingredients)) {
+                    activeRecipe.ingredients.forEach(ing => {
+                        if (!ing || !ing.name) return;
+                        const safeName = escapeHtml(ing.name);
+                        const placeholder = `{${safeName}}`;
+                        if (formattedText.includes(placeholder)) {
+                            const scaledVal = getScaledValue(ing);
+                            const safeUnit = escapeHtml(ing.unit || '');
+                            formattedText = formattedText.replace(
+                                new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+                                `<span class="text-amber-700 font-semibold border-b-2 border-amber-200">${safeName} ${scaledVal}${ing.isStatic ? '' : safeUnit}</span>`
+                            );
+                        }
+                    });
+                }
                 return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
             };
 
@@ -2165,7 +2176,7 @@ ${text}`;
                                 </h3>
 
                                 <div className="divide-y divide-stone-100">
-                                    {activeRecipe.ingredients.map((ing, idx) => (
+                                    {(activeRecipe.ingredients || []).map((ing, idx) => (
                                         <div key={idx} className="py-3 flex justify-between items-center text-sm md:text-base hover:bg-stone-50/50 px-2 rounded-lg transition">
                                             <div className="flex items-center space-x-2">
                                                 <span className={`inline-block w-2.5 h-2.5 rounded-full ${
@@ -2199,7 +2210,7 @@ ${text}`;
                                 </h3>
 
                                 <div className="space-y-6">
-                                    {activeRecipe.instructions.map((step) => (
+                                    {(activeRecipe.instructions || []).map((step) => (
                                         <div 
                                             key={step.step} 
                                             onClick={() => setCheckedSteps(prev => ({...prev, [step.step]: !prev[step.step]}))}
@@ -2410,7 +2421,7 @@ ${text}`;
                                                         className="w-full bg-white border border-stone-200 rounded-xl p-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
                                                     />
                                                     <p className="text-[10px] text-stone-400">
-                                                        預設將使用 OpenRouter 免費模型池 (`google/gemini-2.0-flash-exp:free`) 進行解析。
+                                                        預設將使用 OpenRouter 免費模型池 (google/gemini-2.0-flash-exp:free) 進行解析。
                                                     </p>
                                                 </div>
                                             )}
