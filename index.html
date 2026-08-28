@@ -1124,7 +1124,13 @@
                 try { return localStorage.getItem("magic_baking_gemini_api_key") || ""; } catch (e) { return ""; }
             });
             const [apiModel, setApiModel] = useState(() => {
-                try { return localStorage.getItem("magic_baking_gemini_model") || "gemini-2.0-flash"; } catch (e) { return "gemini-2.0-flash"; }
+                try {
+                    const saved = localStorage.getItem("magic_baking_gemini_model");
+                    if (!saved || saved === "gemini-2.5-flash" || saved === "gemini-3.5-flash") return "gemini-2.0-flash";
+                    return saved;
+                } catch (e) {
+                    return "gemini-2.0-flash";
+                }
             });
             const [groqKey, setGroqKey] = useState(() => {
                 try { return localStorage.getItem("magic_baking_groq_api_key") || ""; } catch (e) { return ""; }
@@ -1432,55 +1438,45 @@ ${text}`;
                     if (apiProvider === "groq") {
                         if (!groqKey.trim()) throw new Error("請填寫 Groq API Key！（可至 console.groq.com 免費申請，秒過免綁卡）");
                         localStorage.setItem("magic_baking_groq_api_key", groqKey.trim());
-                        
-                        let response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": `Bearer ${groqKey.trim()}`
-                            },
-                            body: JSON.stringify({
-                                model: "llama-3.3-70b-versatile",
-                                messages: [
-                                    { role: "system", content: "You output only valid JSON for baking recipes following the specified structure." },
-                                    { role: "user", content: prompt }
-                                ],
-                                response_format: { type: "json_object" }
-                            })
-                        });
 
-                        // 若 70B 模型失敗或限額，自動備用降級切換至 8B 模型嘗試
-                        if (!response.ok) {
-                            const firstErr = await response.json().catch(() => ({}));
-                            console.warn("Groq 70B 回覆異常，自動切換至 8B 備用模型嘗試:", firstErr);
-                            
-                            response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${groqKey.trim()}`
-                                },
-                                body: JSON.stringify({
-                                    model: "llama-3.1-8b-instant",
-                                    messages: [
-                                        { role: "system", content: "You output only valid JSON for baking recipes following the specified structure." },
-                                        { role: "user", content: prompt }
-                                    ],
-                                    response_format: { type: "json_object" }
-                                })
-                            });
+                        const candidateModels = ["llama-3.3-70b-versatile", "llama-3.1-70b-versatile", "llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768"];
+                        let response = null;
+                        let lastErr = null;
+
+                        for (const m of candidateModels) {
+                            try {
+                                response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": `Bearer ${groqKey.trim()}`
+                                    },
+                                    body: JSON.stringify({
+                                        model: m,
+                                        messages: [
+                                            { role: "system", content: "You output only valid JSON for baking recipes following the specified structure." },
+                                            { role: "user", content: prompt }
+                                        ],
+                                        response_format: { type: "json_object" }
+                                    })
+                                });
+                                if (response.ok) break;
+                                lastErr = await response.json().catch(() => ({}));
+                                console.warn(`Groq model ${m} failed:`, lastErr);
+                            } catch (err) {
+                                lastErr = err;
+                            }
                         }
 
-                        if (!response.ok) {
-                            const errData = await response.json().catch(() => ({}));
-                            const errMsg = errData.error?.message || `Groq API 錯誤 (${response.status})`;
-                            if (response.status === 401) {
-                                throw new Error("🔑 Groq API Key 無效或有誤，請檢查是否多複製了空格，或重新至 console.groq.com 產生新 Key。");
+                        if (!response || !response.ok) {
+                            const errMsg = lastErr?.error?.message || (lastErr?.message ? lastErr.message : `Groq API 連線錯誤`);
+                            if (lastErr?.error?.code === "invalid_api_key" || response?.status === 401) {
+                                throw new Error("🔑 Groq API Key 無效或有誤，請確認是否多複製了空格，或至 console.groq.com 重新產生 API Key。");
                             }
-                            if (response.status === 429) {
+                            if (response?.status === 429) {
                                 throw new Error("⏳ Groq 每分鐘請求頻率已滿 (Rate limit)，請稍等 30 秒再試，或改用「免 Key 手動複製模式」。");
                             }
-                            throw new Error(errMsg);
+                            throw new Error(`Groq 轉換錯誤: ${errMsg}`);
                         }
                         const resJson = await response.json();
                         textResult = resJson.choices?.[0]?.message?.content;
@@ -2445,9 +2441,9 @@ ${text}`;
                                                                 try { localStorage.setItem("magic_baking_gemini_model", e.target.value); } catch(err){}
                                                             }}
                                                             className="w-full bg-white border border-stone-200 rounded-xl p-2 text-xs text-stone-700 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
-                                                        >
-                                                            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
-                                                            <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                                                            <option value="gemini-2.0-flash">gemini-2.0-flash（推薦・最新高速穩定）</option>
+                                                            <option value="gemini-1.5-flash">gemini-1.5-flash（穩定相容）</option>
+                                                            <option value="gemini-3.6-flash">gemini-3.6-flash（最新體驗）</option>
                                                         </select>
                                                     </div>
                                                 </div>
