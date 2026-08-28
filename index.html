@@ -1653,11 +1653,13 @@ ${text}`;
                         if (!groqKey.trim()) throw new Error("請填寫 Groq API Key！（可至 console.groq.com 免費申請，秒過免綁卡）");
                         localStorage.setItem("magic_baking_groq_api_key", groqKey.trim());
 
-                        const candidateModels = ["llama-3.3-70b-versatile", "llama-3.1-70b-versatile", "llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768"];
+                        const candidateModels = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it"];
                         let response = null;
+                        let primaryErr = null;
                         let lastErr = null;
 
-                        for (const m of candidateModels) {
+                        for (let i = 0; i < candidateModels.length; i++) {
+                            const m = candidateModels[i];
                             try {
                                 response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                                     method: "POST",
@@ -1675,20 +1677,27 @@ ${text}`;
                                     })
                                 });
                                 if (response.ok) break;
-                                lastErr = await response.json().catch(() => ({}));
-                                console.warn(`Groq model ${m} failed:`, lastErr);
+                                const errJson = await response.json().catch(() => ({}));
+                                if (i === 0) primaryErr = errJson;
+                                lastErr = errJson;
+                                
+                                // 若為 401 密鑰無效，無需再嘗試其他模型，直接退出回報
+                                if (response.status === 401 || errJson.error?.code === "invalid_api_key") {
+                                    throw new Error("🔑 Groq API Key 無效或未授權。請檢查是否多複製了空格，或至 console.groq.com 產生新的 API Key。");
+                                }
+                                console.warn(`Groq model ${m} failed:`, errJson);
                             } catch (err) {
+                                if (err.message.includes("Groq API Key")) throw err;
+                                if (i === 0) primaryErr = err;
                                 lastErr = err;
                             }
                         }
 
                         if (!response || !response.ok) {
-                            const errMsg = lastErr?.error?.message || (lastErr?.message ? lastErr.message : `Groq API 連線錯誤`);
-                            if (lastErr?.error?.code === "invalid_api_key" || response?.status === 401) {
-                                throw new Error("🔑 Groq API Key 無效或有誤，請確認是否多複製了空格，或至 console.groq.com 重新產生 API Key。");
-                            }
+                            const displayErr = primaryErr || lastErr;
+                            const errMsg = displayErr?.error?.message || (displayErr?.message ? displayErr.message : `Groq 伺服器無回應`);
                             if (response?.status === 429) {
-                                throw new Error("⏳ Groq 每分鐘請求頻率已滿 (Rate limit)，請稍等 30 秒再試，或改用「免 Key 手動複製模式」。");
+                                throw new Error("⏳ Groq 請求頻率已滿 (Rate limit)，請稍等 30 秒再試，或改用「免 Key 手動複製模式」。");
                             }
                             throw new Error(`Groq 轉換錯誤: ${errMsg}`);
                         }
