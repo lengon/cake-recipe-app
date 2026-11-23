@@ -1530,12 +1530,12 @@
         const emptyStep = (num) => ({ step: num, text: "" });
 
         function App() {
-            // 從 LocalStorage 載入自訂食譜，並合併檔案內的 savedRecipes（檔案發布內容優先於舊快取）
+            // 從 LocalStorage 載入自訂食譜，使用者最新編輯優先於檔案基底 savedRecipes
             const [customRecipes, setCustomRecipes] = useState(() => {
                 try {
                     const saved = localStorage.getItem("magic_baking_custom_recipes");
                     const parsedLocal = saved ? JSON.parse(saved) : {};
-                    return { ...parsedLocal, ...savedRecipes };
+                    return { ...savedRecipes, ...parsedLocal };
                 } catch (e) {
                     return { ...savedRecipes };
                 }
@@ -2239,47 +2239,111 @@ ${text}`;
                 reader.readAsText(file);
             };
 
-            const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes);
+            const hasUnsavedChanges = JSON.stringify(customRecipes) !== JSON.stringify(savedRecipes) || 
+                                      JSON.stringify(deletedIds) !== JSON.stringify(typeof savedDeletedIds !== 'undefined' ? savedDeletedIds : []);
 
             const generateUpdatedHtml = async (updatedCustomRecipes, updatedDeletedIds) => {
                 let rawHtml = "";
+                // 1. 優先嘗試透過 fetch 取得完整的 HTML (在 http / https 環境下最佳)
                 try {
-                    const response = await fetch(window.location.href);
-                    rawHtml = await response.text();
+                    const response = await fetch(window.location.href, { cache: "no-store" });
+                    if (response.ok) {
+                        rawHtml = await response.text();
+                    }
                 } catch (e) {
-                    console.warn("無法透過 fetch 取得 HTML 原始碼，將使用備用方案重建:", e);
+                    console.warn("無法透過 fetch 取得 HTML 原始碼 (可能在 file:// 協定):", e);
                 }
-
-                const jsonStr = JSON.stringify(updatedCustomRecipes, null, 4);
-                const deletedJsonStr = JSON.stringify(updatedDeletedIds || [], null, 4);
 
                 const placeholderStart = "// [SAVED_RECIPES_PLACEHOLDER]";
                 const placeholderEnd = "// [/SAVED_RECIPES_PLACEHOLDER]";
                 const deletedStart = "// [DELETED_IDS_PLACEHOLDER]";
                 const deletedEnd = "// [/DELETED_IDS_PLACEHOLDER]";
 
+                // 2. 若 fetch 失敗 (例如在本地直接雙擊 file:/// 開啟，受瀏覽器 CORS 限制)，由 DOM 自動完整重建原始碼
+                if (!rawHtml || !rawHtml.includes(placeholderStart) || !rawHtml.includes(placeholderEnd)) {
+                    const babelScript = document.querySelector('script[type="text/babel"]');
+                    if (babelScript && babelScript.textContent) {
+                        rawHtml = `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烘焙比例魔法師 - 智慧蛋糕食譜計算機</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            background-color: #fcfbf7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .recipe-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="recipes_data.js"></script>
+    <script type="text/babel">
+${babelScript.textContent}
+    </script>
+</body>
+</html>`;
+                    }
+                }
+
+                if (!rawHtml || !rawHtml.includes(placeholderStart) || !rawHtml.includes(placeholderEnd)) {
+                    throw new Error("無法取得網頁原始碼結構，請確認網頁載入正常後再試！");
+                }
+
+                const jsonStr = JSON.stringify(updatedCustomRecipes || {}, null, 4);
+                const deletedJsonStr = JSON.stringify(updatedDeletedIds || [], null, 4);
+
                 let htmlResult = rawHtml;
-                if (htmlResult && htmlResult.includes(placeholderStart) && htmlResult.includes(placeholderEnd)) {
+                if (htmlResult.includes(placeholderStart) && htmlResult.includes(placeholderEnd)) {
                     const startIndex = htmlResult.indexOf(placeholderStart) + placeholderStart.length;
-                    const endIndex = htmlResult.indexOf(placeholderEnd);
+                    const endIndex = htmlResult.indexOf(placeholderEnd, startIndex);
                     htmlResult = htmlResult.substring(0, startIndex) + "\n        const savedRecipes = " + jsonStr + ";\n        " + htmlResult.substring(endIndex);
                 }
-                if (htmlResult && htmlResult.includes(deletedStart) && htmlResult.includes(deletedEnd)) {
+                if (htmlResult.includes(deletedStart) && htmlResult.includes(deletedEnd)) {
                     const startIndex = htmlResult.indexOf(deletedStart) + deletedStart.length;
-                    const endIndex = htmlResult.indexOf(deletedEnd);
+                    const endIndex = htmlResult.indexOf(deletedEnd, startIndex);
                     htmlResult = htmlResult.substring(0, startIndex) + "\n        const savedDeletedIds = " + deletedJsonStr + ";\n        " + htmlResult.substring(endIndex);
                 }
                 return htmlResult;
             };
 
             const handleSaveToFile = async () => {
-                const updatedHtml = await generateUpdatedHtml(customRecipes, deletedIds);
+                let updatedHtml = "";
+                try {
+                    updatedHtml = await generateUpdatedHtml(customRecipes, deletedIds);
+                } catch (err) {
+                    alert("⚠️ 產生檔案內容失敗：" + err.message);
+                    return;
+                }
+
+                if (!updatedHtml || updatedHtml.length < 5000) {
+                    alert("⚠️ 儲存失敗：產生的檔案大小異常（少於 5KB），為避免損壞原有檔案已終止儲存。");
+                    return;
+                }
+
+                const isGitHubPages = window.location.hostname.includes("github.io");
+
                 try {
                     if (window.showSaveFilePicker) {
                         const handle = await window.showSaveFilePicker({
-                            suggestedName: "code_artifact.html",
+                            suggestedName: "index.html",
                             types: [{
-                                description: "HTML Files",
+                                description: "HTML Files (*.html)",
                                 accept: { "text/html": [".html"] }
                             }]
                         });
@@ -2287,31 +2351,37 @@ ${text}`;
                         await writable.write(updatedHtml);
                         await writable.close();
                         
-                        // 儲存成功，清除 LocalStorage 中的暫存與已刪除清單
-                        localStorage.removeItem("magic_baking_custom_recipes");
-                        localStorage.removeItem("magic_baking_deleted_recipes");
-                        alert("🎉 成功儲存至檔案本身！此網頁重新整理後自訂食譜依然存在。");
-                        window.location.reload();
+                        // 儲存成功後的提示與同步處理
+                        if (isGitHubPages) {
+                            alert("🎉 成功將最新食譜儲存至本機的 index.html！\n\n📌 提醒：您目前是在 GitHub Pages 線上版。檔案已寫入您的電腦，請在專案終端機執行：\n\ngit add index.html\ngit commit -m \"更新食譜\"\ngit push\n\n推播完成後約 1 分鐘，GitHub Pages 就會同步為最新版！");
+                        } else {
+                            // 在本機檔案環境下，清除暫存並重新整理即可載入最新寫入的檔案
+                            localStorage.removeItem("magic_baking_custom_recipes");
+                            localStorage.removeItem("magic_baking_deleted_recipes");
+                            alert("🎉 成功儲存至 index.html！此檔案重新整理後食譜依然完整保存。");
+                            window.location.reload();
+                        }
                         return;
                     }
                 } catch (e) {
-                    if (e.name !== "AbortError") {
-                        console.error("無法使用 File System Access API 寫入檔案:", e);
-                    } else {
-                        return; // 使用者取消
+                    if (e.name === "AbortError") {
+                        return; // 使用者主動取消選擇檔案
                     }
+                    console.warn("無法使用 File System Access API 寫入檔案，將切換為下載方式:", e);
                 }
 
-                // 備用下載機制
-                const blob = new Blob([updatedHtml], { type: "text/html" });
+                // 備用下載機制 (當瀏覽器不支援 showSaveFilePicker 或被安全性限制時)
+                const blob = new Blob([updatedHtml], { type: "text/html;charset=utf-8" });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = "code_artifact.html";
+                a.download = "index.html";
+                document.body.appendChild(a);
                 a.click();
+                document.body.removeChild(a);
                 URL.revokeObjectURL(url);
                 
-                alert("📢 瀏覽器不支援直接寫入檔案，已為您下載最新的 code_artifact.html。\n請將其覆蓋/替換掉您原本的檔案以完成儲存！");
+                alert("📢 已為您下載最新的 index.html！\n\n請將下載的「index.html」覆蓋至您的專案資料夾中，然後執行：\n\ngit add index.html\ngit commit -m \"更新食譜\"\ngit push\n\n即可完成更新！");
             };
 
             const resetForm = () => {
@@ -2379,11 +2449,19 @@ ${text}`;
                                         <span className="mr-2">📖</span> 選擇或新增食譜
                                     </h2>
                                     <div className="flex gap-2">
-                                        {hasUnsavedChanges && (
+                                        {hasUnsavedChanges ? (
                                             <button 
                                                 onClick={handleSaveToFile}
                                                 className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1 transition shadow-xs animate-pulse"
-                                                title="有未儲存的變更，點擊寫入檔案"
+                                                title="有未儲存的變更，點擊寫入 index.html 檔案"
+                                            >
+                                                💾 儲存至檔案
+                                            </button>
+                                        ) : (
+                                            <button 
+                                                onClick={handleSaveToFile}
+                                                className="bg-stone-100 hover:bg-stone-200 text-stone-600 border border-stone-200 text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1 transition shadow-xs"
+                                                title="將目前所有食譜完整儲存至 index.html 檔案"
                                             >
                                                 💾 儲存至檔案
                                             </button>
