@@ -2326,7 +2326,7 @@ ${text}`;
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                    setSaveStatusMsg("✅ index.html 已下載成功！請將下載的檔案移至專案目錄 C:\\Users\\lengo\\OneDrive\\文件\\CAKE 覆蓋原有檔案即可。");
+                    setSaveStatusMsg("✅ index.html 已下載成功！請注意：檔案會儲存在您的「下載」資料夾（Downloads）而非桌面。請至下載資料夾將 index.html 移至專案目錄 C:\\Users\\lengo\\OneDrive\\文件\\CAKE 覆蓋原有檔案即可。");
                 } catch (e) {
                     alert("下載失敗：" + e.message);
                 }
@@ -2425,6 +2425,13 @@ ${text}`;
                                 title="將所有自訂食譜導出為 JSON 備份檔案"
                             >
                                 📥 匯出食譜備份 (JSON)
+                            </button>
+                            <button
+                                onClick={handleCopyCustomRecipesJson}
+                                className="bg-white/20 hover:bg-white/30 text-white border border-white/40 text-xs font-bold py-1.5 px-3 rounded-xl transition backdrop-blur-xs flex items-center gap-1 shadow-xs"
+                                title="一鍵複製所有自訂食譜代碼，可直接貼在對話框給 AI 助理幫您更新並推播"
+                            >
+                                📋 複製食譜代碼 (貼給 AI)
                             </button>
                         </div>
                     </header>
